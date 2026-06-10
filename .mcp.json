@@ -1,0 +1,10 @@
+{
+  "name": "mindmap",
+  "version": "0.1.0",
+  "description": "MCP server for structured mind map editing",
+  "command": "python3",
+  "args": ["-m", "mindmap_plugin.mcp_server"],
+  "env": {
+    "PYTHONPATH": "src"
+  }
+}
