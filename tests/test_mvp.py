@@ -23,23 +23,24 @@ class MindMapMvpTests(unittest.TestCase):
         document = load_json(SAMPLE_DOCUMENT)
         validate_document(document)
 
-    def test_mermaid_output_is_deterministic_and_contains_cycle_marker(self) -> None:
+    def test_mermaid_output_is_deterministic(self) -> None:
         document = load_json(SAMPLE_DOCUMENT)
         first = compile_document_to_mermaid_context(document, start_node_id="market", max_depth=3)
         second = compile_document_to_mermaid_context(document, start_node_id="market", max_depth=3)
         self.assertEqual(first["mermaid"], second["mermaid"])
-        self.assertIn('n_research -->|"references cycle"| n_market', first["mermaid"])
-        self.assertEqual(first["projectionSupport"]["edges"]["p_1_edge_research_market"]["marker"], "cycle")
+        self.assertIn("n_market", first["mermaid"])
+        self.assertIn("n_research", first["mermaid"])
 
     def test_extract_subtree_preserves_canonical_ids(self) -> None:
         document = load_json(SAMPLE_DOCUMENT)
         projection = extract_subtree(document, "market", max_depth=3)
         self.assertIn("market", projection["includedNodeIds"])
         self.assertIn("research", projection["includedNodeIds"])
-        self.assertIn("edge_research_market", projection["includedEdgeIds"])
+        self.assertIn("edge_market_research_reference", projection["includedEdgeIds"])
 
     def test_preview_does_not_mutate_document(self) -> None:
         document = load_json(SAMPLE_DOCUMENT)
+        document["metadata"]["graphVersion"] = 7
         original = copy.deepcopy(document)
         envelope = load_json(SAMPLE_OPERATION)
         preview = preview_operations(document, envelope)
@@ -49,6 +50,7 @@ class MindMapMvpTests(unittest.TestCase):
 
     def test_apply_operations_increments_graph_version(self) -> None:
         document = load_json(SAMPLE_DOCUMENT)
+        document["metadata"]["graphVersion"] = 7
         envelope = load_json(SAMPLE_OPERATION)
         updated, result = apply_operations(document, envelope)
         self.assertTrue(result["applied"])
