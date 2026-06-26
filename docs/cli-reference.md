@@ -1,11 +1,11 @@
 # CLI Reference
 
-The MVP CLI exposes the same internal tools intended for later MCP transport.
+The CLI exposes the same internal tools used by the MCP transport.
 
-Run commands from the repository root with:
+Run commands from `webui/` with:
 
 ```bash
-PYTHONPATH=src python3 -m mindmap_plugin.cli <command>
+npm run cli -- <command>
 ```
 
 ## Query Commands
@@ -29,17 +29,17 @@ Mutation commands accept the operation envelope defined in `docs/operation-schem
 ## Examples
 
 ```bash
-PYTHONPATH=src python3 -m mindmap_plugin.cli validate-document --document samples/documents/sample-mindmap.json
-PYTHONPATH=src python3 -m mindmap_plugin.cli compile-mermaid-context --document samples/documents/sample-mindmap.json --start-node-id market
-PYTHONPATH=src python3 -m mindmap_plugin.cli preview-operations --document samples/documents/sample-mindmap.json --operations samples/operations/add-pricing.json
+npm run cli -- validate-document --document ../samples/documents/sample-mindmap.json
+npm run cli -- compile-mermaid-context --document ../samples/documents/sample-mindmap.json --start-node-id market
+npm run cli -- preview-operations --document ../samples/documents/sample-mindmap.json --operations ../samples/operations/add-pricing.json
 ```
 
 ## Contract Tests
 
-The repository includes pytest-based contract tests that check the agent-facing tool outputs and edit safety behavior:
+The repository includes TypeScript tests that check the agent-facing tool outputs and edit safety behavior:
 
 ```bash
-PYTHONPATH=src python3 -m pytest
+npm run test:unit
 ```
 
 These tests focus on:

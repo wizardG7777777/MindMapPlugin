@@ -128,9 +128,9 @@ The same internal tool may be exposed externally in more than one way later, but
 
 ## CLI Execution Layer
 
-Before the MCP server is implemented, the project may expose the same internal tools through a local CLI. This is a development and automation entrypoint, not a separate business logic layer.
+The project exposes the same internal tools through a local CLI. This is a development and automation entrypoint, not a separate business logic layer.
 
-The CLI should be implementation-language neutral. It may be implemented in Python, TypeScript, or another suitable runtime, but its observable contract should stay stable:
+The CLI is implemented in TypeScript and its observable contract should stay stable:
 
 - Commands map to internal plugin tools
 - Inputs are passed as explicit flags or JSON files/stdin
@@ -397,6 +397,23 @@ Mutation behavior:
 
 - Does not mutate canonical JSON
 - Does not persist generated layout or view state
+
+### WebUI `POST /api/operations`
+
+Category:
+
+- Local sidecar mutation endpoint
+
+Purpose:
+
+- Let direct WebUI edits submit typed `GraphOperation` envelopes.
+- Keep user text edits on the same validation and versioning path as tool-driven graph edits.
+
+Mutation behavior:
+
+- Mutates canonical graph JSON through Graph Core after validating `documentId`, `baseGraphVersion`, and operation invariants
+- Returns the updated ReactFlow projection after a successful write
+- Rejects stale or invalid operation envelopes
 
 ### WebUI `GET/POST /api/view-state`
 

@@ -3,9 +3,9 @@
   "metadata": {
     "id": "doc_001",
     "title": "Untitled Mind Map",
-    "graphVersion": 8,
+    "graphVersion": 9,
     "createdAt": "2026-04-22T00:00:00.000Z",
-    "updatedAt": "2026-05-30T09:17:47.861Z"
+    "updatedAt": "2026-06-26T08:14:22.887Z"
   },
   "document": {},
   "graph": {
@@ -15,7 +15,7 @@
       "topic": {
         "id": "topic",
         "title": "Main Topic",
-        "cardContent": "High-level planning topic for the map.",
+        "cardContent": "High-level planning topic for the map. This is the root node.",
         "notes": "",
         "meta": {
           "tags": [],

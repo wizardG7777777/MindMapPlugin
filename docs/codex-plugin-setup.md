@@ -32,10 +32,13 @@ The marketplace entry is:
 
 - Manifest: `.codex-plugin/plugin.json`
 - MCP config: `.mcp.json`
-- MCP server: `src/mindmap_plugin/mcp_server.py`
-- Internal tool registry: `src/mindmap_plugin/tools.py`
+- MCP server: `webui/src/mcp/server.ts`
+- Internal TypeScript tool registry: `webui/src/mcp/tools.ts`
+- TypeScript graph core: `webui/src/core/graph.ts`
+- TypeScript layout projection: `webui/src/core/layout.ts`
+- TypeScript CLI: `webui/src/cli.ts`
 
-The MCP config uses an absolute `PYTHONPATH` so the server can start even if Codex launches it from a different working directory.
+The MCP config starts the TypeScript MCP server through the local `tsx` binary under `webui/node_modules/.bin`.
 
 ## Exposed MCP Tools
 
@@ -58,19 +61,30 @@ The plugin exposes these Codex-facing tools:
 Validate the local runtime:
 
 ```bash
-PYTHONPATH=src python3 -m mindmap_plugin.cli validate-document --document samples/documents/sample-mindmap.json
+cd webui
+npm run cli -- validate-document --document ../samples/documents/sample-mindmap.json
+```
+
+Validate the TypeScript runtime:
+
+```bash
+cd webui
+npm run build
+npm run test:unit
 ```
 
 Validate agent-facing Mermaid context:
 
 ```bash
-PYTHONPATH=src python3 -m mindmap_plugin.cli compile-mermaid-context --document samples/documents/sample-mindmap.json --start-node-id market --max-depth 3
+cd webui
+npm run cli -- compile-mermaid-context --document ../samples/documents/sample-mindmap.json --start-node-id market --max-depth 3
 ```
 
 Run the contract tests:
 
 ```bash
-PYTHONPATH=src python3 -m pytest
+cd webui
+npm run test:unit
 ```
 
 ## Codex App Usage
@@ -95,4 +109,4 @@ For graph edits, the agent should:
 
 The Codex plugin backend and MCP tool surface are implemented and locally registered.
 
-The full ReactFlow visual editor is not implemented yet. `mindmap_render_reactflow_view` currently returns ReactFlow-compatible nodes and edges as a projection contract for the future UI.
+The ReactFlow visual editor is implemented as a local WebUI. `mindmap_render_reactflow_view` returns ReactFlow-compatible nodes and edges for tool and UI projection workflows.

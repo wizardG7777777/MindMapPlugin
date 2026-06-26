@@ -1,6 +1,6 @@
 {
   "documentId": "doc_001",
-  "baseGraphVersion": 7,
+  "baseGraphVersion": 9,
   "operations": [
     {
       "type": "addNode",
