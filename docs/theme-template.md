@@ -1,139 +1,25 @@
 # Theme and Template Configuration
 
-## Purpose
+Status: deferred visual-interface design. The headless first delivery has no visual layout engine requirement.
 
-Theme and template configuration maps canonical graph semantics to visual rendering behavior.
+## Separate responsibilities
 
-It allows the same canonical graph to be displayed with different visual styles, layout defaults, and interaction affordances without changing graph truth.
+| Concern | Owner | Example |
+| --- | --- | --- |
+| Graph topology | Canonical graph | Directed edges, including cycles |
+| Semantic meaning | Canonical graph | A relationship means “depends on” |
+| Layout | Future view/template | Layered, circular, radial or fishbone placement |
+| Appearance | Future theme | Shapes, typography, colors and edge markers |
+| Actual positions | Future saved view | Coordinates after a person moves a node |
 
-## Ownership
+A circular layout must not create a closing edge. A cyclic graph must not require circular placement. A semantic label such as `flowchart` or `fishbone` does not guarantee that a matching visual renderer exists.
 
-Theme and template configuration is consumed by the Layout Rendering Engine.
+## Future template rules
 
-It may be loaded by the Persistence Layer or plugin runtime, but it is not stored inside the canonical graph document.
+Templates map semantic attributes to display defaults without rewriting nodes or edges. Switching templates does not change graph version. Invalid or unavailable display configuration must not make a valid graph unreadable from the CLI.
 
-## Core Idea
+Future capabilities must separately report implemented visual layouts and semantic content support. A type label alone is not evidence of layout support. Manual positions, view focus and selection belong to [view state](view-state.md), not template definitions.
 
-The canonical graph stores semantic fields:
+## Deferred scope
 
-- `diagramKind`
-- node metadata
-- edge `kind`
-- edge `order`
-
-The theme/template layer maps those semantics to visual behavior:
-
-- layout mode
-- node renderer type
-- node shape
-- edge renderer type
-- edge shape
-- spacing
-- typography
-- colors
-- markers
-- handles
-
-## Example Shape
-
-```json
-{
-  "themeId": "default-mindmap",
-  "version": 1,
-  "diagramKind": "mindmap",
-  "layout": {
-    "mode": "tree-lr",
-    "rankGap": 160,
-    "nodeGap": 40
-  },
-  "nodes": {
-    "default": {
-      "rendererType": "topic-card",
-      "shape": "rounded-rect",
-      "titleTypography": "heading-sm",
-      "cardTypography": "body-sm"
-    },
-    "priority": {
-      "match": {
-        "meta.tags": ["priority"]
-      },
-      "rendererType": "topic-card",
-      "shape": "rounded-rect",
-      "accent": "warning"
-    }
-  },
-  "edges": {
-    "contains": {
-      "rendererType": "smoothstep",
-      "marker": "arrow",
-      "stroke": "solid"
-    },
-    "references": {
-      "rendererType": "dashed-reference",
-      "marker": "arrow",
-      "stroke": "dashed"
-    }
-  }
-}
-```
-
-## Field Intent
-
-- `themeId` identifies the selected theme or template
-- `version` supports future theme migrations
-- `diagramKind` identifies which graph expression the theme is intended for
-- `layout` defines default layout strategy and spacing
-- `nodes` maps semantic node conditions to renderer choices
-- `edges` maps semantic edge kinds to renderer choices
-
-## Boundaries
-
-Theme and template configuration must not:
-
-- Define canonical graph nodes or edges
-- Store node positions or measured dimensions
-- Store current selection, viewport, or focus state
-- Change graph semantics
-- Replace Graph Core validation
-- Require a canonical graph rewrite when the user switches themes
-
-## Relationship To `diagramKind`
-
-`diagramKind` belongs in canonical graph data because it changes how the graph should be understood.
-
-Theme/template configuration uses `diagramKind` to choose visual defaults. For example:
-
-- `mindmap` may default to a tree or radial layout
-- `fishbone` may default to a cause-and-effect layout
-- `flowchart` may default to a layered directional layout
-- `dependency-graph` may default to a force-directed or layered graph layout
-
-## Relationship To View State
-
-Theme/template configuration defines visual rules. View state stores runtime presentation state.
-
-For example:
-
-- Theme/template may define default `rankGap`
-- View state may store the actual position of a node after the user drags it
-- Theme/template may define edge renderer type
-- View state may store which nodes are collapsed
-
-## V1 Scope
-
-V1 should support:
-
-- One default theme for `mindmap`
-- Default layout mode
-- Default node renderer
-- Edge renderer mapping for `contains` and `references`
-- Basic spacing values
-- Basic typography and accent tokens
-
-V1 should defer:
-
-- Full theme editor UI
-- User-authored theme marketplace
-- Per-node manual style overrides
-- Animated transitions
-- Complex conditional style rules
+Layout algorithms, shape/edge renderer mappings, layout measurement, themes and a theme editor are outside the first-delivery implementation and acceptance gates. The initial CLI reports no visual layouts. Mermaid is structural text output under its own [projection contract](mermaid-projection.md), not a promised visual layout.

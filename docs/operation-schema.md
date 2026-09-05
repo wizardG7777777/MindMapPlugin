@@ -1,309 +1,89 @@
 # Operation Schema
 
-## Purpose
+Status: target operation envelope version 1. This is the only definition of mutation payloads; CLI syntax lives in [CLI reference](cli-reference.md).
 
-This document defines the shared mutation contract used by user-driven and agent-driven editing flows.
-
-Canonical graph changes should be expressed as typed `GraphOperation` records. Presentation-only changes should use separate view-state operations and should not be treated as canonical graph mutations.
-
-The operation layer is closely coupled to the canonical graph schema, but it is not the storage schema itself.
-
-## Design Goals
-
-- Deterministic application
-- Explicit graph mutation intent
-- Clear validation boundaries
-- Easy preview and diff generation
-- Safe agent output handling
-
-## Operation Envelope
-
-Every mutation request should be wrapped in an envelope.
+## Envelope
 
 ```json
 {
-  "documentId": "doc_001",
-  "baseGraphVersion": 7,
+  "envelopeVersion": 1,
+  "documentId": "plan",
+  "baseGraphVersion": 0,
+  "operationId": "build-cycle-1",
+  "actor": {"kind": "agent", "name": "planner"},
+  "scope": {"mode": "document", "allowDelete": false},
   "operations": [
-    {
-      "type": "addEdge",
-      "edge": {
-        "id": "edge_topic_market",
-        "source": "topic",
-        "target": "market",
-        "kind": "contains",
-        "order": 0,
-        "meta": {}
-      }
-    }
+    {"type": "addNode", "node": {"id": "a", "title": "A"}},
+    {"type": "addNode", "node": {"id": "b", "title": "B"}},
+    {"type": "addEdge", "edge": {"id": "ab", "source": "a", "target": "b", "kind": "next"}},
+    {"type": "addEdge", "edge": {"id": "ba", "source": "b", "target": "a", "kind": "next"}}
   ]
 }
 ```
 
-`baseGraphVersion` is compared against `metadata.graphVersion` in the canonical document. It is about graph-content concurrency, not JSON schema migration. The persisted document's `JSON-SchemaVersion` is a separate data-structure version and should not be used to decide whether an edit batch is stale.
+All envelope fields except `actor` are required. `envelopeVersion` is 1; `documentId` must match the loaded file; `baseGraphVersion` is a nonnegative safe integer. IDs follow the [data model](data-model.md). `actor`, when present, has exactly `kind` (`human`, `agent` or `system`) and a nonempty `name`. It is attribution, not a permission credential.
 
-## Base Record
+`operations` contains 1 through 10,000 ordered operations. The entire input is limited to 8 MiB. Unknown envelope, scope, operation and patch fields are rejected. No raw-document replacement, generic JSON merge, renderer state or free-form instruction is an operation.
 
-Every operation should contain:
+## Operations
 
-- `type`
-- target identifiers required by that operation
-- only the fields needed for that mutation
+| Type | Required payload besides `type` | Effect and validation |
+| --- | --- | --- |
+| `addNode` | `node` | Normalize a new node; its ID must be absent and title valid. |
+| `updateNode` | `nodeId`, `patch` | Existing node; nonempty patch may contain `title`, `cardContent`, `notes`, `meta`. |
+| `removeNode` | `nodeId`, `edgePolicy` | Existing node; policy must equal `removeIncidentEdges`; remove every incoming/outgoing edge, including self-loops. Requires deletes allowed. |
+| `addEdge` | `edge` | New edge ID; endpoints must exist at this step. Cycles and parallel edges are permitted. |
+| `updateEdge` | `edgeId`, `patch` | Existing edge; nonempty patch may contain `source`, `target`, `kind`, `order`, `meta`. New endpoints must exist at this step. |
+| `removeEdge` | `edgeId` | Existing edge; requires deletes allowed. |
+| `setEntryNode` | `nodeId` | Null or an existing node ID; sets the default presentation entry. Requires document scope. |
+| `reorderEdges` | `source`, `kind`, `edgeIds` | Existing source; list each current outgoing edge of that source/kind exactly once; assign consecutive orders starting at zero. |
+| `updateDocument` | `patch` | Nonempty patch with `title` and/or `semanticType`; requires document scope. Maps to metadata title and graph semantic type. |
 
-Operations should not contain:
+Node/edge fields follow the data model. Patches shallowly replace listed fields; `meta` replaces the whole metadata object rather than merging nested keys. `updateEdge.patch.order` may additionally be null to remove the optional stored order; other fields cannot be cleared with null unless expressly allowed. IDs, schema versions, receipts and content versions cannot be patched.
 
-- derived view state
-- prompt text
-- arbitrary free-form instructions
-- file paths
-- ReactFlow component state
-- Codex app configuration
+Existing targets and duplicate IDs are checked against the evolving draft in operation order. Adding a node before connecting it is valid. A node removed and re-added with the same ID in one batch remains subject to delete checks and all intermediate effects. A later operation cannot refer to an already removed object unless it has been re-added. Final graph invariants are checked after the batch; removing the entry node requires a `setEntryNode` replacement or null in that batch.
 
-## Core v1 Graph Operations
+## Explicit write scope
 
-### `addNode`
-
-Purpose:
-
-- Create a new canonical graph node
-
-Shape:
+Two exact scope shapes are supported:
 
 ```json
-{
-  "type": "addNode",
-  "node": {
-    "id": "pricing",
-    "title": "Pricing",
-    "cardContent": "Pricing strategy and packaging options.",
-    "notes": "",
-    "meta": {}
-  }
-}
+{"mode":"document","allowDelete":false}
 ```
-
-Validation:
-
-- `node.id` does not already exist
-- `node.title` is non-empty after normalization
-- `node.cardContent` and `node.notes` are semantic text fields and may be empty strings
-
-### `updateNode`
-
-Purpose:
-
-- Update canonical node fields
-
-Shape:
 
 ```json
-{
-  "type": "updateNode",
-  "nodeId": "pricing",
-  "patch": {
-    "title": "Pricing Strategy",
-    "cardContent": "Pricing tiers, packaging, discounts, and monetization assumptions.",
-    "meta": {
-      "tags": ["priority"]
-    }
-  }
-}
+{"mode":"ids","nodeIds":["a","b"],"edgeIds":["ab"],"allowDelete":false}
 ```
 
-Validation:
+All fields in the chosen shape are required, arrays contain unique valid IDs, and empty arrays permit no changes of that category. Document scope allows all graph/document targets but still honors `allowDelete`. ID scope does not allow `updateDocument` or `setEntryNode`. New node and edge IDs must be enumerated in an ID-scoped batch. No additional “allowed traversal root” or implicit browser scope exists.
 
-- `nodeId` exists
-- patched fields conform to node schema
+Validate the union of effects at **every step**, including:
 
-### `removeNode`
+- Nodes added, edited or removed.
+- Edges added, edited, reordered or removed, including edges removed indirectly with a node.
+- Both old and new endpoints of changed edges, and endpoints of every indirectly removed edge.
+- Document fields changed by entry or metadata operations.
 
-Purpose:
+Every affected node/edge ID must be allowed. A patch cannot bypass scope by moving an edge to an unlisted node. Delete permission applies even if the same ID is later re-added. Reading more context does not widen write scope. Scope checks use authoritative records, never caller-reported affected IDs.
 
-- Remove a node from the canonical graph
+## Preview
 
-Shape:
+Preview uses a single snapshot, compares its version, validates scope and operations, and returns:
 
-```json
-{
-  "type": "removeNode",
-  "nodeId": "pricing",
-  "edgePolicy": "removeIncidentEdges"
-}
-```
+- `operationId`, `baseGraphVersion`, prospective `nextGraphVersion`, and `operationCount`.
+- Sorted `affectedNodeIds` and `affectedEdgeIds`, including indirect effects.
+- `diff.nodes` and `diff.edges`: ID-sorted arrays of `{id, before, after}` records; absent records use null.
+- `diff.document`: `{before, after}` for `{title, semanticType, entryNodeId}` only when those fields change; otherwise null.
+- `summary`: `{operationCount, nodeCount, edgeCount}` using affected counts, not just visible diff counts.
 
-Validation:
+Diffs show normalized final before/after content. The affected lists additionally include intermediate changes that cancel out. Receipts and generated timestamps are not prospective semantic diff entries. Preview does not append a receipt or acquire a commit lock. It applies version checking even if its operation ID was previously committed; use `inspect --operation-id` or retry apply to resolve a receipt.
 
-- `nodeId` exists
-- `nodeId` is not `entryNodeId` unless the same batch sets a valid replacement entry node
-- incident edge handling is explicit
+## Apply and idempotency
 
-### `addEdge`
+Apply returns `data.receipt` as defined by the data model and `data.replayed` (boolean). The result envelope's `graphVersion` is the version observed during that commit transaction; a replay's receipt may name an earlier committed version.
 
-Purpose:
+Fingerprint the exact UTF-8 input bytes using SHA-256, including whitespace and trailing newline. Reusing an operation ID with exactly those bytes returns the existing receipt without executing the batch, even after later commits. Reusing it with any different bytes returns `OPERATION_ID_REUSE`. Do not normalize or regenerate input when retrying an uncertain result.
 
-- Create a new directed relationship between two existing nodes
+Receipt lookup occurs after validating input shape and document identity, but before comparing the base version or checking effects against the current graph. This allows exact retry of operations whose targets were subsequently removed. New operations validate against the current locked snapshot. Every successful new batch increments the version once and publishes its receipt with the graph.
 
-Shape:
-
-```json
-{
-  "type": "addEdge",
-  "edge": {
-    "id": "edge_pricing_market",
-    "source": "pricing",
-    "target": "market",
-    "kind": "references",
-    "meta": {}
-  }
-}
-```
-
-Validation:
-
-- `edge.id` does not already exist
-- `edge.source` exists
-- `edge.target` exists
-- directed cycles are allowed unless rejected by a specific edge kind rule
-
-### `updateEdge`
-
-Purpose:
-
-- Update canonical edge fields
-
-Shape:
-
-```json
-{
-  "type": "updateEdge",
-  "edgeId": "edge_pricing_market",
-  "patch": {
-    "kind": "contains",
-    "order": 2
-  }
-}
-```
-
-Validation:
-
-- `edgeId` exists
-- patched fields conform to edge schema
-- source and target updates, if allowed, continue to reference existing nodes
-
-### `removeEdge`
-
-Purpose:
-
-- Remove one directed relationship
-
-Shape:
-
-```json
-{
-  "type": "removeEdge",
-  "edgeId": "edge_pricing_market"
-}
-```
-
-Validation:
-
-- `edgeId` exists
-
-### `setEntryNode`
-
-Purpose:
-
-- Change the default starting node used by views and agent context
-
-Shape:
-
-```json
-{
-  "type": "setEntryNode",
-  "nodeId": "market"
-}
-```
-
-Validation:
-
-- `nodeId` exists
-
-### `reorderEdges`
-
-Purpose:
-
-- Set stable ordering for outgoing edges of one source node and relation kind
-
-Shape:
-
-```json
-{
-  "type": "reorderEdges",
-  "source": "topic",
-  "kind": "contains",
-  "edgeIds": ["edge_topic_market", "edge_topic_product"]
-}
-```
-
-Validation:
-
-- `source` exists
-- each edge id exists
-- each listed edge has the same `source` and `kind`
-- the list contains exactly the edges being reordered for that source and kind
-
-## Separate View-State Operations
-
-Presentation edits should be modeled outside canonical `GraphOperation` records.
-
-Examples:
-
-- `setNodePosition`
-- `toggleCollapse`
-- `setViewport`
-- `setSelection`
-
-These operations may still be useful, but they belong to a view-state contract rather than the canonical graph operation contract.
-
-## Batching Rules
-
-Operations should be applied as one atomic batch.
-
-Rules:
-
-- Validate the entire batch before commit
-- Reject the whole batch if one operation fails
-- Preserve operation order inside the batch
-- Validate the final graph after applying the batch in memory
-
-This is especially important for agent-generated operation lists.
-
-## Scope Restrictions for Agent Batches
-
-Agent-originated batches should support explicit scope limits.
-
-Examples:
-
-- allowed node ids
-- allowed edge ids
-- allowed traversal root
-- allowed edge kinds
-- forbidden node ids
-- disallow delete operations
-
-These constraints should be checked by the Graph Edit Orchestrator before commit.
-
-## Non-Goals for v1
-
-Do not add these yet:
-
-- generic free-form patch operations
-- raw Mermaid replacement
-- direct JSON merge operations
-- cross-document operations
-- collaborative conflict merging
-- ReactFlow state mutations inside canonical graph operations
-
-## Practical Rule
-
-If an edit cannot be described as a small typed operation, it is probably too unbounded for v1.
+Transaction timing, crash handling and limits are normative in [persistence](persistence-and-concurrency.md). A preview cannot substitute for commit-time validation.

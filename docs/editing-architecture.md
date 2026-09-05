@@ -1,256 +1,55 @@
-# Editing Architecture
+# Reading and Editing Architecture
 
-## Purpose
+Status: target CLI contract version 1. This document owns the human/agent workflow; [persistence](persistence-and-concurrency.md) owns its transactional mechanism.
 
-This document defines how users and agents edit the same mind map without creating separate mutation systems.
+## Equal readers
 
-The central rule is:
+A person and any number of agents may independently invoke queries on one document. Each command declares its own nodes, edges, direction, relation filters, depth and fields. A person's recent read does not become another agent's default context. One reader may inspect a node while another reads its incoming dependencies and a third reads the whole graph.
 
-- Users and agents may express different kinds of intent
-- The system must reduce both into one validated operation pipeline
+One command builds all of its output from one complete snapshot and labels the result with that snapshot's version. Readers can overlap each other and a writer. There is no reader-owned edit session, shared focus or document lock held during reasoning. Separate queries may return different committed versions; combining their results requires comparing those versions or issuing a new query containing the combined selectors.
 
-This avoids three common failures:
-
-- UI logic silently mutating canonical state
-- Agents bypassing validation with whole-document rewrites
-- Divergence between visual edits and semantic edits
-
-## Actors
-
-There are two first-class editing actors.
-
-### User
-
-The user edits the map through direct interactions:
-
-- Typing node text
-- Creating child or sibling nodes
-- Dragging nodes on the canvas
-- Reparenting a branch
-- Reordering siblings
-- Collapsing or expanding subtrees
-
-### Agent
-
-The agent edits the map through semantic requests:
-
-- Expand this branch into three subtopics
-- Reorganize this subtree by theme
-- Convert these notes into a branch hierarchy
-- Merge duplicate branches
-- Rename nodes for consistency
-
-The agent should not directly manipulate ReactFlow state by default.
-
-## Edit Layers
-
-The editing system should be modeled as four layers.
-
-### 1. Intent Layer
-
-This is where actor-specific requests appear.
-
-Examples:
-
-- `UserIntent.DragNode`
-- `UserIntent.SubmitRename`
-- `AgentIntent.ExpandSubtree`
-- `AgentIntent.RestructureBranch`
-
-This layer is actor-facing and may vary by UI or prompt design.
-
-### 2. Operation Layer
-
-This is the shared mutation contract.
-
-Examples:
-
-- `addNode`
-- `updateNode`
-- `moveNode`
-- `reorderChildren`
-- `setNodePosition`
-- `toggleCollapse`
-
-The operation layer must be deterministic, serializable, and validation-friendly.
-
-### 3. Canonical Graph Layer
-
-This is the only mutation authority.
-
-Rules:
-
-- Only canonical JSON is persisted
-- Only Graph Core applies operations
-- Every applied operation must preserve graph invariants
-
-### 4. Projection Layer
-
-This is where the document becomes consumer-specific output:
-
-- ReactFlow view model for UI
-- Mermaid projection for agent context
-
-Projections must never become write authorities on their own.
-
-## User Editing Flow
-
-User editing should follow this path:
+## Read, prepare, preview, commit
 
 ```mermaid
-flowchart LR
-  A["ReactFlow UI"] --> B["UserIntent"]
-  B --> C["Graph Edit Orchestrator"]
-  C --> D["GraphOperation[]"]
-  D --> E["Graph Core"]
-  E --> F["Persisted JSON"]
-  F --> G["Layout Rendering Engine"]
-  F --> H["Mermaid Compiler"]
+sequenceDiagram
+  participant H as Person
+  participant A as Agent
+  participant D as Document
+  H->>D: Read nodes a,b
+  D-->>H: Scope a,b at version 4
+  A->>D: Read incoming relations of c
+  D-->>A: Scope around c at version 4
+  Note over H,A: Independently prepare operations; no edit lock
+  H->>D: Preview batch at version 4
+  D-->>H: Diff and prospective version 5
+  A->>D: Commit batch based on version 4
+  D-->>A: Committed version 5
+  H->>D: Commit batch based on version 4
+  D-->>H: CONFLICT, current version 5
+  H->>D: Read required scope again
+  D-->>H: Fresh result at version 5
 ```
 
-Examples:
+A preview validates a batch against the version read for that preview and returns a structured before/after diff. It does not change the document, reserve IDs, issue an approval token or guarantee that the batch remains current. Apply validates again inside the commit transaction.
 
-- Dragging a node on the canvas emits `setNodePosition`
-- Dropping a node onto another node with a semantic reparent action emits `moveNode`
-- Clicking "add child" emits `addNode`
+On a conflict, reread enough context to reconsider the intended edit, create a revised batch with a new operation ID, and preview again when the change warrants it. Merely replacing `baseGraphVersion` without checking the graph is not a conflict resolution strategy. Automatic merging and branch locking are outside the first delivery.
 
-The UI must distinguish visual drag from structural reparenting. These gestures may look similar but have different persistence meaning.
+## Mutation authority
 
-## Agent Editing Flow
+Both actors submit the [same operation envelope](operation-schema.md). Read scope describes facts included in a result. Write scope is explicitly supplied with the batch and checked against all actual effects. Reading an adjacent node does not authorize changing it; omitting a node from context does not mean it is absent from the document.
 
-Agent editing should follow this path:
+`actor` is optional attribution. It does not bypass validation, turn an agent into a trusted system writer, or establish authorization. CLI calls rely on the user's requested task and local file access. Destructive batches must explicitly permit deletes in their scope. There is no interactive approval service inside the program; host approval policy, when present, remains the host's responsibility.
 
-```mermaid
-flowchart LR
-  A["Codex App"] --> B["Select scope"]
-  B --> C["Compile Mermaid context"]
-  C --> D["Agent request"]
-  D --> E["AgentIntent or GraphOperation[]"]
-  E --> F["Graph Edit Orchestrator"]
-  F --> G["Preview or validate"]
-  G --> H["Graph Core"]
-  H --> I["Persisted JSON"]
-```
+Structural edits operate on nodes and edges. Reparenting is an edge change, not a hidden tree-specific mutation. Display-only changes cannot be submitted as graph operations. A full read can be exported, but the mutation command accepts only typed operations, never a complete replacement graph.
 
-The recommended default is:
+## Commit outcomes and retries
 
-- Inject Mermaid for comprehension
-- Include scoped node content fields when text editing is requested
-- Request structured operations as output
-- Validate scope before apply
-- Show preview before commit
+A successful apply returns a durable receipt and observed current version. If the response is lost, retry the exact same input bytes and operation ID. The command resolves the receipt before testing the batch's now-old base version. The same ID with different bytes is rejected.
 
-## Authority Boundaries
+A conflict, invalid operation, out-of-scope indirect effect or document-size failure leaves the committed file unchanged. An I/O failure after publication may have an uncertain outcome; it is reported as such and must be resolved using the same operation ID. If an interrupted operation never committed and another writer advanced the graph, exact retry returns `CONFLICT`; the absence of that operation's receipt resolves its outcome, but the intended change needs reconsideration. Retry behavior and lock-release requirements are defined in [persistence](persistence-and-concurrency.md).
 
-### What users may change
+## Verification
 
-By default, users may change:
+After commit, reread affected nodes/edges or validate the whole document. Another writer may commit before this reread; inspect the returned version rather than expecting it always to equal the receipt's committed version. Receipt history confirms whether a particular batch committed; it does not provide historical graph snapshots.
 
-- Structure
-- Layout
-- Collapse state
-- Node text
-- Node ordering
-
-### What agents may change
-
-By default, agents may change:
-
-- Structure within an allowed scope
-- Node text
-- Ordering within an allowed scope
-- Semantic metadata
-
-Agents should not change by default:
-
-- Absolute layout positions
-- Viewport state
-- Selection state
-- Arbitrary UI-only styling
-
-## Graph Edit Orchestrator Responsibilities
-
-The Graph Edit Orchestrator exists to keep graph editing rules, safety checks, and transaction boundaries in one place.
-
-It should handle:
-
-- Intent normalization
-- Operation batching
-- Scope restriction
-- Version checks
-- Preview diffs
-- Rejection of invalid or stale edits
-- Actor-aware edit policies
-- Confirmation requirements for risky edits
-- Atomic apply-or-reject behavior
-- Undo integration later
-
-It should not:
-
-- Store canonical data itself
-- Render the map
-- Contain domain logic already owned by Graph Core
-
-User edits and agent edits should share the same underlying Graph Core invariants. The difference is policy, not graph validity.
-
-Shared constraints:
-
-- Node and edge references must be valid
-- Operation batches must satisfy `baseGraphVersion`
-- Destructive operations must account for affected nodes and edges
-- Canonical graph updates must not contain view state or ReactFlow component data
-- A batch should not partially mutate canonical graph state
-
-Actor-specific policies:
-
-- User low-risk edits may apply immediately
-- User broad or destructive edits should require confirmation
-- Agent edits should default to preview-before-apply
-- Agent edits should be restricted to the selected or explicitly approved scope
-- Agent edits based on stale graph context should be rejected
-- Agent edits should never use whole-document JSON replacement
-
-## Agent Workflow Edit Lock
-
-MVP should use a document-level canonical edit lock while an agent workflow is active.
-
-The lock exists because the agent reasons over a specific `graphVersion`. If the user changes canonical graph structure or node content while the agent is analyzing context or preparing operations, the agent's proposed batch may no longer match the current graph.
-
-Recommended v1 rules:
-
-- Acquire the edit lock when an agent workflow starts with graph context.
-- Record the `graphVersion` used to build the agent context.
-- Block user actions that mutate canonical graph data while the lock is active.
-- Allow non-mutating view actions such as pan, zoom, and inspection.
-- Treat selection changes cautiously; they should not change the active agent scope unless the workflow explicitly supports scope updates.
-- Release the lock when the workflow is applied, rejected, cancelled, or fails.
-- Reject the agent batch if `baseGraphVersion` still does not match the current graph when applying.
-
-This document-level lock is intentionally conservative. Future versions may replace it with scope-level locks, queued user edits, conflict previews, or merge policies.
-
-## Graph Versioning and Concurrency
-
-The first implementation should use graph-content version checks, not real-time collaboration primitives.
-
-Recommended rule:
-
-- Every operation batch carries `baseGraphVersion`
-- If the current `metadata.graphVersion` does not match, reject and recompute
-
-This is enough for v1 and keeps agent edits from overwriting recent user work silently.
-
-## Preview Strategy
-
-Agent edits should default to preview-before-apply.
-
-Suggested preview forms:
-
-- Tree diff by affected branch
-- Operation list summary
-- Mermaid before and after for the scoped subtree
-
-User edits usually do not need an explicit preview because the UI interaction itself already acts as preview.
-
-## Practical Rule
-
-Users and agents may edit differently, but they must never mutate differently.
+The first delivery is complete only when these flows pass using independent CLI processes. No browser selection or visual preview is needed; human-readable diffs and JSON results provide the headless review surface.

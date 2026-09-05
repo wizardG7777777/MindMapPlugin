@@ -1,236 +1,50 @@
-# Context Management System
+# Independent Queries and Context
 
-## Purpose
+Status: target CLI contract version 1. A context is the result of an explicit query against one snapshot, not a shared agent session.
 
-The Context Management System prepares, budgets, injects, and remembers agent-facing context for mind map workflows.
+## Reader isolation
 
-It exists because agents need more than raw JSON or screenshots. They need a scoped, structured view of the graph, plus enough short-term and long-term memory to continue a task coherently without confusing memory with canonical graph truth.
+Every request specifies its file and selectors. No read writes focus, selection, recent results or memory back to the program. A person, Kimi and GPT may use unrelated scopes concurrently. A saved result remains an observation of its reported version; the program does not promise later queries can reopen that historical version.
 
-## Core Responsibilities
+A query loads and validates the complete committed file once, then constructs all counts, records, omissions and Mermaid from that in-memory snapshot. It must not reopen the file for a second part of the same response. Missing IDs fail explicitly. The graph's entry node never overrides explicit selectors.
 
-- Resolve user, tool, or agent-provided scope requests into bounded graph context
-- Compose context from graph facts, projections, summaries, Mermaid output, and memory entries
-- Budget context size through priority, compression, truncation, and omission metadata
-- Produce structured context packets for Codex-facing injection or internal agent workflows
-- Maintain session-scoped memory for ongoing tasks
-- Provide extension points for durable long-term memory
-- Preserve source references for graph-derived context and memory entries
+## Scope resolution
 
-## Internal Subsystems
+For scoped `context`, seeds are the specified node IDs plus both endpoints of explicitly selected edges. Explicit edges and seeds must be included, even when not encountered through traversal. An explicitly selected edge excluded by `--kinds` is an invalid argument rather than a silently dropped selection.
 
-### Context Builder
+Expand seeds breadth-first through edges matching the kind filter and requested direction. Assign each reached node its minimum distance from any seed. Visit a node at most once for expansion, and stop expansion at the requested depth. Sort same-distance candidates by canonical ID using locale-independent code-point order. Traversal stops at repeated nodes without deleting the relationships that led to them.
 
-Builds graph-derived context from canonical data and query results.
+`--all` selects all nodes, including disconnected components, sorted by ID; the kind filter limits relationships only. It has no implicit entry root. `neighbors` is the same query mechanism with one node seed and depth 1.
 
-Expected inputs:
+Select returned nodes from eligible candidates by distance then ID (or ID for `--all`), preserving all explicit seeds first. After node selection, internal candidate edges are **all** matching canonical edges with both endpoints returned, including back edges, cross edges, parallel edges and self-loops. Keep explicit edges first, then fill by edge ID order. If explicit seeds or explicit edges exceed limits, fail `LIMIT_EXCEEDED` with required minimums instead of silently dropping them.
 
-- Document id
-- `graphVersion`
-- User selection, current node, or tool/agent-provided scope request
-- Tool name or workflow intent
-- Context requirements from the Agent Contract
+## Boundary relationships and omissions
 
-Expected outputs:
+A boundary candidate is a matching edge with exactly one endpoint in the returned node set, regardless of whether the other endpoint lies beyond requested depth or was omitted by a node limit. Return ID-sorted boundary records up to the independent boundary limit. Records carry `{id, source, target, kind}` without inventing content for the outside node. They are not internal edges or duplicated nodes.
 
-- Included nodes
-- Included edges
-- Paths, neighborhoods, subtrees, or local projections
-- Optional summaries
-- Optional Mermaid context requested through the Mermaid Compiler
+`omissions.nodes` counts eligible scope nodes excluded by `maxNodes`; it does not count the entire rest of the document. `omissions.edges` counts internal candidate edges excluded by `maxEdges`. `omissions.boundaryEdges` counts boundary candidates beyond the boundary limit. Depth is a requested scope boundary, not proof that no further nodes exist. Even when limits apply, full counts are computed from the same snapshot, not inferred from the truncated result.
 
-### Context Budgeter
+## Content selection
 
-Controls how much context is returned.
+Every returned node contains `id` and `title`. `card` adds `cardContent`; `all` additionally adds `notes` and `meta`. Unselected card/notes/meta fields are absent and each is listed in `omissions.fields` with `{nodeId, field, reason: "not_requested", omittedBytes}`. `omittedBytes` is the UTF-8 size of its string or compact JSON representation for meta. Title mode can therefore distinguish missing content from empty stored content.
 
-Owned concerns:
+For selected title/card/notes, a zero `maxTextBytes` returns the complete field; otherwise apply `maxTextBytes` per field, cutting only at Unicode code-point boundaries and returning `{nodeId, field, reason: "text_limit", omittedBytes}` for shortened fields. No mutation may treat shortened or absent fields as the full original. Meta in all mode is returned intact. For the `node` command, use the same content rules with no traversal.
 
-- Priority ordering
-- Token or size estimates
-- Compression strategy
-- Truncation strategy
-- Omission metadata
-- Fallback behavior when requested context is too large
+## Context result data
 
-The budgeter should preserve enough identifiers for follow-up tool calls even when labels, descriptions, or summaries are shortened.
+The common [result envelope](command-contract.md) carries `documentId` and `graphVersion`. Context `data` has exactly:
 
-### Context Packet Composer
+- `scope`: `{mode, nodeIds, edgeIds, direction, depth, kinds, limits}`; original explicit selectors, deduplicated only by validation (duplicates are rejected). Mode is `all`, `ids` or `neighbors`; all uses empty selector arrays, null direction/depth, and kinds is null or the supplied unique string array.
+- `nodes`: normalized returned node records with fields selected/truncated above, sorted by ID.
+- `edges`: full returned internal canonical edge records, sorted by ID.
+- `boundaryEdges`: crossing records defined above.
+- `omissions`: `{nodes, edges, boundaryEdges, fields}` with nonnegative counts and field markers sorted by node ID then field name.
+- `mermaid`: null unless requested, otherwise the object defined in [Mermaid projection](mermaid-projection.md).
 
-Packages context into a stable structure for tools and agent workflows.
+Filters, limits and sorting are deterministic. Output nodes are sorted by ID even though breadth-first priority determines which nodes fit. The `scope.limits` field contains `{maxNodes, maxEdges, maxBoundaryEdges, maxTextBytes}` so a saved result explains its omissions.
 
-A context packet should include:
+There is no implicit write scope in a context result. A caller forms an explicit operation scope independently. Context generation never claims omitted graph content does not exist and never modifies the graph to make it tree-shaped.
 
-- Context purpose
-- Document id
-- `graphVersion`
-- Included node ids
-- Included edge ids
-- Scoped node content fields when node text may be read or edited
-- Projection metadata
-- Mermaid text when requested
-- Memory entries when relevant
-- Omitted or compressed content metadata
-- Source references for graph-derived facts
+## First-delivery boundary
 
-## Node Content Context
-
-Mermaid should remain the structural view. Node text fields should be provided through a separate scoped content block when the agent needs to understand or edit node content.
-
-Default v1 rules:
-
-- Include `title` for nodes in the selected scope.
-- Include `cardContent` for selected nodes and nearby nodes when the request involves content editing, summarization, expansion, or review.
-- Omit `notes` by default because it may be long and lower priority for map-level reasoning.
-- Include `notes` only when the user explicitly asks to inspect, summarize, rewrite, or use long-form node notes.
-- Mark omitted or truncated fields explicitly so the agent does not treat unseen content as empty content.
-- State which node fields are editable in the current workflow.
-
-Example node content block:
-
-```json
-{
-  "nodeContent": [
-    {
-      "nodeId": "market",
-      "title": "Market",
-      "cardContent": "Market size, segments, competitors, and demand signals.",
-      "notes": {
-        "included": false,
-        "reason": "omitted_by_default"
-      },
-      "editableFields": ["title", "cardContent"]
-    }
-  ]
-}
-```
-
-The agent should use `updateNode` operations to change these fields. It should not infer or overwrite omitted fields.
-
-### Context Injection Adapter
-
-Adapts context packets for Codex-facing workflows.
-
-This adapter should not decide final prompt wording. It should only provide structured payloads that the Codex Integration Layer or agent workflow can insert into the appropriate interaction surface.
-
-### Session Memory
-
-Session Memory stores short-lived workflow state for the current interaction.
-
-Possible examples:
-
-- Current focus node
-- Current selected scope
-- Recent tool results
-- Recent edit proposal ids
-- User-stated temporary constraints
-- Ambiguities waiting for user confirmation
-
-Session Memory should be invalidated or rechecked when the underlying `graphVersion` changes.
-
-### Long-term Memory
-
-Long-term Memory is an extension point for durable, cross-session context.
-
-Possible examples:
-
-- User preferences for naming, structure, or diagram style
-- Reusable graph-editing patterns
-- Frequently used templates
-- Cross-document project context
-- Stable user instructions for agent-assisted mind map editing
-
-Long-term Memory is optional for v1. If introduced, it must keep source references and must not be treated as current graph state.
-
-## Memory Rules
-
-- Canonical graph facts must come from Graph Core and the current `graphVersion`
-- Memory entries may guide context selection or editing preferences
-- Memory summaries must not override current nodes, edges, labels, or relations
-- Graph-derived memory should record document id, `graphVersion`, and source ids when possible
-- Stale memory must be marked, refreshed, or ignored when source `graphVersion` values no longer match
-- Sensitive or user-specific memory should require explicit storage policy before persistence
-
-## Context Packet Shape
-
-This is a conceptual shape, not a final schema:
-
-```json
-{
-  "contextId": "ctx_001",
-  "purpose": "expand_node",
-  "documentId": "doc_001",
-  "graphVersion": 12,
-  "scope": {
-    "type": "subtree",
-    "rootNodeId": "topic",
-    "maxDepth": 3
-  },
-  "graph": {
-    "nodeIds": ["topic", "child_a"],
-    "edgeIds": ["edge_001"]
-  },
-  "nodeContent": [
-    {
-      "nodeId": "topic",
-      "title": "Topic",
-      "cardContent": "Short visible card content.",
-      "notes": {
-        "included": false,
-        "reason": "omitted_by_default"
-      },
-      "editableFields": ["title", "cardContent"]
-    }
-  ],
-  "mermaid": {
-    "included": true,
-    "text": "flowchart TD\n  topic[Topic] --> child_a[Child A]"
-  },
-  "memory": {
-    "sessionEntryIds": ["mem_session_001"],
-    "longTermEntryIds": []
-  },
-  "omissions": {
-    "nodes": 0,
-    "edges": 0,
-    "reason": null
-  }
-}
-```
-
-## Boundaries
-
-The Context Management System must not:
-
-- Own canonical graph truth
-- Apply graph edits
-- Validate edit operations
-- Implement Mermaid conversion rules
-- Persist extracted projections as document state
-- Treat memory summaries as current graph facts without source validation
-- Decide final prompt wording or model behavior
-- Depend on ReactFlow component state
-
-## V1 Scope
-
-V1 should implement:
-
-- Scope request resolution for current node, user selection, neighbors, and extracted projections
-- Mermaid context requests through the Mermaid Compiler
-- Basic context size limits
-- Structured context packet output
-- Minimal session memory for current focus, recent tool results, and pending confirmations
-
-V1 should defer:
-
-- Durable long-term memory
-- Cross-document memory
-- Memory indexing and retrieval
-- Preference learning
-- Automatic memory persistence
-
-## Open Questions
-
-- Which session memory entries should survive `graphVersion` changes?
-- Should long-term memory be user-scoped, document-scoped, workspace-scoped, or plugin-scoped?
-- What storage policy is required before persistent memory is enabled?
-- Should memory be exposed to agents through tools or only through context packets?
-- How should the system summarize large graph regions without losing edit-critical ids?
+No host-specific prompt injection, session memory, persistent focus, semantic summarization model or long-term memory subsystem is required. The caller can save results or request a wider scope. If a valid document exceeds context record budgets, `export` provides the complete snapshot for ID discovery and data retrieval. To read a known node's entire long text, use `node --content all --max-text-bytes 0`; no selected field then has an artificial 1 MiB ceiling. These features cannot become hidden dependencies of query correctness.

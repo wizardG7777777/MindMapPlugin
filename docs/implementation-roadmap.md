@@ -1,236 +1,33 @@
 # Implementation Roadmap
 
-## Phase 0: Architecture and Contracts
+Status: target implementation order. All completion claims require the evidence defined in [acceptance](acceptance.md).
 
-Goal:
+## Phase 1: Contract and fixtures
 
-- Freeze the system shape before coding
+Implement the canonical schema, operation envelope, command/results schemas and independent context result. Publish capability definitions from the same schema source. Turn [workflow examples](cli-workflows.md) into validated fixtures, including empty graph, cycle, self-loop, multiple parents, parallel edges and disconnected nodes.
 
-Deliverables:
+Exit: every documented command and error has an unambiguous schema and acceptance case. Normative examples validate. This is a design/fixture gate, not proof that commands run.
 
-- Repository docs
-- Canonical schema draft
-- Mermaid contract draft
-- Module boundaries
+## Phase 2: Headless vertical slice
 
-Exit criteria:
+Build create, inspect, export, node, neighbors, context, preview, apply and validate with the common result envelope. Add version/help/capabilities/schema discovery and doctor. Use real transactional persistence from the first apply implementation; a direct-write shortcut cannot count as completion.
 
-- The team can describe one end-to-end edit flow unambiguously
+Exit: the complete workflow runs through the executable in independent processes, without a browser, account, socket or background service. A person and two simulated agent callers read different scopes without shared state. All required commands exist; optional visual commands are not advertised.
 
-## Phase 1: Graph Core
+## Phase 3: Concurrency, recovery and limits
 
-Goal:
+Exercise cross-process commit races, exact retries, kernel lock release on death, physical-path aliases, bounded output, invalid batches, read-only storage and interrupted publication. Resolve every failure or narrow advertised storage support explicitly.
 
-- Build the canonical model and deterministic mutations
+Exit: all concurrency/storage gates pass with failure injection and full assertions. Receipt/version correctness and no silent lost updates are mandatory. Passing graph unit tests alone cannot close this phase.
 
-Scope:
+## Phase 4: Packaging and agent usability
 
-- Schema types
-- Validation rules
-- Basic graph operations
-- Minimal serialization format
+Produce a self-contained installable artifact with compiled code, schemas, supported runtime adapters and the skill. Test from a clean installation with immutable package files. Have an independent reader execute a realistic directed-cycle task using only package help, schemas and skill, without supplied internal operation examples beyond the packaged material.
 
-Deliverables:
+Exit: install/runtime gates and independent workflow acceptance pass. Each advertised platform has its own evidence. Only then may README and release metadata state runtime availability.
 
-- `GraphDocument` type
-- Validation layer
-- Mutation functions
-- Sample fixture documents
+## Later delivery: Visual interaction
 
-Exit criteria:
+Visual editing, layouts, themes, window-specific selections and automatic refresh can follow without changing the CLI's graph authority. [View state](view-state.md) and [theme/template](theme-template.md) define their boundaries. They must not delay, substitute for or weaken headless acceptance.
 
-- A small graph can be created, updated, and validated without any UI
-
-## Phase 2: Mermaid Compiler
-
-Goal:
-
-- Produce reliable LLM-facing graph projections
-
-Scope:
-
-- Full graph compilation
-- Subtree compilation
-- Stable node ordering
-- Escaping strategy
-- Stable Mermaid node identifier rules
-- Edge semantic labels
-- `projectionSupport` output for edit targeting
-- Cycle and repeated-node markers
-- Parent-child and sibling order projection rules
-
-Deliverables:
-
-- `compileToMermaid(graph, scope)` API
-- Test fixtures for deterministic output
-- Size-limited projection mode
-
-Exit criteria:
-
-- The same graph always compiles to the same Mermaid text
-
-## Phase 3: Layout Rendering Engine
-
-Goal:
-
-- Render the canonical graph in a usable editor
-
-Scope:
-
-- `JSON -> nodes/edges`
-- Position hydration
-- Expand/collapse behavior
-- Optional auto-layout integration
-
-Deliverables:
-
-- Layout rendering adapter
-- Example editor screen
-- Position and dimension write-back to separate view state
-
-Exit criteria:
-
-- A user can open a graph, move nodes, and persist layout state
-
-## Phase 4: CLI Tool Adapter
-
-Goal:
-
-- Make internal tools executable and testable before MCP packaging
-
-Scope:
-
-- Language-neutral CLI command contract
-- Tool registry dispatch from CLI commands
-- JSON input and output conventions
-- Structured error codes
-- Query, preview, and mutation command wrappers
-
-Deliverables:
-
-- CLI entrypoint
-- Command reference
-- Tool-to-command mapping
-- Sample command fixtures
-
-Exit criteria:
-
-- Codex or a developer can run documented CLI commands to inspect, preview, and apply graph changes
-
-## Phase 5: Codex Integration
-
-Goal:
-
-- Allow agent-assisted graph editing through bounded actions
-
-Scope:
-
-- Codex host request and response adaptation
-- Tool registry definitions
-- Context management integration
-- Agent contract schemas
-- Structured edit delegation
-- Internal plugin action routing
-
-Deliverables:
-
-- Codex-facing adapter configuration
-- Tool registry
-- Context management system
-- Agent contract schemas
-- Graph edit delegation path
-
-Exit criteria:
-
-- A user can ask Codex to modify a branch and get a validated result
-
-## Phase 6: Plugin Packaging
-
-Goal:
-
-- Convert the project into an installable local plugin
-
-Scope:
-
-- Plugin manifest
-- Optional marketplace entry
-- Local asset organization
-- Runtime wiring
-
-Deliverables:
-
-- `.codex-plugin/plugin.json`
-- Optional marketplace registration
-
-Exit criteria:
-
-- The plugin can be discovered and launched in Codex
-
-## Phase 7: MCP Tool Exposure
-
-Goal:
-
-- Expose stable internal tools to Codex through MCP
-
-Scope:
-
-- MCP server wrapper
-- External Codex-facing tool schemas
-- Mapping from MCP tool calls to internal tools or CLI commands
-- Confirmation and mutation safety behavior
-
-Deliverables:
-
-- `.mcp.json`
-- MCP server entrypoint
-- External tool definitions
-- End-to-end Codex tool-call fixtures
-
-Exit criteria:
-
-- Codex can call registered MCP tools and receive structured graph results
-
-## Phase 8: Quality and Extensions
-
-Goal:
-
-- Make the system resilient enough for real usage
-
-Scope:
-
-- Test coverage
-- Migration support
-- Rich node metadata
-- Better layout
-- Import/export
-
-Possible extensions:
-
-- Markdown import
-- Mermaid import with constraints
-- Snapshot history
-- Multi-root views
-- Collaboration hooks
-
-## Recommended Order of Construction
-
-1. Graph Core
-2. Mermaid Compiler
-3. Minimal Layout Rendering Engine
-4. CLI Tool Adapter
-5. Codex Integration Layer
-6. Plugin Packaging
-7. MCP Tool Exposure
-8. Extended features
-
-## Recommended First Demo
-
-The first demo should be intentionally narrow:
-
-1. Load a sample graph JSON document
-2. Render it in ReactFlow
-3. Generate Mermaid for the focused branch
-4. Simulate one structured agent edit
-5. Re-render the updated graph
-
-If this demo works cleanly, the architecture is validated.
+Automatic merge, remote synchronization, historical graph snapshots and agent memory are separate future decisions. They are not implicit first-delivery requirements.
