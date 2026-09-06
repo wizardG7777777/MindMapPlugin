@@ -1,3 +1,4 @@
+import { profiles, renderLimits } from './presentation/contracts.js';
 import fs from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { readFileSync } from 'node:fs';
@@ -66,7 +67,7 @@ function help(target) {
   return { usage:target ? usage : 'mindmap <command> [options]', description:target ? description : 'Local directed graphs for people and agents.\n' + commands.map(c => `${c.usage}: ${c.description}`).join('\n'), arguments:args,options,examples };
 }
 function capabilities() {
-  return { ...identity,commands,topologies:['directed'],cycles:true,multipleParents:true,selfLoops:true,parallelEdges:true,disconnectedComponents:true,contextFormats:['json','mermaid'],visualLayouts:[],requiresServer:false,offlineGraphCommands:true,limits,storage:{writeSupport,readsRequireLockAdapter:false} };
+  return { ...identity,commands,topologies:['directed'],cycles:true,multipleParents:true,selfLoops:true,parallelEdges:true,disconnectedComponents:true,contextFormats:['json','mermaid'],visualLayouts:profiles,renderFormats:['svg','mermaid'],renderLimits,requiresServer:false,offlineGraphCommands:true,limits,storage:{writeSupport,readsRequireLockAdapter:false} };
 }
 async function operationInput(path,stdin) {
   let bytes;
@@ -109,6 +110,7 @@ export async function execute(parsed,{store = persistence(),stdin = process.stdi
         }
         break;
       }
+      case 'render': { const {renderDocument} = await import('./presentation/render.js'); data = await renderDocument(document,args); break; }
       case 'export': data = {path,document}; break;
       case 'validate': data = {valid:true,documentSchemaVersion:2,...counts}; break;
       case 'node': data = readNode(document,args); break;
@@ -117,21 +119,34 @@ export async function execute(parsed,{store = persistence(),stdin = process.stdi
       case 'preview': data = edit(document,input.envelope).preview; break;
       default: throw new Error('No handler for ' + name);
     }
+    if (['context','neighbors'].includes(name) && args.layoutHints) {
+      const {layoutDocument} = await import('./presentation/layout.js');
+      const {projectMermaid} = await import('./presentation/mermaid.js');
+      const selected = new Set(data.nodes.map(n => n.id));
+      const subset = {metadata:document.metadata,graph:{...document.graph,entryNodeId:selected.has(document.graph.entryNodeId) ? document.graph.entryNodeId : null,nodes:Object.fromEntries(data.nodes.map(n => [n.id,{...document.graph.nodes[n.id],title:n.title,meta:structuredClone(document.graph.nodes[n.id].meta)}])),edges:Object.fromEntries(data.edges.map(e => [e.id,e]))}};
+      const omitted = [];
+      for (const n of Object.values(subset.graph.nodes)) if (n.meta.flow?.mergeNodeId && !selected.has(n.meta.flow.mergeNodeId)) { omitted.push(n.id); delete n.meta.flow.mergeNodeId; }
+      const layout = await layoutDocument(subset,{layout:args.layout,orientation:args.orientation});
+      if (omitted.length) layout.warnings.push({code:'MERGE_OUTSIDE_SCOPE',message:'A decision merge lies outside this selected context.',nodeIds:omitted,edgeIds:[]});
+      data.mermaid = projectMermaid(data.nodes,data.edges,layout.orientation,{entryNodeId:layout.entryNodeId,sourceNodes:subset.graph.nodes,layoutHints:layout});
+    }
     return {document,data};
   } catch (error) { throw observed(error,document); }
 }
-export async function runCLI(argv = process.argv.slice(2),{stdout = process.stdout,...dependencies} = {}) {
-  let name = attempted(argv), result, exitCode;
+export async function runCLI(argv = process.argv.slice(2),{stdout = process.stdout,stderr = process.stderr,...dependencies} = {}) {
+  let name = attempted(argv), result, exitCode, raw = false;
   const json = argv.includes('--json');
   try {
-    const parsed = parseArguments(argv); name = parsed.name;
+    const parsed = parseArguments(argv); name = parsed.name; raw = parsed.name === 'render' && parsed.args.raw;
     const {document,data} = await execute(parsed,dependencies);
     result = {ok:true,cliContractVersion:1,command:name,documentId:document?.metadata.id ?? null,graphVersion:document?.metadata.graphVersion ?? null,data,error:null}; exitCode = 0;
   } catch (error) {
     const failure = error instanceof MindmapError ? error : new MindmapError('INTERNAL_ERROR',error.message,{outcome:'not_published',phase:'command'});
     result = {ok:false,cliContractVersion:1,command:name,documentId:error.documentId ?? null,graphVersion:error.graphVersion ?? null,data:null,error:{code:failure.code,message:failure.message,details:failure.details}}; exitCode = failure.exitCode;
   }
-  const text = JSON.stringify(result,null,json ? undefined : 2) + '\n';
-  await new Promise((resolve,reject) => stdout.write(text,error => error ? reject(error) : resolve()));
+  const rawFailure = !result.ok && name === 'render' && argv.includes('--raw') && !json;
+  const text = raw && result.ok ? result.data.text : JSON.stringify(result,null,json ? undefined : 2) + '\n';
+  const destination = rawFailure ? stderr : stdout;
+  await new Promise((resolve,reject) => destination.write(text,error => error ? reject(error) : resolve()));
   return exitCode;
 }

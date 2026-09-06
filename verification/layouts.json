@@ -1,0 +1,74 @@
+{
+  "version": "0.2.0",
+  "artifact": "mindmap-cli-0.2.0.tgz",
+  "sha256": "ec77a75005e67a1b7db28baa4d33d47d8adf9e74ced07a0980336853611a8088",
+  "nodeVersion": "24.15.0",
+  "os": "darwin",
+  "osRelease": "25.6.0",
+  "arch": "arm64",
+  "filesystemType": 26,
+  "installScripts": false,
+  "developmentDependencies": false,
+  "immutableAssets": true,
+  "layoutProfiles": [
+    "flowchart",
+    "mindmap",
+    "dependency",
+    "network",
+    "fishbone"
+  ],
+  "svgAndMermaidHints": true,
+  "bundledFont": true,
+  "missingAdapterVerified": true,
+  "offlineCommands": true,
+  "childProcessesDenied": true,
+  "independentEvaluator": "separate schema-driven program; no source or internal fixtures",
+  "powerLossTested": false,
+  "completedAt": "2026-09-06T12:44:33.305Z",
+  "tests": {
+    "tests": 43,
+    "pass": 43,
+    "fail": 0,
+    "skipped": 0
+  },
+  "independentCalls": 19,
+  "visualArtifacts": [
+    {
+      "path": "examples/login-authentication/flowchart.svg",
+      "sha256": "ad2ec062ccab3847d9422a5f483175ea71845249e6ae58c7e167e83ed18e9936",
+      "nodes": 22,
+      "edges": 34
+    },
+    {
+      "path": "examples/login-authentication/flowchart-lr.svg",
+      "sha256": "b2668f7f8860ece07e6cc84ea62eab136ccc4262b2ae23c355002913344f0efd",
+      "nodes": 22,
+      "edges": 34
+    },
+    {
+      "path": "examples/layout-gallery/mindmap.svg",
+      "sha256": "4158df9a014d914383dc62fa346fc006f84b2268dc3c87137f9e7f512950cf35",
+      "nodes": 8,
+      "edges": 9
+    },
+    {
+      "path": "examples/layout-gallery/dependency.svg",
+      "sha256": "632138b7a5d2a13dba31bc4fd58c5517210d9ef6fd64a27412492a8baa367d94",
+      "nodes": 6,
+      "edges": 6
+    },
+    {
+      "path": "examples/layout-gallery/network.svg",
+      "sha256": "3035eef6fefe53b15ddb7bfca69e48ca57e395eab05c7e0fc82b5ac64c7dc2bb",
+      "nodes": 6,
+      "edges": 8
+    },
+    {
+      "path": "examples/layout-gallery/fishbone.svg",
+      "sha256": "788cc07250d6b9095a0619063773bacce28da9220d9a61ebb73e00d14e83fa6e",
+      "nodes": 7,
+      "edges": 6
+    }
+  ],
+  "visualInspection": "Login TD/LR and all four other profile examples were rasterized and visually inspected. A/B/C entrances and authentication completion nodes align; retry paths remain separate. Unrelated dependency edges route outside cycle groups."
+}

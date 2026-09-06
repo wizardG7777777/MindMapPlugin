@@ -1,3 +1,4 @@
+import { profiles, renderLimits, layoutShape, renderData, flowNode, flowEdge } from './presentation/contracts.js';
 import { obj, arr, str, bool, nil, integer, id, nullable, meta, document, metadata, receipt, selectedNode, fieldOmission, context, operations, preview, limits, queryLimits, schema, dialect, operationTypes } from './definitions.js';
 import { errorGroups } from './errors.js';
 export const identityShape = obj({ product: { const: 'mindmap-cli' }, version: str, cliContractVersion: { const: 1 }, documentSchemaVersions: { const: [2] } });
@@ -10,8 +11,9 @@ const check = obj({ name: str, ok: bool, details: meta });
 const support = obj({ os: str, arch: str, filesystems: arr(str), nodeVersions: arr(str) });
 export const dataShapes = {
   version: identityShape, help,
-  capabilities: obj({ ...identityShape.properties, commands: arr(commandDefinition), topologies: { const: ['directed'] }, cycles: { const: true }, multipleParents: { const: true }, selfLoops: { const: true }, parallelEdges: { const: true }, disconnectedComponents: { const: true }, contextFormats: { const: ['json','mermaid'] }, visualLayouts: { const: [] }, requiresServer: { const: false }, offlineGraphCommands: { const: true }, limits: obj(Object.fromEntries(Object.entries(limits).map(([k,v]) => [k, { const: v }]))), storage: obj({ writeSupport: arr(support), readsRequireLockAdapter: { const: false } }) }),
+  capabilities: obj({ ...identityShape.properties, commands: arr(commandDefinition), topologies: { const: ['directed'] }, cycles: { const: true }, multipleParents: { const: true }, selfLoops: { const: true }, parallelEdges: { const: true }, disconnectedComponents: { const: true }, contextFormats: { const: ['json','mermaid'] }, visualLayouts: { const: profiles }, renderFormats: { const: ['svg','mermaid'] }, renderLimits: { const: renderLimits }, requiresServer: { const: false }, offlineGraphCommands: { const: true }, limits: obj(Object.fromEntries(Object.entries(limits).map(([k,v]) => [k, { const: v }]))), storage: obj({ writeSupport: arr(support), readsRequireLockAdapter: { const: false } }) }),
   schema: schemaShape,
+  render: renderData,
   create: obj({ path: str, document }),
   inspect: { oneOf: [obj({ path: str, metadata, topology: { const: 'directed' }, semanticType: str, entryNodeId: nullable(id), nodeCount: integer, edgeCount: integer, relationCounts: { type: 'object', additionalProperties: integer }, commitCount: integer }), obj({ path: str, receipt })] },
   export: obj({ path: str, document }),
@@ -26,6 +28,7 @@ const detailProperties = {
   INVALID_ENVELOPE: { field: str, reason: str }, DOCUMENT_NOT_FOUND: { path: str }, ALREADY_EXISTS: { path: str },
   UNSUPPORTED_SCHEMA: { actualVersion: { $ref: '#/$defs/jsonValue' }, supportedVersions: { const: [2] } },
   INVALID_DOCUMENT: { field: str, reason: str }, NOT_FOUND: { kind: { enum: ['node','edge','receipt'] }, id },
+  INVALID_LAYOUT: { reason: str, nodeIds: arr(id), edgeIds: arr(id) },
   INVALID_OPERATION: { reason: str }, SCOPE_VIOLATION: { nodeIds: arr(id), edgeIds: arr(id), documentFields: arr(str), reason: str },
   LIMIT_EXCEEDED: { limit: str, maximum: integer, actual: integer }, OPERATION_ID_REUSE: { operationId: id, committedGraphVersion: integer },
   CONFLICT: { expectedVersion: integer, currentVersion: integer }, LOCK_TIMEOUT: { path: str, timeoutMs: integer },
@@ -51,6 +54,7 @@ operationError.properties.error.properties.details = { oneOf: [
 const conflict = errors.find(s => s.properties.error.properties.code.const === 'CONFLICT');
 conflict.allOf = [{ if: { properties: { command: { const: 'apply' } } }, then: { properties: { error: { properties: { details: { required: ['operationId','committed'], properties: { operationId: id, committed: { const: false } } } } } } } }];
 export const schemas = {
+  layout: schema('layout', layoutShape, { flowNode, flowEdge }),
   document: schema('document', document),
   operations: schema('operations', operations),
   context: schema('context', context),

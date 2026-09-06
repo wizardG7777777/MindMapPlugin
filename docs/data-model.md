@@ -57,7 +57,7 @@ Map keys must equal record IDs. Every endpoint must exist. Edge kinds are nonemp
 
 `entryNodeId` is null or an existing node ID. It is an optional default presentation starting point, not a tree root, access boundary or implicit selector. An empty graph is valid only with a null entry. A nonempty graph may also have a null entry. Queries require their documented explicit selectors and never rely on a global current node.
 
-Positions, dimensions, colors, layouts, viewport, selected IDs and traversal state do not belong in canonical node/edge records. Semantic `meta` is not a channel for renderer-specific state. Display contracts are deferred separately.
+Positions, dimensions, colors, layouts, viewport, selected IDs and traversal state do not belong in canonical node/edge records. Semantic `meta` is not a channel for renderer-specific state. Automatic display geometry is defined separately in [rendering](rendering.md); persistent manual view state remains deferred. Optional `meta.flow` attributes describe semantic node/edge roles and decision merges for control-flow layouts. They do not store coordinates, and profile validation occurs when rendering.
 
 ## Commit receipts
 

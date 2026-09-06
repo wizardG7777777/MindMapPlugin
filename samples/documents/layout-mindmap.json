@@ -1,0 +1,139 @@
+{
+  "JSON-SchemaVersion": 2,
+  "metadata": {
+    "id": "mindmap",
+    "title": "产品规划",
+    "graphVersion": 0,
+    "createdAt": "2026-09-05T00:00:00.000Z",
+    "updatedAt": "2026-09-05T00:00:00.000Z"
+  },
+  "graph": {
+    "topology": "directed",
+    "semanticType": "mindmap",
+    "entryNodeId": "root",
+    "nodes": {
+      "root": {
+        "id": "root",
+        "title": "产品规划",
+        "cardContent": "",
+        "notes": "",
+        "meta": {}
+      },
+      "design": {
+        "id": "design",
+        "title": "设计",
+        "cardContent": "",
+        "notes": "",
+        "meta": {}
+      },
+      "runtime": {
+        "id": "runtime",
+        "title": "实现",
+        "cardContent": "",
+        "notes": "",
+        "meta": {}
+      },
+      "tests": {
+        "id": "tests",
+        "title": "验证",
+        "cardContent": "",
+        "notes": "",
+        "meta": {}
+      },
+      "layout": {
+        "id": "layout",
+        "title": "布局策略",
+        "cardContent": "",
+        "notes": "",
+        "meta": {}
+      },
+      "svg": {
+        "id": "svg",
+        "title": "SVG 导出",
+        "cardContent": "",
+        "notes": "",
+        "meta": {}
+      },
+      "race": {
+        "id": "race",
+        "title": "并发测试",
+        "cardContent": "",
+        "notes": "",
+        "meta": {}
+      },
+      "idea": {
+        "id": "idea",
+        "title": "独立想法",
+        "cardContent": "",
+        "notes": "",
+        "meta": {}
+      }
+    },
+    "edges": {
+      "e01": {
+        "id": "e01",
+        "source": "root",
+        "target": "design",
+        "kind": "contains",
+        "meta": {}
+      },
+      "e02": {
+        "id": "e02",
+        "source": "root",
+        "target": "runtime",
+        "kind": "contains",
+        "meta": {}
+      },
+      "e03": {
+        "id": "e03",
+        "source": "root",
+        "target": "tests",
+        "kind": "contains",
+        "meta": {}
+      },
+      "e04": {
+        "id": "e04",
+        "source": "design",
+        "target": "layout",
+        "kind": "contains",
+        "meta": {}
+      },
+      "e05": {
+        "id": "e05",
+        "source": "runtime",
+        "target": "svg",
+        "kind": "contains",
+        "meta": {}
+      },
+      "e06": {
+        "id": "e06",
+        "source": "tests",
+        "target": "race",
+        "kind": "contains",
+        "meta": {}
+      },
+      "e07": {
+        "id": "e07",
+        "source": "layout",
+        "target": "svg",
+        "kind": "影响",
+        "meta": {}
+      },
+      "e08": {
+        "id": "e08",
+        "source": "tests",
+        "target": "tests",
+        "kind": "复查",
+        "meta": {}
+      },
+      "e09": {
+        "id": "e09",
+        "source": "root",
+        "target": "runtime",
+        "kind": "协调",
+        "meta": {}
+      }
+    }
+  },
+  "commits": []
+}

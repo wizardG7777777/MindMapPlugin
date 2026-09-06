@@ -4,6 +4,7 @@ Status: target CLI contract version 1. The public interface consists solely of t
 
 ## Process behavior
 
+- `render --raw` emits SVG/Mermaid text and routes errors to stderr; it is incompatible with `--json`. Other modes retain the envelope below.
 - `--json` selects machine output; otherwise return a readable rendering of the same result. All commands accept `--json`.
 - JSON mode writes exactly one UTF-8 JSON object followed by a newline to stdout. Diagnostics go to stderr, never mixed into the result. Parsing errors follow the same contract when `--json` appears as a standalone argument.
 - No command prompts, reads terminal confirmation, opens a browser or starts a listener. Input is consumed from stdin only when explicitly requested with `--input -`.
@@ -13,9 +14,9 @@ Status: target CLI contract version 1. The public interface consists solely of t
 
 ## Identity and discovery
 
-`--version` returns product identity `mindmap-cli`, executable `version`, `cliContractVersion: 1`, and `documentSchemaVersions: [2]`. `capabilities` adds the exact available command/option schemas, topology properties, available context formats, resource limits, and tested platform/filesystem support. First delivery reports `topologies: ["directed"]`, cycles/multiple parents/self-loops/parallel edges/disconnected components supported, `visualLayouts: []`, and `requiresServer: false`.
+`--version` returns product identity `mindmap-cli`, executable `version`, `cliContractVersion: 1`, and `documentSchemaVersions: [2]`. `capabilities` adds the exact available command/option schemas, topology properties, available context formats, resource limits, and tested platform/filesystem support. First delivery reports `topologies: ["directed"]`, cycles/multiple parents/self-loops/parallel edges/disconnected components supported, `visualLayouts: ["flowchart", "mindmap", "dependency", "network", "fishbone"]`, `renderFormats: ["svg", "mermaid"]`, and `requiresServer: false`.
 
-`schema document|operations|context|result` returns complete JSON Schema documents with a declared dialect, deterministic `$id`, all required properties, enums, bounds and `additionalProperties` behavior. `result` defines a discriminated union by command and success/error status, with complete command-specific `data` shapes; it must not use an unspecified object for an operation envelope or result. `context` describes the `data` returned by `context` and `neighbors`. Schemas, runtime validation, help and capabilities derive from one definition.
+`schema document|operations|context|result|layout` returns complete JSON Schema documents with a declared dialect, deterministic `$id`, all required properties, enums, bounds and `additionalProperties` behavior. `result` defines a discriminated union by command and success/error status, with complete command-specific `data` shapes; it must not use an unspecified object for an operation envelope or result. `context` describes the `data` returned by `context` and `neighbors`. Schemas, runtime validation, help and capabilities derive from one definition.
 
 A package is not accepted merely because it identifies itself correctly. The behavior in [acceptance](acceptance.md) must pass.
 
@@ -45,7 +46,7 @@ For success, the reported graph version is the snapshot actually used. A later r
 | --- | --- | --- |
 | 0 | none | Success, including exact replay |
 | 2 | `INVALID_ARGUMENT`, `INVALID_JSON`, `INVALID_ENVELOPE` | Command or input shape is invalid |
-| 3 | `DOCUMENT_NOT_FOUND`, `ALREADY_EXISTS`, `UNSUPPORTED_SCHEMA`, `INVALID_DOCUMENT`, `NOT_FOUND`, `INVALID_OPERATION`, `SCOPE_VIOLATION`, `LIMIT_EXCEEDED`, `OPERATION_ID_REUSE` | Requested document or action is not valid |
+| 3 | `DOCUMENT_NOT_FOUND`, `ALREADY_EXISTS`, `UNSUPPORTED_SCHEMA`, `INVALID_DOCUMENT`, `NOT_FOUND`, `INVALID_OPERATION`, `SCOPE_VIOLATION`, `LIMIT_EXCEEDED`, `OPERATION_ID_REUSE`, `INVALID_LAYOUT` | Requested document or action is not valid |
 | 4 | `CONFLICT` | Reread and reconsider a new batch |
 | 5 | `LOCK_TIMEOUT`, `LOCK_UNAVAILABLE`, `IO_ERROR`, `UNSUPPORTED_STORAGE`, `COMMIT_OUTCOME_UNKNOWN` | Local storage or transaction could not complete as requested |
 | 6 | `INTERNAL_ERROR` | Unexpected program failure; message does not claim rollback |

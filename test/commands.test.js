@@ -9,14 +9,14 @@ test('C01: discovery, all help/schema outputs, exact command catalog and version
   const version = await cli(['--version']); assert.equal(version.data.version,'0.2.0');
   assert.equal(version.data.cliContractVersion,1); assert.deepEqual(version.data.documentSchemaVersions,[2]);
   const caps = (await cli(['capabilities'])).data;
-  assert.deepEqual(caps.commands.map(c => c.name),['apply','capabilities','context','create','doctor','export','help','inspect','neighbors','node','preview','schema','validate','version']);
-  assert.equal(caps.requiresServer,false); assert.deepEqual(caps.visualLayouts,[]);
+  assert.deepEqual(caps.commands.map(c => c.name),['apply','capabilities','context','create','doctor','export','help','inspect','neighbors','node','preview','render','schema','validate','version']);
+  assert.equal(caps.requiresServer,false); assert.deepEqual(caps.visualLayouts,['flowchart','mindmap','dependency','network','fishbone']);
   await cli(['--help']);
   for (const command of caps.commands) {
     if (!['version','help'].includes(command.name)) await cli([command.name,'--help']);
     assert.ok(ajv.validateSchema(command.inputSchema));
   }
-  for (const name of ['document','operations','context','result']) {
+  for (const name of ['document','operations','context','result','layout']) {
     const returned = (await cli(['schema',name])).data;
     assert.deepEqual(returned,JSON.parse(await fs.readFile(join(packageRoot,'schemas',name + '.json'),'utf8')));
     assert.ok(ajv.validateSchema(returned));

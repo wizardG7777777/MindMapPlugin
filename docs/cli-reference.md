@@ -9,7 +9,8 @@ Status: CLI contract version 1, implemented in program 0.2.0. All commands below
 | `mindmap --version` | No command-specific options | Product/release/contract/schema identity |
 | `mindmap --help` or `mindmap <command> --help` | Help never requires a document | `usage`, `description`, `arguments`, `options`, `examples` |
 | `mindmap capabilities` | No command-specific options | Complete identity, command/option definitions, graph/format/storage capabilities and limits |
-| `mindmap schema <name>` | Required name: `document`, `operations`, `context`, `result` | The complete JSON Schema for that name |
+| `mindmap schema <name>` | Required name: `document`, `operations`, `context`, `result`, `layout` | The complete JSON Schema for that name |
+| `mindmap render <document>` | Required `--format svg|mermaid`; optional `--layout auto|flowchart|mindmap|dependency|network|fishbone`, `--orientation TD|LR`, `--root id`, `--layout-hints` (Mermaid only), `--raw` (incompatible with `--json`) | `format`, `text`, `layout`, `layoutHints`, `warnings`; see [rendering](rendering.md) |
 | `mindmap create <document>` | `--title` defaults to `Untitled graph`; `--id` defaults to a generated UUID; `--lock-timeout-ms` defaults to 5000 | `path` and normalized `document` at version 0 |
 | `mindmap inspect <document>` | Optional `--operation-id <id>` | Without ID: `path`, `metadata`, `topology`, `semanticType`, `entryNodeId`, `nodeCount`, `edgeCount`, `relationCounts`, `commitCount`; with ID: `path`, matching `receipt` |
 | `mindmap export <document>` | No command-specific options; always complete | `path`, complete normalized `document`, including all content and receipts |
@@ -21,7 +22,7 @@ Status: CLI contract version 1, implemented in program 0.2.0. All commands below
 | `mindmap validate <document>` | No command-specific options | `valid: true`, schema version, node/edge/commit counts |
 | `mindmap doctor` | Optional `--directory <existing-directory>` for an explicit storage probe | Product identity, platform, `checks`, `supported` |
 
-All accept `--json`. `--lock-timeout-ms` is a safe integer from 0 through 60000; zero attempts immediate acquisition and otherwise returns `LOCK_TIMEOUT`. Input `-` means stdin; no other command consumes stdin. `create` requires an existing parent directory and never overwrites a target. Its success data contains the fully normalized empty document from the data model.
+All accept `--json`. `render --raw` instead emits artifact text only and puts errors on stderr; it cannot be combined with `--json`. `--lock-timeout-ms` is a safe integer from 0 through 60000; zero attempts immediate acquisition and otherwise returns `LOCK_TIMEOUT`. Input `-` means stdin; no other command consumes stdin. `create` requires an existing parent directory and never overwrites a target. Its success data contains the fully normalized empty document from the data model.
 
 `inspect --operation-id` returns `NOT_FOUND` for an absent receipt. `relationCounts` counts all edges by exact kind. Results contain no hidden session state. `validate` checks all persisted invariants including receipt consistency, not merely JSON syntax.
 
@@ -42,6 +43,8 @@ All accept `--json`. `--lock-timeout-ms` is a safe integer from 0 through 60000;
 | `--max-boundary-edges <integer>` | 100 | Crossing-edge records, 0 through 20000 |
 | `--max-text-bytes <integer>` | 4096 | Per selected title/card/notes field, 0 through 1048576 UTF-8 bytes; zero disables field truncation |
 | `--mermaid` | Absent | Include structural Mermaid text and ID mappings in the result |
+| `--layout-hints` | Absent | Requires `--mermaid`; attach the measured layout for the selected context |
+| `--layout auto|flowchart|mindmap|dependency|network|fishbone` | auto when hints are requested | Requires `--mermaid --layout-hints`; selects a layout profile |
 | `--orientation LR|TD` | LR | Only valid with `--mermaid`; affects text projection, not the graph |
 
 `neighbors` allows direction, kinds, content, node/edge/boundary/text limits and Mermaid options; it does not accept `--depth`, `--all`, `--nodes` or `--edges`. Traversal and omission counting are fully defined in [context management](context-management.md).
@@ -58,4 +61,4 @@ mindmap context ./plan.json --all --mermaid --json
 mindmap inspect ./plan.json --operation-id build-general-graph --json
 ```
 
-The file format for changes and exact-retry examples are in [CLI workflows](cli-workflows.md). Command names and options in this document must match `capabilities`, machine schemas and built-package behavior before release. There are no first-delivery visual, server, host-registration or language-model generation commands.
+The file format for changes and exact-retry examples are in [CLI workflows](cli-workflows.md). Command names and options in this document must match `capabilities`, machine schemas and built-package behavior before release. There are no server, interactive UI, host-registration or language-model generation commands. Rendering is a read-only CLI operation.

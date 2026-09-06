@@ -84,7 +84,7 @@ try {
     }
   }
   assert.equal(await fs.stat(join(work,'unavailable.json')).then(() => true,() => false),false);
-  const summary = {version:'0.2.0',artifact:packed[0].filename,sha256:hash,nodeVersion:process.versions.node,os:process.platform,osRelease:os.release(),arch:process.arch,filesystemType:(await fs.statfs(temp)).type,installScripts:false,developmentDependencies:false,immutableAssets:true,missingAdapterVerified:true,offlineCommands:true,childProcessesDenied:true,independentEvaluator:'separate schema-driven program; no source or internal fixtures',powerLossTested:false,completedAt:new Date().toISOString()};
+  const summary = {version:'0.2.0',artifact:packed[0].filename,sha256:hash,nodeVersion:process.versions.node,os:process.platform,osRelease:os.release(),arch:process.arch,filesystemType:(await fs.statfs(temp)).type,installScripts:false,developmentDependencies:false,immutableAssets:true,layoutProfiles:['flowchart','mindmap','dependency','network','fishbone'],svgAndMermaidHints:true,bundledFont:true,missingAdapterVerified:true,offlineCommands:true,childProcessesDenied:true,independentEvaluator:'separate schema-driven program; no source or internal fixtures',powerLossTested:false,completedAt:new Date().toISOString()};
   await fs.writeFile(join(evidence,'summary.json'),JSON.stringify(summary,null,2)+'\n');
   console.log('Package acceptance evidence: '+evidence);
 } finally {

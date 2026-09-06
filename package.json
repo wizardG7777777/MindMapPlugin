@@ -17,7 +17,8 @@
     "docs/",
     "skills/",
     "samples/",
-    "README.md"
+    "README.md",
+    "assets/"
   ],
   "scripts": {
     "build": "node scripts/build.js",
@@ -27,10 +28,12 @@
   },
   "dependencies": {
     "ajv": "8.20.0",
+    "fontkit": "2.0.4",
     "koffi": "3.2.1"
   },
   "devDependencies": {
-    "mermaid": "11.17.2",
-    "jsdom": "30.0.1"
+    "@resvg/resvg-js": "2.6.2",
+    "jsdom": "30.0.1",
+    "mermaid": "11.17.2"
   }
 }

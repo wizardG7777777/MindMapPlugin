@@ -4,7 +4,7 @@ Status: deferred visual-interface design. No view-state command, selection servi
 
 ## Boundary
 
-The canonical document stores graph facts. A future view stores positions, dimensions, viewport, collapse state and layout choice separately. Missing view state must never prevent CLI reads, preview, apply or validation.
+The canonical document stores graph facts. Headless rendering returns derived positions and dimensions for an explicitly selected layout. A future persistent view can store manual position overrides, viewport, collapse state and layout preferences separately. Missing view state must never prevent CLI reads, preview, apply or validation.
 
 A view is identified by document identity plus a view/session identifier. Several windows may display one document with different positions, focus and selected IDs. No single global selection can determine all readers' query scopes.
 

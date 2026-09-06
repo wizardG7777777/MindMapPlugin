@@ -38,7 +38,7 @@ A test-only persistence adapter must expose failpoints after locked reload, afte
 
 | ID | Setup and action | Required observation |
 | --- | --- | --- |
-| C01 | Run version, root/command help, capabilities and all four schema names. | Correct product identity and contract/schema versions; exact catalog matches CLI reference; complete machine schemas; no opaque operation or result payload. Unsupported visual capabilities are not advertised. |
+| C01 | Run version, root/command help, capabilities and all five schema names. | Correct product identity and contract/schema versions; exact catalog matches CLI reference; complete machine schemas; no opaque operation or result payload. Unsupported visual capabilities are not advertised. |
 | C02 | Create the workflow document; inspect, validate and read all-context. Attempt creation again. | Empty normalized schema-2 graph at version 0; null entry; zero receipts; second create exits 3 `ALREADY_EXISTS`, byte-identical target. |
 | C03 | Preview then apply `changes.json`; inspect and validate. | Preview leaves bytes unchanged; 11 operations; affected nodes a,b,c,x and edges aa,ab,ab2,ac,bc,ca. Apply reaches version 1 with one matching receipt, four nodes and six edges. |
 | C04 | Run node, neighbors and scoped context examples in independent processes. | Exact node/internal-edge/boundary sets from the workflow; each version 1; no focus files or altered graph bytes. |
@@ -92,3 +92,9 @@ Review every Markdown document and skill, rather than a selected happy-path subs
 - Working links, consistent examples, clearly deferred visual features, and no claims that planned commands already run.
 
 An independent review reports actionable contradictions and missing behavior, not just a keyword count. Resolve findings and review the corrected contract before declaring the documentation accepted. Actual runtime gates remain unexecuted until a conforming implementation exists.
+
+## Headless presentation gates
+
+`test/layout.test.js` implements V01–V07: complete scene/SVG preservation, TD/LR execution alignment and merge ordering, five distinct layout strategies, ID-renaming invariance, nested/short alternatives, Mermaid with and without hints, isolated context hints, real SVG rasterization, Unicode/XML safety, raw artifact/error streams, empty output and explicit limits. Layout constraints use a 0.01 SVG-unit numerical tolerance. Review actual SVG/PNG artifacts for the login flow and profile gallery; parsing and geometry assertions complement, rather than replace, visual inspection.
+
+Package acceptance repeats these tests against its immutable installation and renders SVG and hinted Mermaid with network access and child-process creation denied. Packaged font source/hash and license must be present. Canonical graph bytes and graph versions must remain unchanged by every rendering mode.

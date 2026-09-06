@@ -48,3 +48,7 @@ There is no implicit write scope in a context result. A caller forms an explicit
 ## First-delivery boundary
 
 No host-specific prompt injection, session memory, persistent focus, semantic summarization model or long-term memory subsystem is required. The caller can save results or request a wider scope. If a valid document exceeds context record budgets, `export` provides the complete snapshot for ID discovery and data retrieval. To read a known node's entire long text, use `node --content all --max-text-bytes 0`; no selected field then has an artificial 1 MiB ceiling. These features cannot become hidden dependencies of query correctness.
+
+## Optional layout hints
+
+`--mermaid --layout-hints` adds the measured layout object to `data.mermaid.layoutHints`. Layout applies only to returned internal nodes/edges, never to omitted or boundary nodes. The default structural Mermaid object retains its original fields when hints are absent. A merge outside the selected context is reported with `MERGE_OUTSIDE_SCOPE`; canonical metadata is unchanged. Profile selection and limits are defined in [rendering](rendering.md). Use `render` to produce a complete graph artifact without context record budgets.

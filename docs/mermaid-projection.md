@@ -4,21 +4,22 @@ Status: target optional context format for the headless CLI. This document owns 
 
 ## Input and output
 
-The compiler receives returned internal nodes and edges from one [context result](context-management.md). It never reopens the file. It emits `flowchart LR` by default or `flowchart TD` when requested. This is structural text output available to both people and agents, not a promise of a visual layout engine.
+The compiler receives returned internal nodes and edges from one [context result](context-management.md). It never reopens the file. It emits `flowchart LR` by default or `flowchart TD` when requested. This is structural text output available to both people and agents, independent of a browser. Fixed-geometry SVG is available through [rendering](rendering.md).
 
 Context `data.mermaid` is:
 
 - `text`: deterministic Mermaid source.
 - `nodeIds`: map from projection ID to canonical node ID.
 - `edgeIds`: array of `{index, edgeId, source, target, kind, order}` in emitted edge order; optional stored order is represented as null when absent. Index is zero-based.
+- Optional `layoutHints`: the complete measured `layout` schema, present only when requested. Hints also appear as a Mermaid comment and standard spacing frontmatter; see [rendering](rendering.md).
 
 Without `--mermaid`, this field is null. The context result already carries content, scope, version, boundaries and omissions; the compiler does not create a second competing context envelope.
 
 ## Stable identifiers and labels
 
-Sort canonical node IDs by locale-independent code-point order, then assign projection identifiers `n_0`, `n_1`, and so on. Projection IDs are stable for the same returned node set, not persistent identities across different scopes. Mutation payloads always use canonical IDs from the mapping.
+Sort canonical node IDs by locale-independent code-point order, then assign projection identifiers `n_0`, `n_1`, and so on. Projection IDs are stable for the same returned node set, not persistent identities across different scopes. Mutation payloads always use canonical IDs from the mapping. Declaration order is separately entry-first, followed by traversal through the selected relationships; it is not the ID-sorting order. This preserves stable mapping identities without using an error node's alphabetic ID as a flow entry.
 
-Emit quoted rectangular labels from the returned node titles. Escape labels using Mermaid numeric entity notation for unsafe characters: encode `&`, `"`, `#`, `<`, `>`, `[`, `]`, `{`, `}`, `|`, backslash and backtick as `#<decimal Unicode code point>;`; replace CR, LF and tab with a space before encoding. Preserve ordinary Unicode. Decimal references follow the [official Mermaid flowchart entity syntax](https://github.com/mermaid-js/mermaid/blob/develop/docs/syntax/flowchart.md#entity-codes-to-escape-characters). Emit no click handlers, classes, arbitrary styles, subgraphs or executable content. Test generated text with a parser/rendering fixture before declaring this format supported; a string snapshot alone does not prove valid syntax.
+Emit escaped quoted labels from the returned node titles. Known start/end roles use rounded shapes and decisions use diamonds; other nodes use rectangles. The selected presentation entry is declared first. Escape labels using Mermaid numeric entity notation for unsafe characters: encode `&`, `"`, `#`, `<`, `>`, `[`, `]`, `{`, `}`, `|`, backslash and backtick as `#<decimal Unicode code point>;`; replace CR, LF and tab with a space before encoding. Preserve ordinary Unicode. Decimal references follow the [official Mermaid flowchart entity syntax](https://github.com/mermaid-js/mermaid/blob/develop/docs/syntax/flowchart.md#entity-codes-to-escape-characters). Emit no click handlers, classes, arbitrary styles, subgraphs or executable content. Optional layout hints contain only generated spacing settings and inert comments; they do not execute code. Test generated text with a parser/rendering fixture before declaring this format supported; a string snapshot alone does not prove valid syntax.
 
 ## Relationship preservation
 

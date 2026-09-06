@@ -27,7 +27,8 @@ Every invocation is self-contained. No global current document, reader, selectio
 | `src/cli.js`, `src/commands.js` | Executable routing and declarative command definitions |
 | `src/definitions.js`, `src/schemas.js`, `src/validation.js` | Shared schemas and semantic validation |
 | `src/graph.js` | Ordered operations, scope enforcement and preview diffs |
-| `src/queries.js` | Snapshot context and Mermaid projection |
+| `src/queries.js` | Independent snapshot context |
+| `src/presentation/` | Semantic interpretation, profile strategies, typography, geometry, SVG and Mermaid |
 | `src/json.js` | Bounded reads and strict UTF-8/JSON parsing |
 | `src/persistence.js`, `src/native.js`, `src/support.js` | Transactions, kernel locking, synchronization and tested support |
 
@@ -39,7 +40,9 @@ Every invocation is self-contained. No global current document, reader, selectio
 | Command handlers | Typed request routing and result assembly | A second set of graph mutation rules |
 | Graph core | Document types, graph validation, deterministic operations | Paths, locks, prompts, rendering components |
 | Query/context | Explicit selectors, bounded traversal, field selection, omissions | Shared session state or edit authorization |
-| Mermaid compiler | IDs, labels, relationship projection | Scope selection, graph writes or UI rendering |
+| Presentation strategies | Graph-type constraints, branch/merge/tree/component interpretation | Graph writes or browser state |
+| Geometry engine | Measured boxes, layers, edge routes and label placement | Changing graph relationships |
+| SVG/Mermaid output | Fixed-geometry SVG or structural Mermaid with optional hints | Scope selection, graph writes or UI lifecycle |
 | Edit validation | Write scope, final-state validation, structured diff | Long-lived agent locks or language-model reasoning |
 | Persistence | Path identity, snapshot reads, commit locks, receipts, durable publication | Graph meaning or reader focus |
 
@@ -63,7 +66,7 @@ This delivery supports cooperating local CLI processes. Remote synchronization, 
 
 A future browser editor can use an internal adapter to invoke the same command handlers and transaction code. It cannot introduce a competing write authority. UI lifecycle, independent window selections and refresh behavior are defined in [view state](view-state.md); layout choices are defined in [theme/template](theme-template.md).
 
-The first release does not register or advertise UI commands or renderer availability. A graph's semantic type never implies that a corresponding visual layout exists.
+The CLI advertises implemented layouts and output formats through capabilities. A semantic type selects only the profiles defined in [rendering](rendering.md); it cannot claim an arbitrary renderer exists. There are no interactive UI or server commands.
 
 ## Required vertical slice
 

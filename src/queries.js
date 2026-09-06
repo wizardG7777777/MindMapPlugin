@@ -1,3 +1,5 @@
+import { projectMermaid } from './presentation/mermaid.js';
+export { projectMermaid } from './presentation/mermaid.js';
 import { fail, limit, argument } from './errors.js';
 import { sorted, compare } from './validation.js';
 import { queryDefaults } from './definitions.js';
@@ -27,18 +29,6 @@ export function selectNode(node, content = 'card', maxTextBytes = 4096) {
   return { node: result, omissions: { fields: fields.sort(fieldOrder) } };
 }
 export function readNode(document,args) { return selectNode(required(document.graph.nodes,'node',args.id),args.content,args.maxTextBytes); }
-const escapeLabel = value => value.replace(/[\r\n\t]/g,' ').replace(/[&"#<>\[\]{}|\\`]/gu,c => `#${c.codePointAt(0)};`);
-export function projectMermaid(nodes,edges,orientation = 'LR') {
-  const nodeIds = {}, canonicalIds = new Map(), edgeIds = [];
-  const lines = ['flowchart ' + orientation];
-  nodes.forEach((node,i) => { const id = 'n_' + i; nodeIds[id] = node.id; canonicalIds.set(node.id,id); lines.push(`  ${id}["${escapeLabel(node.title)}"]`); });
-  edges.forEach((edge,index) => {
-    const label = edge.kind + (edge.order !== undefined ? ` order=${edge.order}` : '');
-    lines.push(`  ${canonicalIds.get(edge.source)} -->|"${escapeLabel(label)}"| ${canonicalIds.get(edge.target)}`);
-    edgeIds.push({ index, edgeId:edge.id, source:edge.source, target:edge.target, kind:edge.kind, order:edge.order ?? null });
-  });
-  return { text:lines.join('\n') + '\n', nodeIds, edgeIds };
-}
 export function context(document,args,neighbors = false) {
   const graph = document.graph, mode = neighbors ? 'neighbors' : args.all ? 'all' : 'ids';
   const nodeIds = neighbors ? [args.id] : args.nodes ?? [], edgeIds = args.edges ?? [];
@@ -82,5 +72,5 @@ export function context(document,args,neighbors = false) {
   const chosenEdges = [...internal.filter(e => explicit.has(e.id)),...internal.filter(e => !explicit.has(e.id))].slice(0,limits.maxEdges).sort((a,b) => compare(a.id,b.id));
   const nodes = [], fields = [];
   for (const id of sorted(chosenIds)) { const selected = selectNode(graph.nodes[id],args.content,args.maxTextBytes); nodes.push(selected.node); fields.push(...selected.omissions.fields); }
-  return { scope: { mode, nodeIds, edgeIds, direction, depth, kinds, limits }, nodes, edges:chosenEdges, boundaryEdges:boundaries.slice(0,limits.maxBoundaryEdges), omissions: { nodes:candidates.length - nodes.length, edges:internal.length - chosenEdges.length, boundaryEdges:Math.max(0,boundaries.length - limits.maxBoundaryEdges), fields:fields.sort(fieldOrder) }, mermaid:args.mermaid ? projectMermaid(nodes,chosenEdges,args.orientation) : null };
+  return { scope: { mode, nodeIds, edgeIds, direction, depth, kinds, limits }, nodes, edges:chosenEdges, boundaryEdges:boundaries.slice(0,limits.maxBoundaryEdges), omissions: { nodes:candidates.length - nodes.length, edges:internal.length - chosenEdges.length, boundaryEdges:Math.max(0,boundaries.length - limits.maxBoundaryEdges), fields:fields.sort(fieldOrder) }, mermaid:args.mermaid ? projectMermaid(nodes,chosenEdges,args.orientation,{entryNodeId:chosenIds.has(graph.entryNodeId) ? graph.entryNodeId : null,sourceNodes:graph.nodes}) : null };
 }

@@ -4,7 +4,7 @@ Status: implementation phases and release gates for 0.2.0. Verification follows 
 
 ## Release 0.2.0 implementation
 
-The runtime lives in `src/`; the build copies executable JavaScript into `dist/` and generates the four JSON Schemas under `schemas/`. `bin/mindmap.js` is the package entry point. The standalone skill and schema-2 examples ship with the package.
+The runtime lives in `src/`; the build copies executable JavaScript into `dist/` and generates the five JSON Schemas under `schemas/`. `bin/mindmap.js` is the package entry point. The standalone skill and schema-2 examples ship with the package.
 
 `test/` contains the command, graph, context, Mermaid, persistence and native-adapter checks. Cross-process failure injection is confined to the test runner's internal dependency injection; the release command parser exposes no test flags. `scripts/package-acceptance.js` repeats the tests through an immutable installation and supplies only the installed package to a separate schema-driven evaluator.
 
@@ -34,8 +34,12 @@ Produce a self-contained installable artifact with compiled code, schemas, suppo
 
 Exit: install/runtime gates and independent workflow acceptance pass. Each advertised platform has its own evidence. Only then may README and release metadata state runtime availability.
 
+## Headless presentation
+
+Graph-type layouts, deterministic SVG output, optional Mermaid hints, font assets and geometry/rasterization tests are implemented under [rendering](rendering.md). Acceptance includes the actual login flow and all five profile fixtures.
+
 ## Later delivery: Visual interaction
 
-Visual editing, layouts, themes, window-specific selections and automatic refresh can follow without changing the CLI's graph authority. [View state](view-state.md) and [theme/template](theme-template.md) define their boundaries. They must not delay, substitute for or weaken headless acceptance.
+Interactive visual editing, configurable themes, window-specific selections and automatic refresh can follow without changing the CLI's graph authority. [View state](view-state.md) and [theme/template](theme-template.md) define their boundaries. They must not delay, substitute for or weaken headless acceptance.
 
 Automatic merge, remote synchronization, historical graph snapshots and agent memory are separate future decisions. They are not implicit first-delivery requirements.

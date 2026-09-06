@@ -1,18 +1,6 @@
-export const dialect = 'https://json-schema.org/draft/2020-12/schema';
-export const obj = (properties, required = Object.keys(properties)) => ({ type: 'object', properties, required, additionalProperties: false });
-export const arr = (items, extra = {}) => ({ type: 'array', items, ...extra });
-export const str = { type: 'string' };
-export const bool = { type: 'boolean' };
-export const nil = { type: 'null' };
-export const integer = { type: 'integer', minimum: 0, maximum: Number.MAX_SAFE_INTEGER };
-export const id = { type: 'string', pattern: '^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$', maxLength: 128 };
-export const text = { type: 'string', pattern: '\\S' };
-export const trimmed = { type: 'string', pattern: '^\\S(?:[\\s\\S]*\\S)?$' };
-export const timestamp = { type: 'string', pattern: '^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$' };
-export const jsonValue = { anyOf: [{ type: 'null' }, bool, str, { type: 'number' }, arr({ $ref: '#/$defs/jsonValue' }), { type: 'object', additionalProperties: { $ref: '#/$defs/jsonValue' } }] };
-export const meta = { type: 'object', additionalProperties: { $ref: '#/$defs/jsonValue' } };
-export const ids = arr(id, { uniqueItems: true });
-export const nullable = value => ({ anyOf: [value, nil] });
+import { dialect, obj, arr, str, bool, nil, integer, id, text, trimmed, timestamp, jsonValue, meta, ids, nullable } from './schema-primitives.js';
+export * from './schema-primitives.js';
+import { layoutShape } from './presentation/contracts.js';
 export const summary = obj({ operationCount: { ...integer, minimum: 1, maximum: 10000 }, nodeCount: integer, edgeCount: integer });
 export const actor = obj({ kind: { enum: ['human', 'agent', 'system'] }, name: text });
 export const node = obj({ id, title: trimmed, cardContent: str, notes: str, meta });
@@ -46,7 +34,7 @@ export const queryLimits = obj(Object.fromEntries(Object.keys(queryDefaults).map
 export const selectedNode = { oneOf: [obj({ id, title: str }), obj({ id, title: str, cardContent: str }), obj({ id, title: str, cardContent: str, notes: str, meta })] };
 export const fieldOmission = obj({ nodeId: id, field: { enum: ['title', 'cardContent', 'notes', 'meta'] }, reason: { enum: ['not_requested', 'text_limit'] }, omittedBytes: integer });
 export const boundary = obj({ id, source: id, target: id, kind: trimmed });
-export const mermaid = obj({ text: str, nodeIds: { type: 'object', patternProperties: { '^n_[0-9]+$': id }, additionalProperties: false }, edgeIds: arr(obj({ index: integer, edgeId: id, source: id, target: id, kind: trimmed, order: nullable(integer) })) });
+export const mermaid = obj({ text: str, nodeIds: { type: 'object', patternProperties: { '^n_[0-9]+$': id }, additionalProperties: false }, edgeIds: arr(obj({ index: integer, edgeId: id, source: id, target: id, kind: trimmed, order: nullable(integer) })), layoutHints: layoutShape }, ['text', 'nodeIds', 'edgeIds']);
 export const context = obj({
   scope: { oneOf: [
     obj({ mode: { const: 'all' }, nodeIds: { ...ids, maxItems: 0 }, edgeIds: { ...ids, maxItems: 0 }, direction: nil, depth: nil, kinds: nullable(arr(trimmed, { uniqueItems: true, minItems: 1 })), limits: queryLimits }),

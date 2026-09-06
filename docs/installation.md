@@ -8,7 +8,7 @@ The program version is **0.2.0**, MindMap's second version. The root package man
 
 The installable artifact must expose the `mindmap` executable through package `bin` metadata. A published package must support execution through `npx <package-name>@<version> ...` and installation through `npm install -g <package-name>@<version>`. Publication naming and version are release inputs, not inferred from the working directory.
 
-The package includes executable JavaScript runtime code, command/schema definitions, the agent skill and referenced documentation. Exact runtime dependencies are Ajv 8.20.0 and Koffi 3.2.1; Koffi provides its native locking adapter through a platform-specific prebuilt dependency. Runtime use must not require a repository checkout, source compilation, development-only TypeScript runners, personal absolute paths, an agent host installation or a global native build toolchain.
+The package includes executable JavaScript runtime code, command/schema definitions, the agent skill and referenced documentation. Exact runtime dependencies are Ajv 8.20.0, Koffi 3.2.1 and Fontkit 2.0.4; Koffi provides its native locking adapter through a platform-specific prebuilt dependency. Runtime use must not require a repository checkout, source compilation, development-only TypeScript runners, personal absolute paths, an agent host installation or a global native build toolchain.
 
 The initial writable-storage adapters target macOS and Linux, with exact OS/architecture/filesystem support advertised only after passing the relevant gates. Node runtime versions are pinned in package engine metadata and tested in the release matrix. Windows support requires its own locking and durable-publication adapter and is not implied by the CLI's platform-neutral command syntax.
 
@@ -34,6 +34,8 @@ npx --no-install mindmap create ./plan.json --id plan --json
 ```
 
 The installed executable is also available at `node_modules/.bin/mindmap`. Installation resolves the declared dependencies; it does not register an agent host or install a skill globally. A native build toolchain is unnecessary on the advertised platform. The package acceptance script verifies installation with all dependency install scripts disabled.
+
+Rendering assets include Noto Sans CJK SC Regular 2.004, its SIL Open Font License and source/hash metadata. SVG uses measured glyph outlines and needs no fonts or external resources in the viewing application. PNG rasterization is an acceptance-only dependency, not a product runtime requirement.
 
 ## Data placement
 

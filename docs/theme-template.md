@@ -1,25 +1,18 @@
-# Theme and Template Configuration
+# Layout, Appearance and Templates
 
-Status: deferred visual-interface design. The headless first delivery has no visual layout engine requirement.
-
-## Separate responsibilities
+Status: headless layout and fixed SVG appearance are implemented. Interactive theme editing and persistent manual views remain deferred.
 
 | Concern | Owner | Example |
 | --- | --- | --- |
 | Graph topology | Canonical graph | Directed edges, including cycles |
-| Semantic meaning | Canonical graph | A relationship means “depends on” |
-| Layout | Future view/template | Layered, circular, radial or fishbone placement |
-| Appearance | Future theme | Shapes, typography, colors and edge markers |
-| Actual positions | Future saved view | Coordinates after a person moves a node |
+| Semantic meaning | Canonical graph/profile conventions | A decision, merge or retry relationship |
+| Layout policy | Presentation strategy | Equal-layer alternatives, a rooted hierarchy or a fishbone spine |
+| Measured geometry | Presentation engine | Node boxes and routed edge polylines |
+| Appearance | SVG renderer | Role shapes, fonts, colors and arrow markers |
+| Manual positions | Future saved view | User-specific coordinate overrides |
 
-A circular layout must not create a closing edge. A cyclic graph must not require circular placement. A semantic label such as `flowchart` or `fishbone` does not guarantee that a matching visual renderer exists.
+The implemented profiles are `flowchart`, `mindmap`, `dependency`, `network` and `fishbone`. CLI selection, profile semantics, typography and exact output fields are defined in [rendering](rendering.md). Layout is independent of a browser or interactive editor.
 
-## Future template rules
+A circular arrangement never creates a closing edge. A cyclic graph never requires circular placement. Switching the presentation profile does not change graph content or graph version. Unsupported layout constraints fail clearly while the source graph remains readable through ordinary CLI queries.
 
-Templates map semantic attributes to display defaults without rewriting nodes or edges. Switching templates does not change graph version. Invalid or unavailable display configuration must not make a valid graph unreadable from the CLI.
-
-Future capabilities must separately report implemented visual layouts and semantic content support. A type label alone is not evidence of layout support. Manual positions, view focus and selection belong to [view state](view-state.md), not template definitions.
-
-## Deferred scope
-
-Layout algorithms, shape/edge renderer mappings, layout measurement, themes and a theme editor are outside the first-delivery implementation and acceptance gates. The initial CLI reports no visual layouts. Mermaid is structural text output under its own [projection contract](mermaid-projection.md), not a promised visual layout.
+The current SVG renderer provides a fixed, safe palette and packages its measured font. Theme selection, arbitrary style configuration and a theme editor are future additions. Persistent drag positions, view focus and selections belong to [view state](view-state.md). They are not a reason to delay deterministic CLI layout or SVG delivery.

@@ -25,7 +25,7 @@ The first delivery is a complete headless workflow:
 
 Ordinary commands run and exit. They require no browser, listening port, background service, account or model API. External agent applications provide reasoning and invoke the same commands available to a person. The program does not generate natural-language plans on its own.
 
-The only public automation interface is the CLI. There is no separately registered agent tool catalog. Visual editing, themes and automatic layouts are deferred and are not dependencies of the first delivery.
+The only public automation interface is the CLI. There is no separately registered agent tool catalog. Five headless layout profiles and standalone SVG output are available. Interactive visual editing and configurable themes remain deferred.
 
 ## Independent reads, coordinated commits
 
@@ -53,6 +53,16 @@ mindmap validate ./plan.json --json
 
 [Installation](docs/installation.md) covers building from this checkout and installing the package artifact without a source checkout. The [agent skill](skills/mindmap-cli/SKILL.md) teaches the workflow but is not required for CLI access.
 
+## Render a complete diagram
+
+```sh
+mindmap render ./plan.json --format svg --layout flowchart --orientation TD --raw > plan.svg
+mindmap render ./plan.json --format mermaid --raw > plan.mmd
+mindmap render ./plan.json --format mermaid --layout-hints --raw > plan-with-hints.mmd
+```
+
+The profiles are `flowchart`, `mindmap`, `dependency`, `network` and `fishbone`; `auto` selects one from the graph's semantic type. SVG preserves our measured positions and routes, including Chinese text through packaged glyph outlines. Mermaid hints describe the intended geometry, but an external viewer may ignore them. See [rendering](docs/rendering.md) for control-flow roles, exact output fields and limits.
+
 ## Build and verify
 
 Use Node **24.15.0**:
@@ -65,7 +75,7 @@ npm test
 npm run test:package
 ```
 
-`npm test` runs the new CLI, graph, schema, query, native-lock and recovery tests. `test:package` installs a packed artifact with development dependencies and install scripts disabled, makes its assets read-only, repeats the tests through the installed executable, and runs an independent schema-driven caller with networking and child-process creation denied by the macOS sandbox. Run that package check outside an enclosing sandbox that forbids creating a test sandbox.
+`npm test` runs the CLI, graph, schema, query, native-lock, recovery and measured-layout/SVG tests. `test:package` installs a packed artifact with development dependencies and install scripts disabled, makes its assets read-only, repeats the tests through the installed executable, and runs an independent schema-driven caller with networking and child-process creation denied by the macOS sandbox. Run that package check outside an enclosing sandbox that forbids creating a test sandbox.
 
 The package check writes command transcripts, results and the exact artifact hash under `test-results/package/`. Release verification summaries are recorded in the repository's `verification/` directory. Process-crash tests do not establish power-loss recovery. Linux and Windows writes, graphical editing and automatic merge are not advertised by this release.
 
@@ -82,7 +92,8 @@ The package check writes command transcripts, results and the exact artifact has
 | [Context management](docs/context-management.md) | Independent query scope, limits and returned facts |
 | [Editing architecture](docs/editing-architecture.md) | Human and agent read/prepare/commit workflows |
 | [Persistence and concurrency](docs/persistence-and-concurrency.md) | Snapshot reads, commit locking, durability and retries |
-| [Mermaid projection](docs/mermaid-projection.md) | Optional structural text projection |
+| [Mermaid projection](docs/mermaid-projection.md) | Structural source and optional layout hints |
+| [Rendering](docs/rendering.md) | Graph-specific layout policies and standalone SVG |
 | [CLI workflows](docs/cli-workflows.md) | End-to-end examples |
 | [Installation](docs/installation.md) | Package contents and release execution |
 | [Acceptance](docs/acceptance.md) | Executable release gates and evidence requirements |

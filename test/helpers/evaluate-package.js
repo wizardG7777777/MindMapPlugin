@@ -46,5 +46,15 @@ const final=(await call('export','evaluation.json')).data.document;
 assert.equal(final.metadata.graphVersion,2); assert.equal(final.graph.nodes.plan.title,'Refined plan');
 assert.deepEqual(Object.values(final.graph.edges).map(e => [e.source,e.target]),edges);
 assert.equal(final.graph.nodes.spectator.title,'spectator');
+const svg=await call('render','evaluation.json','--format','svg','--layout','network');
+assert.equal(svg.data.layout.nodes.length,4); assert.equal(svg.data.layout.edges.length,3);
+assert.ok(svg.data.text.startsWith('<svg'));
+const hinted=await call('render','evaluation.json','--format','mermaid','--layout','flowchart','--root','plan','--layout-hints');
+assert.equal(hinted.data.layoutHints.entryNodeId,'plan');
+assert.ok(hinted.data.text.includes('%% mindmap-layout-v1:'));
+const rawArgs=[bin,'render','evaluation.json','--format','svg','--layout','network','--raw'];
+const raw=await exec(profile ? '/usr/bin/sandbox-exec' : process.execPath,profile ? ['-f',profile,process.execPath,...rawArgs] : rawArgs,{cwd:work,timeout:15000,maxBuffer:16*1024*1024});
+assert.equal(raw.stderr,''); assert.equal(raw.stdout,svg.data.text);
+
 await fs.writeFile(report,JSON.stringify({version:version.data,task:'Build and refine a three-node directed cycle while an independent caller reads an unrelated node.',networkDenied:Boolean(profile),childProcessesDenied:Boolean(profile),calls,final},null,2)+'\n');
 console.log(`Independent package evaluation passed (${calls.length} calls).`);

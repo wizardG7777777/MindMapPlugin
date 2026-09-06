@@ -6,7 +6,7 @@ Status: target CLI contract version 1. This is the exact per-command success `da
 
 All object shapes below are closed unless explicitly defined as a map or JSON Schema. All listed fields are required unless marked optional. Strings, booleans, arrays, nullable fields and nonnegative safe integers retain their JSON types; counts cannot be floating point. `Path` is an absolute physical document/probe path resolved by persistence. `Document`, `Node`, `Edge`, `Receipt` and `Actor` are exactly the types in [data model](data-model.md). A content-selected `Node` follows the query contract instead of requiring omitted content fields.
 
-`Schema` is a complete JSON Schema using `$schema: "https://json-schema.org/draft/2020-12/schema"`. Exported schemas have `$id` equal to `urn:mindmap-cli:contract:1:<name>` for document, operations, context or result. They carry all relevant field/union definitions rather than requiring a separately registered tool to supply them.
+`Schema` is a complete JSON Schema using `$schema: "https://json-schema.org/draft/2020-12/schema"`. Exported schemas have `$id` equal to `urn:mindmap-cli:contract:1:<name>` for document, operations, context, result or layout. They carry all relevant field/union definitions rather than requiring a separately registered tool to supply them.
 
 `Identity` is `{product: "mindmap-cli", version: string, cliContractVersion: 1, documentSchemaVersions: [2]}`. Version is the actual package release version, not a graph version.
 
@@ -22,6 +22,7 @@ All object shapes below are closed unless explicitly defined as a map or JSON Sc
 | `help` | `{usage: string, description: string, arguments: Positional[], options: Option[], examples: string[]}`. Root help lists the catalog in description/usage; command help describes that command. |
 | `capabilities` | Shape below |
 | `schema` | `Schema` itself, selected by requested name |
+| `render` | `{format, text, layout, layoutHints, warnings}` exactly as defined in [rendering](rendering.md) and `schema layout` |
 | `create` | `{path: Path, document: Document}` |
 | `inspect` without operation ID | `{path: Path, metadata: Document.metadata, topology: "directed", semanticType: string, entryNodeId: string|null, nodeCount: integer, edgeCount: integer, relationCounts: map<string, integer>, commitCount: integer}` |
 | `inspect` with operation ID | `{path: Path, receipt: Receipt}` |
@@ -42,7 +43,7 @@ Capabilities has all Identity fields plus:
 - `commands`: `CommandDefinition[]`, sorted by command name, covering the full CLI reference catalog.
 - `topologies`: `["directed"]`.
 - `cycles`, `multipleParents`, `selfLoops`, `parallelEdges`, `disconnectedComponents`: all true.
-- `contextFormats`: `["json", "mermaid"]`; `visualLayouts`: an empty string array; `requiresServer`: false; `offlineGraphCommands`: true.
+- `contextFormats`: `["json", "mermaid"]`; `visualLayouts`: `["flowchart", "mindmap", "dependency", "network", "fishbone"]`; `renderFormats`: `["svg", "mermaid"]`; `renderLimits`: `{nodes: 500, edges: 2000, titleCodePoints: 512, svgBytes: 33554432}`; `requiresServer`: false; `offlineGraphCommands`: true.
 - `limits`: `{documentBytes: 67108864, operationInputBytes: 8388608, operationsPerBatch: 10000, idMaxCharacters: 128, queryDefaults: QueryLimits, queryMaximums: QueryLimits, depthMaximum: 100, lockTimeoutDefaultMs: 5000, lockTimeoutMaximumMs: 60000}`.
 - `storage`: `{writeSupport: Support[], readsRequireLockAdapter: false}`. `Support` is `{os: string, arch: string, filesystems: string[], nodeVersions: string[]}` listing actual tested combinations and exact tested Node versions. An empty writeSupport list means writes cannot be advertised as ready.
 
@@ -54,6 +55,7 @@ All failures have the envelope/code/exit status from command contract. `details`
 
 | Code | Required details |
 | --- | --- |
+| `INVALID_LAYOUT` | `reason`, `nodeIds`, `edgeIds`; incompatible semantics or geometry, leaving the graph unchanged |
 | `CONFLICT` | `expectedVersion`, `currentVersion`; for apply additionally `operationId`, `committed: false` (no receipt for that ID in the checked snapshot) |
 | `OPERATION_ID_REUSE` | `operationId`, `committedGraphVersion` |
 | `UNSUPPORTED_SCHEMA` | `actualVersion`, `supportedVersions: [2]` |

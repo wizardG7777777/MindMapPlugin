@@ -1,0 +1,73 @@
+{
+  "valid": true,
+  "graphVersion": 2,
+  "nodes": 22,
+  "edges": 34,
+  "successPaths": {
+    "A": [
+      "login_ui",
+      "choose_method",
+      "a_input",
+      "a_form_check",
+      "a_verify",
+      "resolve_account",
+      "account_check",
+      "issue_session",
+      "accept_session",
+      "load_context",
+      "main_ui"
+    ],
+    "B": [
+      "login_ui",
+      "choose_method",
+      "b_authorize",
+      "b_verify",
+      "resolve_account",
+      "account_check",
+      "issue_session",
+      "accept_session",
+      "load_context",
+      "main_ui"
+    ],
+    "C": [
+      "login_ui",
+      "choose_method",
+      "c_authorize",
+      "c_verify",
+      "resolve_account",
+      "account_check",
+      "issue_session",
+      "accept_session",
+      "load_context",
+      "main_ui"
+    ]
+  },
+  "onlyACollectsCredentials": true,
+  "independentBranchReads": true,
+  "failureAndRetryPaths": true,
+  "mermaidParsed": true,
+  "visual": {
+    "profile": "flowchart",
+    "orientation": "TD",
+    "sameRank": [
+      {
+        "nodeIds": [
+          "a_input",
+          "b_authorize",
+          "c_authorize"
+        ],
+        "reason": "alternative entries"
+      },
+      {
+        "nodeIds": [
+          "a_verify",
+          "b_verify",
+          "c_verify"
+        ],
+        "reason": "alternative completion before merge"
+      }
+    ],
+    "svg": true,
+    "mermaidLayoutHints": true
+  }
+}

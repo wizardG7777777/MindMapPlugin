@@ -1,3 +1,4 @@
+import { profiles } from './presentation/contracts.js';
 import { obj, arr, str, bool, integer, id, text, dialect, queryDefaults, queryMaximums } from './definitions.js';
 export const optionKey = name => name.slice(2).replace(/-([a-z])/g, (_, c) => c.toUpperCase());
 const option = (name, valueType, description, extras = {}) => ({ name, valueType, required: false, default: null, enum: null, bounds: null, description, ...extras });
@@ -15,6 +16,8 @@ const contextOptions = [
   option('--direction', 'string', 'Relationship traversal direction.', { default: 'outgoing', enum: ['outgoing', 'incoming', 'both'] }),
   option('--kinds', 'string-list', 'Exact relationship kinds, separated by commas.'), content,
   ...['maxNodes', 'maxEdges', 'maxBoundaryEdges'].map(key => number('--' + key.replace(/[A-Z]/g, c => '-' + c.toLowerCase()), queryDefaults[key], key === 'maxBoundaryEdges' ? 0 : 1, queryMaximums[key], 'Maximum returned ' + key.slice(3).toLowerCase() + '.')),
+  flag('--layout-hints', 'Attach measured layout geometry to Mermaid output; requires --mermaid.'),
+  option('--layout', 'string', 'Layout strategy used by Mermaid hints; requires --mermaid and --layout-hints.', { enum: ['auto', ...profiles] }),
   maxText, flag('--mermaid', 'Include structural Mermaid text and canonical ID mappings.'),
   option('--orientation', 'string', 'Mermaid direction; requires --mermaid.', { default: 'LR', enum: ['LR', 'TD'] }),
 ];
@@ -22,7 +25,8 @@ const records = [
   ['version', 'mindmap --version', 'Identify the executable and supported protocol versions.', [], [], ['mindmap --version --json']],
   ['help', 'mindmap --help | mindmap <command> --help', 'Read commands and options.', [], [], ['mindmap context --help']],
   ['capabilities', 'mindmap capabilities', 'Discover commands, schemas, limits and tested storage support.', [], [], ['mindmap capabilities --json']],
-  ['schema', 'mindmap schema <name>', 'Return a complete JSON Schema.', [positional('name', 'Schema name.', ['document', 'operations', 'context', 'result'])], [], ['mindmap schema operations --json']],
+  ['schema', 'mindmap schema <name>', 'Return a complete JSON Schema.', [positional('name', 'Schema name.', ['document', 'operations', 'context', 'result', 'layout'])], [], ['mindmap schema operations --json']],
+  ['render', 'mindmap render <document> --format svg|mermaid', 'Render the complete graph without changing it; --raw emits a standalone artifact.', [documentArg], [option('--format', 'string', 'Artifact format.', { required: true, enum: ['svg', 'mermaid'] }), option('--layout', 'string', 'Graph-specific layout strategy; auto uses semanticType.', { default: 'auto', enum: ['auto', ...profiles] }), option('--orientation', 'string', 'Execution or hierarchy direction; defaults to TD for flowchart/dependency and LR otherwise.', { enum: ['TD', 'LR'] }), option('--root', 'string', 'Explicit presentation root; defaults to the document entry.'), flag('--layout-hints', 'Include measured geometry and standard spacing hints in Mermaid output.'), flag('--raw', 'Write only SVG/Mermaid text to stdout; errors go to stderr. Incompatible with --json.')], ['mindmap render ./plan.json --format svg --layout flowchart --raw > plan.svg', 'mindmap render ./plan.json --format mermaid --layout-hints --json']],
   ['create', 'mindmap create <document>', 'Create an empty graph; never overwrite an existing file.', [documentArg], [option('--title', 'string', 'Document title.', { default: 'Untitled graph' }), option('--id', 'string', 'Document ID; generated UUID when absent.'), lockTimeout], ['mindmap create ./plan.json --id plan --json']],
   ['inspect', 'mindmap inspect <document>', 'Read document counts or a committed operation receipt.', [documentArg], [option('--operation-id', 'string', 'Exact committed operation ID.')], ['mindmap inspect ./plan.json --json']],
   ['export', 'mindmap export <document>', 'Read the complete document and all receipts without query truncation.', [documentArg], [], ['mindmap export ./plan.json --json']],
@@ -36,7 +40,7 @@ const records = [
 ];
 function optionSchema(opt) {
   const key = optionKey(opt.name);
-  let value = opt.valueType === 'boolean' ? { const: true } : opt.valueType === 'integer' ? { ...integer, minimum: opt.bounds.min, maximum: opt.bounds.max } : opt.valueType === 'string-list' ? arr(['nodes', 'edges'].includes(key) ? id : text, { uniqueItems: true, minItems: 1 }) : ['id', 'operationId'].includes(key) ? id : text;
+  let value = opt.valueType === 'boolean' ? { const: true } : opt.valueType === 'integer' ? { ...integer, minimum: opt.bounds.min, maximum: opt.bounds.max } : opt.valueType === 'string-list' ? arr(['nodes', 'edges'].includes(key) ? id : text, { uniqueItems: true, minItems: 1 }) : ['id', 'operationId', 'root'].includes(key) ? id : text;
   if (opt.enum) value = { ...value, enum: opt.enum };
   return value;
 }
@@ -48,7 +52,8 @@ function commandSchema(name, args, options) {
     { required: ['all'], not: { anyOf: ['nodes','edges','direction','depth'].map(k => ({ required: [k] })) } },
     { not: { required: ['all'] }, anyOf: [{ required: ['nodes'] }, { required: ['edges'] }] },
   ] });
-  if (['context', 'neighbors'].includes(name)) constraints.push({ if: { required: ['orientation'] }, then: { required: ['mermaid'] } });
+  if (name === 'render') constraints.push({ not: { required: ['raw', 'json'] } }, { if: { required: ['layoutHints'] }, then: { properties: { format: { const: 'mermaid' } } } });
+  if (['context', 'neighbors'].includes(name)) constraints.push({ if: { anyOf: [{required:['orientation']},{required:['layoutHints']},{required:['layout']}] }, then: { required: ['mermaid'] } }, {if:{required:['layout']},then:{required:['layoutHints']}});
   return { $schema: dialect, ...obj(properties, []), allOf: [{ if: { not: { required: ['help'] } }, then: { required, ...(constraints.length ? { allOf: constraints } : {}) } }] };
 }
 export const commands = records.map(([name, usage, description, args, options, examples]) => {

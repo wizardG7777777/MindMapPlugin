@@ -1,0 +1,661 @@
+{
+  "envelopeVersion": 1,
+  "documentId": "login-authentication",
+  "baseGraphVersion": 1,
+  "operationId": "describe-login-control-flow-v1",
+  "actor": {
+    "kind": "agent",
+    "name": "Codex"
+  },
+  "scope": {
+    "mode": "document",
+    "allowDelete": false
+  },
+  "operations": [
+    {
+      "type": "updateNode",
+      "nodeId": "login_ui",
+      "patch": {
+        "meta": {
+          "owner": "frontend",
+          "flow": {
+            "role": "start"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateNode",
+      "nodeId": "choose_method",
+      "patch": {
+        "meta": {
+          "owner": "user",
+          "flow": {
+            "role": "decision",
+            "mergeNodeId": "resolve_account"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateNode",
+      "nodeId": "a_input",
+      "patch": {
+        "meta": {
+          "owner": "frontend",
+          "loginMethod": "A",
+          "collectsAccountAndPassword": true,
+          "flow": {
+            "role": "action"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateNode",
+      "nodeId": "a_form_check",
+      "patch": {
+        "meta": {
+          "owner": "frontend",
+          "flow": {
+            "role": "decision"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateNode",
+      "nodeId": "a_input_error",
+      "patch": {
+        "meta": {
+          "owner": "frontend",
+          "flow": {
+            "role": "error"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateNode",
+      "nodeId": "a_verify",
+      "patch": {
+        "meta": {
+          "owner": "backend",
+          "flow": {
+            "role": "decision"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateNode",
+      "nodeId": "a_auth_error",
+      "patch": {
+        "meta": {
+          "owner": "frontend",
+          "flow": {
+            "role": "error"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateNode",
+      "nodeId": "b_authorize",
+      "patch": {
+        "meta": {
+          "owner": "platform_b",
+          "loginMethod": "B",
+          "collectsAccountAndPassword": false,
+          "flow": {
+            "role": "action"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateNode",
+      "nodeId": "b_verify",
+      "patch": {
+        "meta": {
+          "owner": "backend",
+          "flow": {
+            "role": "decision"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateNode",
+      "nodeId": "c_authorize",
+      "patch": {
+        "meta": {
+          "owner": "platform_c",
+          "loginMethod": "C",
+          "collectsAccountAndPassword": false,
+          "flow": {
+            "role": "action"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateNode",
+      "nodeId": "c_verify",
+      "patch": {
+        "meta": {
+          "owner": "backend",
+          "flow": {
+            "role": "decision"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateNode",
+      "nodeId": "platform_error",
+      "patch": {
+        "meta": {
+          "owner": "frontend",
+          "flow": {
+            "role": "error"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateNode",
+      "nodeId": "resolve_account",
+      "patch": {
+        "meta": {
+          "owner": "backend",
+          "flow": {
+            "role": "merge"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateNode",
+      "nodeId": "account_check",
+      "patch": {
+        "meta": {
+          "owner": "backend",
+          "flow": {
+            "role": "decision"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateNode",
+      "nodeId": "account_error",
+      "patch": {
+        "meta": {
+          "owner": "frontend",
+          "flow": {
+            "role": "error"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateNode",
+      "nodeId": "issue_session",
+      "patch": {
+        "meta": {
+          "owner": "backend",
+          "flow": {
+            "role": "action"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateNode",
+      "nodeId": "session_error",
+      "patch": {
+        "meta": {
+          "owner": "frontend",
+          "flow": {
+            "role": "error"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateNode",
+      "nodeId": "accept_session",
+      "patch": {
+        "meta": {
+          "owner": "frontend",
+          "flow": {
+            "role": "action"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateNode",
+      "nodeId": "load_context",
+      "patch": {
+        "meta": {
+          "owner": "frontend_backend",
+          "flow": {
+            "role": "action"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateNode",
+      "nodeId": "load_error",
+      "patch": {
+        "meta": {
+          "owner": "frontend",
+          "flow": {
+            "role": "error"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateNode",
+      "nodeId": "clear_session",
+      "patch": {
+        "meta": {
+          "owner": "frontend",
+          "flow": {
+            "role": "error"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateNode",
+      "nodeId": "main_ui",
+      "patch": {
+        "meta": {
+          "owner": "frontend",
+          "flow": {
+            "role": "end"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateEdge",
+      "edgeId": "e01",
+      "patch": {
+        "meta": {
+          "flow": {
+            "role": "forward"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateEdge",
+      "edgeId": "e02",
+      "patch": {
+        "meta": {
+          "flow": {
+            "role": "branch"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateEdge",
+      "edgeId": "e03",
+      "patch": {
+        "meta": {
+          "flow": {
+            "role": "branch"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateEdge",
+      "edgeId": "e04",
+      "patch": {
+        "meta": {
+          "flow": {
+            "role": "branch"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateEdge",
+      "edgeId": "e05",
+      "patch": {
+        "meta": {
+          "flow": {
+            "role": "forward"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateEdge",
+      "edgeId": "e06",
+      "patch": {
+        "meta": {
+          "flow": {
+            "role": "error"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateEdge",
+      "edgeId": "e07",
+      "patch": {
+        "meta": {
+          "flow": {
+            "role": "retry"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateEdge",
+      "edgeId": "e08",
+      "patch": {
+        "meta": {
+          "flow": {
+            "role": "forward"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateEdge",
+      "edgeId": "e09",
+      "patch": {
+        "meta": {
+          "flow": {
+            "role": "error"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateEdge",
+      "edgeId": "e10",
+      "patch": {
+        "meta": {
+          "flow": {
+            "role": "retry"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateEdge",
+      "edgeId": "e11",
+      "patch": {
+        "meta": {
+          "flow": {
+            "role": "forward"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateEdge",
+      "edgeId": "e12",
+      "patch": {
+        "meta": {
+          "flow": {
+            "role": "forward"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateEdge",
+      "edgeId": "e13",
+      "patch": {
+        "meta": {
+          "flow": {
+            "role": "error"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateEdge",
+      "edgeId": "e14",
+      "patch": {
+        "meta": {
+          "flow": {
+            "role": "error"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateEdge",
+      "edgeId": "e15",
+      "patch": {
+        "meta": {
+          "flow": {
+            "role": "forward"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateEdge",
+      "edgeId": "e16",
+      "patch": {
+        "meta": {
+          "flow": {
+            "role": "forward"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateEdge",
+      "edgeId": "e17",
+      "patch": {
+        "meta": {
+          "flow": {
+            "role": "error"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateEdge",
+      "edgeId": "e18",
+      "patch": {
+        "meta": {
+          "flow": {
+            "role": "error"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateEdge",
+      "edgeId": "e19",
+      "patch": {
+        "meta": {
+          "flow": {
+            "role": "forward"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateEdge",
+      "edgeId": "e20",
+      "patch": {
+        "meta": {
+          "flow": {
+            "role": "retry"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateEdge",
+      "edgeId": "e21",
+      "patch": {
+        "meta": {
+          "flow": {
+            "role": "forward"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateEdge",
+      "edgeId": "e22",
+      "patch": {
+        "meta": {
+          "flow": {
+            "role": "error"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateEdge",
+      "edgeId": "e23",
+      "patch": {
+        "meta": {
+          "flow": {
+            "role": "error"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateEdge",
+      "edgeId": "e24",
+      "patch": {
+        "meta": {
+          "flow": {
+            "role": "retry"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateEdge",
+      "edgeId": "e25",
+      "patch": {
+        "meta": {
+          "flow": {
+            "role": "forward"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateEdge",
+      "edgeId": "e26",
+      "patch": {
+        "meta": {
+          "flow": {
+            "role": "error"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateEdge",
+      "edgeId": "e27",
+      "patch": {
+        "meta": {
+          "flow": {
+            "role": "retry"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateEdge",
+      "edgeId": "e28",
+      "patch": {
+        "meta": {
+          "flow": {
+            "role": "forward"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateEdge",
+      "edgeId": "e29",
+      "patch": {
+        "meta": {
+          "flow": {
+            "role": "forward"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateEdge",
+      "edgeId": "e30",
+      "patch": {
+        "meta": {
+          "flow": {
+            "role": "error"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateEdge",
+      "edgeId": "e31",
+      "patch": {
+        "meta": {
+          "flow": {
+            "role": "retry"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateEdge",
+      "edgeId": "e32",
+      "patch": {
+        "meta": {
+          "flow": {
+            "role": "error"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateEdge",
+      "edgeId": "e33",
+      "patch": {
+        "meta": {
+          "flow": {
+            "role": "retry"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateEdge",
+      "edgeId": "e34",
+      "patch": {
+        "meta": {
+          "flow": {
+            "role": "forward"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,602 @@
+{
+  "envelopeVersion": 1,
+  "documentId": "login-authentication",
+  "baseGraphVersion": 0,
+  "operationId": "build-login-authentication-v1",
+  "actor": {
+    "kind": "agent",
+    "name": "Codex"
+  },
+  "scope": {
+    "mode": "document",
+    "allowDelete": false
+  },
+  "operations": [
+    {
+      "type": "addNode",
+      "node": {
+        "id": "login_ui",
+        "title": "用户看到登录界面",
+        "cardContent": "展示 A、B、C 三种登录入口。",
+        "notes": "",
+        "meta": {
+          "owner": "frontend"
+        }
+      }
+    },
+    {
+      "type": "addNode",
+      "node": {
+        "id": "choose_method",
+        "title": "用户选择登录方式",
+        "cardContent": "A 为本系统账号密码登录；B、C 为对应平台鉴权。",
+        "notes": "",
+        "meta": {
+          "owner": "user"
+        }
+      }
+    },
+    {
+      "type": "addNode",
+      "node": {
+        "id": "a_input",
+        "title": "A：输入账号和密码",
+        "cardContent": "仅 A 方式在本系统收集账号和密码。",
+        "notes": "",
+        "meta": {
+          "owner": "frontend",
+          "loginMethod": "A",
+          "collectsAccountAndPassword": true
+        }
+      }
+    },
+    {
+      "type": "addNode",
+      "node": {
+        "id": "a_form_check",
+        "title": "A：检查必填项与格式",
+        "cardContent": "前端检查输入是否完整、格式是否符合要求；不承担身份鉴权。",
+        "notes": "",
+        "meta": {
+          "owner": "frontend"
+        }
+      }
+    },
+    {
+      "type": "addNode",
+      "node": {
+        "id": "a_input_error",
+        "title": "提示输入问题",
+        "cardContent": "标出需要修正的输入，返回账号密码表单。",
+        "notes": "",
+        "meta": {
+          "owner": "frontend"
+        }
+      }
+    },
+    {
+      "type": "addNode",
+      "node": {
+        "id": "a_verify",
+        "title": "A：服务端校验账号密码",
+        "cardContent": "提交至本系统登录接口，由服务端验证账号及密码。",
+        "notes": "",
+        "meta": {
+          "owner": "backend"
+        }
+      }
+    },
+    {
+      "type": "addNode",
+      "node": {
+        "id": "a_auth_error",
+        "title": "A：提示账号或密码错误",
+        "cardContent": "保留在 A 登录流程，允许重新输入。",
+        "notes": "",
+        "meta": {
+          "owner": "frontend"
+        }
+      }
+    },
+    {
+      "type": "addNode",
+      "node": {
+        "id": "b_authorize",
+        "title": "B：发起平台 B 授权",
+        "cardContent": "通过平台 B 的登录 SDK 或授权流程取得待验证的平台凭证；本系统不收集平台密码。",
+        "notes": "",
+        "meta": {
+          "owner": "platform_b",
+          "loginMethod": "B",
+          "collectsAccountAndPassword": false
+        }
+      }
+    },
+    {
+      "type": "addNode",
+      "node": {
+        "id": "b_verify",
+        "title": "B：服务端调用平台 B API 鉴权",
+        "cardContent": "按平台 B 规范验证或交换凭证，并获取经验证的平台用户身份；不信任客户端自行宣称的身份。",
+        "notes": "",
+        "meta": {
+          "owner": "backend"
+        }
+      }
+    },
+    {
+      "type": "addNode",
+      "node": {
+        "id": "c_authorize",
+        "title": "C：发起平台 C 授权",
+        "cardContent": "通过平台 C 的登录 SDK 或授权流程取得待验证的平台凭证；本系统不收集平台密码。",
+        "notes": "",
+        "meta": {
+          "owner": "platform_c",
+          "loginMethod": "C",
+          "collectsAccountAndPassword": false
+        }
+      }
+    },
+    {
+      "type": "addNode",
+      "node": {
+        "id": "c_verify",
+        "title": "C：服务端调用平台 C API 鉴权",
+        "cardContent": "按平台 C 规范验证或交换凭证，并获取经验证的平台用户身份。",
+        "notes": "",
+        "meta": {
+          "owner": "backend"
+        }
+      }
+    },
+    {
+      "type": "addNode",
+      "node": {
+        "id": "platform_error",
+        "title": "提示平台登录未完成",
+        "cardContent": "覆盖用户取消、拒绝授权、凭证无效及 API 超时或失败；允许重新选择方式。",
+        "notes": "",
+        "meta": {
+          "owner": "frontend"
+        }
+      }
+    },
+    {
+      "type": "addNode",
+      "node": {
+        "id": "resolve_account",
+        "title": "确认对应的本地账号",
+        "cardContent": "将通过鉴权的身份映射到本地账号。首次平台登录的创建或绑定方式由业务规则决定，不在本示意图中指定具体策略。",
+        "notes": "",
+        "meta": {
+          "owner": "backend"
+        }
+      }
+    },
+    {
+      "type": "addNode",
+      "node": {
+        "id": "account_check",
+        "title": "检查本地账号是否可登录",
+        "cardContent": "检查账号状态及业务准入条件。",
+        "notes": "",
+        "meta": {
+          "owner": "backend"
+        }
+      }
+    },
+    {
+      "type": "addNode",
+      "node": {
+        "id": "account_error",
+        "title": "提示账号不可用或关联失败",
+        "cardContent": "不创建登录会话；展示原因并允许返回登录入口。",
+        "notes": "",
+        "meta": {
+          "owner": "frontend"
+        }
+      }
+    },
+    {
+      "type": "addNode",
+      "node": {
+        "id": "issue_session",
+        "title": "服务端建立本系统登录会话",
+        "cardContent": "身份和账号检查通过后，建立本系统会话并返回登录结果；平台凭证不直接等同于本系统会话。",
+        "notes": "",
+        "meta": {
+          "owner": "backend"
+        }
+      }
+    },
+    {
+      "type": "addNode",
+      "node": {
+        "id": "session_error",
+        "title": "提示登录服务暂时失败",
+        "cardContent": "会话未建立时不进入主界面，允许重新发起登录。",
+        "notes": "",
+        "meta": {
+          "owner": "frontend"
+        }
+      }
+    },
+    {
+      "type": "addNode",
+      "node": {
+        "id": "accept_session",
+        "title": "客户端确认登录成功",
+        "cardContent": "按本系统会话机制接收登录态，开始初始化用户环境。",
+        "notes": "",
+        "meta": {
+          "owner": "frontend"
+        }
+      }
+    },
+    {
+      "type": "addNode",
+      "node": {
+        "id": "load_context",
+        "title": "加载用户资料与权限",
+        "cardContent": "携带本系统会话请求用户资料、权限和主界面必需数据；服务端校验会话。",
+        "notes": "",
+        "meta": {
+          "owner": "frontend_backend"
+        }
+      }
+    },
+    {
+      "type": "addNode",
+      "node": {
+        "id": "load_error",
+        "title": "显示初始化失败并提供重试",
+        "cardContent": "网络或服务暂时失败时保留加载状态，不误报已进入主界面。",
+        "notes": "",
+        "meta": {
+          "owner": "frontend"
+        }
+      }
+    },
+    {
+      "type": "addNode",
+      "node": {
+        "id": "clear_session",
+        "title": "清理失效登录态",
+        "cardContent": "初始化过程中会话失效或未通过验证，清理本地登录状态并返回登录页。",
+        "notes": "",
+        "meta": {
+          "owner": "frontend"
+        }
+      }
+    },
+    {
+      "type": "addNode",
+      "node": {
+        "id": "main_ui",
+        "title": "进入主界面，登录完成",
+        "cardContent": "用户资料和权限准备完成，展示主界面及该用户可访问的功能。",
+        "notes": "",
+        "meta": {
+          "owner": "frontend"
+        }
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e01",
+        "source": "login_ui",
+        "target": "choose_method",
+        "kind": "点击登录入口"
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e02",
+        "source": "choose_method",
+        "target": "a_input",
+        "kind": "选择 A"
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e03",
+        "source": "choose_method",
+        "target": "b_authorize",
+        "kind": "选择 B"
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e04",
+        "source": "choose_method",
+        "target": "c_authorize",
+        "kind": "选择 C"
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e05",
+        "source": "a_input",
+        "target": "a_form_check",
+        "kind": "提交"
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e06",
+        "source": "a_form_check",
+        "target": "a_input_error",
+        "kind": "输入不完整或格式错误"
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e07",
+        "source": "a_input_error",
+        "target": "a_input",
+        "kind": "修正后重试"
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e08",
+        "source": "a_form_check",
+        "target": "a_verify",
+        "kind": "输入合法"
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e09",
+        "source": "a_verify",
+        "target": "a_auth_error",
+        "kind": "验证失败"
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e10",
+        "source": "a_auth_error",
+        "target": "a_input",
+        "kind": "重新输入"
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e11",
+        "source": "a_verify",
+        "target": "resolve_account",
+        "kind": "A 鉴权成功"
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e12",
+        "source": "b_authorize",
+        "target": "b_verify",
+        "kind": "取得平台 B 凭证"
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e13",
+        "source": "b_authorize",
+        "target": "platform_error",
+        "kind": "取消或拒绝授权"
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e14",
+        "source": "b_verify",
+        "target": "platform_error",
+        "kind": "凭证无效或 API 失败"
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e15",
+        "source": "b_verify",
+        "target": "resolve_account",
+        "kind": "B 鉴权成功"
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e16",
+        "source": "c_authorize",
+        "target": "c_verify",
+        "kind": "取得平台 C 凭证"
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e17",
+        "source": "c_authorize",
+        "target": "platform_error",
+        "kind": "取消或拒绝授权"
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e18",
+        "source": "c_verify",
+        "target": "platform_error",
+        "kind": "凭证无效或 API 失败"
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e19",
+        "source": "c_verify",
+        "target": "resolve_account",
+        "kind": "C 鉴权成功"
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e20",
+        "source": "platform_error",
+        "target": "login_ui",
+        "kind": "重试或改选方式"
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e21",
+        "source": "resolve_account",
+        "target": "account_check",
+        "kind": "本地账号已确认"
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e22",
+        "source": "resolve_account",
+        "target": "account_error",
+        "kind": "无法完成账号关联"
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e23",
+        "source": "account_check",
+        "target": "account_error",
+        "kind": "账号不可登录"
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e24",
+        "source": "account_error",
+        "target": "login_ui",
+        "kind": "返回登录入口"
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e25",
+        "source": "account_check",
+        "target": "issue_session",
+        "kind": "允许登录"
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e26",
+        "source": "issue_session",
+        "target": "session_error",
+        "kind": "会话建立失败"
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e27",
+        "source": "session_error",
+        "target": "login_ui",
+        "kind": "重新登录"
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e28",
+        "source": "issue_session",
+        "target": "accept_session",
+        "kind": "会话建立成功"
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e29",
+        "source": "accept_session",
+        "target": "load_context",
+        "kind": "初始化用户环境"
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e30",
+        "source": "load_context",
+        "target": "load_error",
+        "kind": "网络或服务失败"
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e31",
+        "source": "load_error",
+        "target": "load_context",
+        "kind": "点击重试"
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e32",
+        "source": "load_context",
+        "target": "clear_session",
+        "kind": "会话失效或未通过验证"
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e33",
+        "source": "clear_session",
+        "target": "login_ui",
+        "kind": "返回登录页"
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e34",
+        "source": "load_context",
+        "target": "main_ui",
+        "kind": "会话有效且资料权限加载完成"
+      }
+    },
+    {
+      "type": "setEntryNode",
+      "nodeId": "login_ui"
+    },
+    {
+      "type": "updateDocument",
+      "patch": {
+        "semanticType": "authentication-flowchart"
+      }
+    }
+  ]
+}
