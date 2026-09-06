@@ -1,0 +1,50 @@
+// A black-box caller: only the installed executable, its help/schema/skill, and
+// this task are inputs. No product source, internal helpers or fixtures are used.
+import fs from 'node:fs/promises';
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
+import { dirname,join } from 'node:path';
+import assert from 'node:assert/strict';
+const exec = promisify(execFile);
+const [bin,work,report,profile] = process.argv.slice(2);
+const calls = [];
+async function call(...args) {
+  const executable = profile ? '/usr/bin/sandbox-exec' : process.execPath;
+  const argv = profile ? ['-f',profile,process.execPath,bin,...args,'--json'] : [bin,...args,'--json'];
+  const {stdout,stderr} = await exec(executable,argv,{cwd:work,timeout:15000,maxBuffer:16*1024*1024});
+  assert.equal(stderr,''); const result=JSON.parse(stdout); assert.equal(result.ok,true);
+  calls.push({args,result}); return result;
+}
+const version = await call('--version'); assert.equal(version.data.version,'0.2.0');
+await call('--help');
+const caps = (await call('capabilities')).data;
+assert.ok(caps.cycles && caps.parallelEdges && !caps.requiresServer);
+const schema = (await call('schema','operations')).data;
+const types = new Set(schema.properties.operations.items.oneOf.map(shape => shape.properties.type.const));
+for (const name of ['addNode','addEdge','updateNode']) assert.ok(types.has(name));
+const skill = await fs.readFile(join(dirname(dirname(bin)),'skills/mindmap-cli/SKILL.md'),'utf8');
+assert.ok(skill.includes('base version') && skill.includes('same bytes'));
+await call('create','evaluation.json','--id','evaluation','--title','Independent evaluation');
+const graph = (await call('export','evaluation.json')).data.document;
+const graphIds = ['observe','plan','review','spectator'];
+const edges = [['plan','observe'],['observe','review'],['review','plan']];
+const request = {envelopeVersion:schema.properties.envelopeVersion.const,documentId:graph.metadata.id,baseGraphVersion:graph.metadata.graphVersion,operationId:'build-evaluation',actor:{kind:'agent',name:'package-evaluator'},scope:{mode:'document',allowDelete:false},operations:[...graphIds.map(id => ({type:'addNode',node:{id,title:id}})),...edges.map(([source,target],i) => ({type:'addEdge',edge:{id:'e'+i,source,target,kind:'next'}}))]};
+await fs.writeFile(join(work,'request.json'),JSON.stringify(request)+'\n');
+await call('preview','evaluation.json','--input','request.json');
+await call('apply','evaluation.json','--input','request.json');
+const context = await call('context','evaluation.json','--nodes','plan','--depth','2','--content','all','--mermaid');
+assert.equal(context.data.nodes.length,3); assert.equal(context.data.edges.length,3);
+const revise = {...request,baseGraphVersion:context.graphVersion,operationId:'refine-evaluation',scope:{mode:'ids',nodeIds:['plan'],edgeIds:[],allowDelete:false},operations:[{type:'updateNode',nodeId:'plan',patch:{title:'Refined plan'}}]};
+await fs.writeFile(join(work,'revise.json'),JSON.stringify(revise)+'\n');
+const [edited,independentRead] = await Promise.all([call('apply','evaluation.json','--input','revise.json'),call('node','evaluation.json','--id','spectator','--content','all')]);
+assert.equal(edited.graphVersion,2); assert.equal(independentRead.data.node.title,'spectator');
+await call('neighbors','evaluation.json','--id','review','--direction','both');
+await call('inspect','evaluation.json','--operation-id','build-evaluation');
+await call('validate','evaluation.json');
+await call('doctor'); await call('doctor','--directory',work);
+const final=(await call('export','evaluation.json')).data.document;
+assert.equal(final.metadata.graphVersion,2); assert.equal(final.graph.nodes.plan.title,'Refined plan');
+assert.deepEqual(Object.values(final.graph.edges).map(e => [e.source,e.target]),edges);
+assert.equal(final.graph.nodes.spectator.title,'spectator');
+await fs.writeFile(report,JSON.stringify({version:version.data,task:'Build and refine a three-node directed cycle while an independent caller reads an unrelated node.',networkDenied:Boolean(profile),childProcessesDenied:Boolean(profile),calls,final},null,2)+'\n');
+console.log(`Independent package evaluation passed (${calls.length} calls).`);

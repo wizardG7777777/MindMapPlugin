@@ -1,0 +1,70 @@
+{
+  "version": "0.2.0",
+  "artifact": "mindmap-cli-0.2.0.tgz",
+  "sha256": "3d11d706cbee42e823e9732bf404b4cc1e59c77d4ec938f6311e0f8c94ba89ee",
+  "nodeVersion": "24.15.0",
+  "os": "darwin",
+  "osRelease": "25.6.0",
+  "arch": "arm64",
+  "filesystemType": 26,
+  "installScripts": false,
+  "developmentDependencies": false,
+  "immutableAssets": true,
+  "missingAdapterVerified": true,
+  "offlineCommands": true,
+  "childProcessesDenied": true,
+  "independentEvaluator": "separate schema-driven program; no source or internal fixtures",
+  "powerLossTested": false,
+  "completedAt": "2026-09-06T09:02:55.639Z",
+  "tests": {
+    "tests": 34,
+    "pass": 34,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "commandTranscriptEntries": 279,
+  "independentEvaluationCalls": 17,
+  "evaluationResult": {
+    "graphVersion": 2,
+    "nodeIds": [
+      "observe",
+      "plan",
+      "review",
+      "spectator"
+    ],
+    "edges": [
+      [
+        "observe",
+        "review"
+      ],
+      [
+        "plan",
+        "observe"
+      ],
+      [
+        "review",
+        "plan"
+      ]
+    ],
+    "unrelatedNodeUnchanged": true
+  },
+  "reproduce": [
+    "npm ci",
+    "npm run build",
+    "npm test",
+    "npm run test:package"
+  ],
+  "evidenceFiles": [
+    "test-results/package/summary.json",
+    "test-results/package/tests.tap",
+    "test-results/package/commands.ndjson",
+    "test-results/package/independent-evaluation.json"
+  ],
+  "notes": [
+    "Package artifacts and full logs are generated locally; verification summaries are committed separately to avoid a self-referential artifact hash.",
+    "Native I/O and concurrency guarantees apply only to the advertised local storage matrix and cooperating CLI writers.",
+    "The independent evaluator is an automated schema-driven caller; no external model-provider integration or power-loss experiment was performed."
+  ]
+}

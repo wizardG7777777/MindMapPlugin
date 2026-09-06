@@ -1,6 +1,14 @@
 # Implementation Roadmap
 
-Status: target implementation order. All completion claims require the evidence defined in [acceptance](acceptance.md).
+Status: implementation phases and release gates for 0.2.0. Verification follows [acceptance](acceptance.md).
+
+## Release 0.2.0 implementation
+
+The runtime lives in `src/`; the build copies executable JavaScript into `dist/` and generates the four JSON Schemas under `schemas/`. `bin/mindmap.js` is the package entry point. The standalone skill and schema-2 examples ship with the package.
+
+`test/` contains the command, graph, context, Mermaid, persistence and native-adapter checks. Cross-process failure injection is confined to the test runner's internal dependency injection; the release command parser exposes no test flags. `scripts/package-acceptance.js` repeats the tests through an immutable installation and supplies only the installed package to a separate schema-driven evaluator.
+
+The advertised write matrix currently contains macOS arm64/APFS with Node 24.15.0. Expand it only after executing the platform gates. The evaluator is an automated local caller; it does not claim a live integration test of any model provider.
 
 ## Phase 1: Contract and fixtures
 

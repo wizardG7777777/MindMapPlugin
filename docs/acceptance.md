@@ -10,6 +10,22 @@ Status: normative first-delivery gates. This file defines tests to run against a
 
 None of these levels implies the next. A successful build, help command or unit test suite alone is insufficient.
 
+## Running the implementation checks
+
+Use Node 24.15.0 on the advertised macOS arm64/APFS configuration. `npm test` builds the runtime and runs the new tests under `test/`. `npm run test:package` packs and installs the artifact into a clean temporary directory, repeats those tests through its executable with package files read-only, and records results in `test-results/package/`.
+
+The package evaluator is a separate schema-driven program supplied with the installed executable, help, schemas and skill. It receives no graph-core imports or internal fixtures. Its actual calls and final graph are recorded, and its CLI commands run with network access and child-process creation denied by an operating-system sandbox. This is automated caller acceptance, not an assertion that a particular external model provider was exercised.
+
+| Gates | Executable evidence |
+| --- | --- |
+| C01–C04, C06–C08, C11–C12 | `test/commands.test.js`, `test/invalid-data.test.js` |
+| C05 | `test/mermaid.test.js`, using pinned Mermaid 11.17.2 and jsdom 30.0.1 |
+| C09–C10, C14 | `test/queries.test.js` |
+| C13, P06 storage failures | `test/storage.test.js` |
+| P01–P08, P10 | `test/concurrency.test.js`, with a separate-process failpoint runner |
+| P09 | `test/invalid-data.test.js` |
+| R01–R05 for the advertised configuration | `scripts/package-acceptance.js` and `test/helpers/evaluate-package.js` |
+
 ## Harness requirements
 
 Use temporary directories and an explicit path to the release executable. The harness may be written in any available test language; the product itself must not require that language. Validate JSON results against the published result schema and independently inspect persisted documents against the document schema.

@@ -3,6 +3,7 @@
 
 .mindmap/
 node_modules/
-webui/dist/
-webui/test-results/
-webui/playwright-report/
+dist/
+coverage/
+test-results/
+*.tgz

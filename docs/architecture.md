@@ -1,6 +1,6 @@
 # Architecture
 
-Status: target specification for CLI contract version 1. The first delivery is headless. See [acceptance](acceptance.md) for implementation evidence.
+Status: normative specification for implemented CLI contract version 1. The first delivery is headless. See [acceptance](acceptance.md) for implementation evidence.
 
 ## Runtime boundaries
 
@@ -19,6 +19,17 @@ flowchart TD
 ```
 
 Every invocation is self-contained. No global current document, reader, selection, focus or task is stored. Several CLI processes may read the same file with different selectors. Ordinary commands exit after returning a result; no socket or daemon is needed.
+
+## Source map
+
+| Source | Responsibility |
+| --- | --- |
+| `src/cli.js`, `src/commands.js` | Executable routing and declarative command definitions |
+| `src/definitions.js`, `src/schemas.js`, `src/validation.js` | Shared schemas and semantic validation |
+| `src/graph.js` | Ordered operations, scope enforcement and preview diffs |
+| `src/queries.js` | Snapshot context and Mermaid projection |
+| `src/json.js` | Bounded reads and strict UTF-8/JSON parsing |
+| `src/persistence.js`, `src/native.js`, `src/support.js` | Transactions, kernel locking, synchronization and tested support |
 
 ## Modules
 

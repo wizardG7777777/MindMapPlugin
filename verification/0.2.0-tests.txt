@@ -1,0 +1,44 @@
+✔ C01: discovery, all help/schema outputs, exact command catalog and versions (1210.990541ms)
+✔ C02-C04: empty creation, all graph structures, preview, three independent readers (974.959208ms)
+✔ C06: every operation, shallow metadata, order, entry changes and removals (480.396833ms)
+✔ C07/C08: invalid operations and every indirect/intermediate scope effect are atomic (1949.350292ms)
+✔ C11/C12: parser failures, missing records, byte-exact stdin and readable output (1336.557708ms)
+✔ P01: repeated readers on a graph with no coordination directory create no state (459.096042ms)
+✔ P02/P03/P05: held writer, nonblocking readers/preview, timeout, then kernel release on death (784.775542ms)
+✔ P02: deterministic locked reload race and repeated ordinary release executable races (1038.119667ms)
+✔ P04: simultaneous exact replay, later commits, removed targets and changed bytes (736.560708ms)
+✔ P06: physical path, symlink, case aliases and hard-link rejection (622.016709ms)
+▶ P07: crash at each publication stage, exact recovery and intervening-commit conflict
+  ✔ beforeTemporarySync (531.576208ms)
+  ✔ afterTemporarySync (556.295625ms)
+  ✔ afterReplace (565.921667ms)
+  ✔ afterDurability (573.630291ms)
+✔ P07: crash at each publication stage, exact recovery and intervening-commit conflict (2712.893583ms)
+▶ P08: disk-full, permission, replace/sync failures and replay durability uncertainty
+  ✔ beforeTemporarySync (380.383791ms)
+  ✔ afterTemporarySync (401.261292ms)
+  ✔ beforeReplace (405.963084ms)
+  ✔ afterReplace (398.217334ms)
+  ✔ afterDurability (410.412375ms)
+✔ P08: disk-full, permission, replace/sync failures and replay durability uncertainty (2463.513709ms)
+✔ P10: concurrent create, case aliases, invalid existing targets and interrupted creation (723.354708ms)
+✔ P08: unexpected defects disclose whether publication already happened (752.57575ms)
+✔ P06/P10: APFS Unicode normalization and case aliases share a creation lock (227.770708ms)
+✔ P08: failures from actual write, file sync, rename and directory sync primitives (1538.861625ms)
+✔ C07: strict UTF-8/JSON, duplicate escaped keys, closed schemas and version errors (2170.7435ms)
+✔ P09: byte/count limits, oversized candidate with receipts, and bounded file reads (1197.910542ms)
+✔ C05: pinned Mermaid parser preserves cycles, self-loops, parallel edges and unsafe labels (686.005125ms)
+✔ C09: requested fields, byte-safe Unicode truncation and complete metadata (605.7485ms)
+✔ C10: traversal directions, edge seeds, all budgets and omission accounting (1071.082541ms)
+✔ C14: untruncated export beyond node/edge budgets and exact append to a >1 MiB field (1164.587459ms)
+✔ C13: doctor no-write/probe modes, permission failures and regular-file checks (840.304292ms)
+✔ C13/P06: adapter precedence, network storage rejection and unsafe coordination paths (374.023292ms)
+✔ P05: native descriptors retain FD_CLOEXEC with the real Darwin variadic ABI (5.252166ms)
+ℹ tests 34
+ℹ suites 0
+ℹ pass 34
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 27976.365959

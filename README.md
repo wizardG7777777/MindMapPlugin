@@ -2,7 +2,15 @@
 
 MindMap is a local directed-graph program with one public CLI for people and agents. Readers independently choose the document, nodes, relationships and content they need. A graph may contain cycles, multiple parents, parallel relationships, self-loops and disconnected components.
 
-**Status: CLI contract version 1, target specification.** The documents describe the required implementation, not a claim that the current source or a published package already provides these commands. Runtime readiness is established only by the [acceptance gates](docs/acceptance.md). Examples use the intended executable name `mindmap`.
+**Status: release 0.2.0, headless CLI implemented.** The executable provides the commands below. The package has not been published to npm. Writable storage is currently limited to macOS arm64 on APFS with Node 24.15.0; the executable reports the tested matrix through `capabilities`. [Acceptance](docs/acceptance.md) defines the runtime and package verification requirements.
+
+| Version | Value | Meaning |
+| --- | --- | --- |
+| Program release | `0.2.0` | MindMap's second version, expressed as a package version |
+| CLI contract | `1` | Command and result compatibility |
+| Document schema | `2` | Persisted graph format |
+| Operation envelope | `1` | Mutation request format |
+| Graph version | Starts at `0` | Per-document committed batch count |
 
 ## First delivery
 
@@ -43,7 +51,23 @@ mindmap context ./plan.json --all --mermaid --json
 mindmap validate ./plan.json --json
 ```
 
-These are target commands, not instructions to run an unreleased package. [Installation](docs/installation.md) defines how a release must make them available without a source checkout. The [agent skill](skills/mindmap-cli/SKILL.md) teaches the workflow but is not required for CLI access.
+[Installation](docs/installation.md) covers building from this checkout and installing the package artifact without a source checkout. The [agent skill](skills/mindmap-cli/SKILL.md) teaches the workflow but is not required for CLI access.
+
+## Build and verify
+
+Use Node **24.15.0**:
+
+```sh
+npm ci
+npm run build
+node ./bin/mindmap.js --help
+npm test
+npm run test:package
+```
+
+`npm test` runs the new CLI, graph, schema, query, native-lock and recovery tests. `test:package` installs a packed artifact with development dependencies and install scripts disabled, makes its assets read-only, repeats the tests through the installed executable, and runs an independent schema-driven caller with networking and child-process creation denied by the macOS sandbox. Run that package check outside an enclosing sandbox that forbids creating a test sandbox.
+
+The package check writes command transcripts, results and the exact artifact hash under `test-results/package/`. Release verification summaries are recorded in the repository's `verification/` directory. Process-crash tests do not establish power-loss recovery. Linux and Windows writes, graphical editing and automatic merge are not advertised by this release.
 
 ## Specification ownership
 

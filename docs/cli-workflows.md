@@ -1,6 +1,8 @@
 # CLI Workflows
 
-Status: target examples for CLI contract version 1. They become executable acceptance fixtures when the CLI is implemented; their presence is not runtime evidence. Run in a disposable directory with the release executable on PATH.
+Status: executable examples for CLI contract version 1, program 0.2.0. The new tests exercise these fixtures through separate executable processes. Run in a disposable directory with the release executable on PATH.
+
+The repository includes the [empty document](../samples/documents/empty-plan.json), [graph-building batch](../samples/operations/build-general-graph.json), [writer A batch](../samples/operations/writer-a.json) and [writer B batch](../samples/operations/writer-b.json) for these examples. Copy operation files before editing them; retain the submitted bytes for exact retries.
 
 ## Discover and create
 

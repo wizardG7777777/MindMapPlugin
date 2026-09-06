@@ -1,6 +1,6 @@
 # CLI Reference
 
-Status: target CLI contract version 1, not a claim of current runtime availability. All commands below are required for the first delivery. See [command contract](command-contract.md) for common results, limits and exit statuses, and [command result data](command-results.md) for exact JSON payloads.
+Status: CLI contract version 1, implemented in program 0.2.0. All commands below are included in the headless delivery. See [command contract](command-contract.md) for common results, limits and exit statuses, and [command result data](command-results.md) for exact JSON payloads.
 
 ## Command catalog
 

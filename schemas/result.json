@@ -1,0 +1,5769 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mindmap-cli:contract:1:result",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/versionSuccess"
+    },
+    {
+      "$ref": "#/$defs/helpSuccess"
+    },
+    {
+      "$ref": "#/$defs/capabilitiesSuccess"
+    },
+    {
+      "$ref": "#/$defs/schemaSuccess"
+    },
+    {
+      "$ref": "#/$defs/createSuccess"
+    },
+    {
+      "$ref": "#/$defs/inspectSuccess"
+    },
+    {
+      "$ref": "#/$defs/exportSuccess"
+    },
+    {
+      "$ref": "#/$defs/nodeSuccess"
+    },
+    {
+      "$ref": "#/$defs/neighborsSuccess"
+    },
+    {
+      "$ref": "#/$defs/contextSuccess"
+    },
+    {
+      "$ref": "#/$defs/previewSuccess"
+    },
+    {
+      "$ref": "#/$defs/applySuccess"
+    },
+    {
+      "$ref": "#/$defs/validateSuccess"
+    },
+    {
+      "$ref": "#/$defs/doctorSuccess"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "const": false
+        },
+        "cliContractVersion": {
+          "const": 1
+        },
+        "command": {
+          "type": "string"
+        },
+        "documentId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+              "maxLength": 128
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "graphVersion": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "data": {
+          "type": "null"
+        },
+        "error": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "const": "INVALID_ARGUMENT"
+            },
+            "message": {
+              "type": "string"
+            },
+            "details": {
+              "type": "object",
+              "properties": {
+                "argument": {
+                  "type": "string"
+                },
+                "reason": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "argument",
+                "reason"
+              ],
+              "additionalProperties": {
+                "$ref": "#/$defs/jsonValue"
+              }
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "details"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "ok",
+        "cliContractVersion",
+        "command",
+        "documentId",
+        "graphVersion",
+        "data",
+        "error"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "const": false
+        },
+        "cliContractVersion": {
+          "const": 1
+        },
+        "command": {
+          "type": "string"
+        },
+        "documentId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+              "maxLength": 128
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "graphVersion": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "data": {
+          "type": "null"
+        },
+        "error": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "const": "INVALID_JSON"
+            },
+            "message": {
+              "type": "string"
+            },
+            "details": {
+              "type": "object",
+              "properties": {
+                "source": {
+                  "enum": [
+                    "input",
+                    "document"
+                  ]
+                },
+                "reason": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "source",
+                "reason"
+              ],
+              "additionalProperties": {
+                "$ref": "#/$defs/jsonValue"
+              }
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "details"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "ok",
+        "cliContractVersion",
+        "command",
+        "documentId",
+        "graphVersion",
+        "data",
+        "error"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "const": false
+        },
+        "cliContractVersion": {
+          "const": 1
+        },
+        "command": {
+          "type": "string"
+        },
+        "documentId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+              "maxLength": 128
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "graphVersion": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "data": {
+          "type": "null"
+        },
+        "error": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "const": "INVALID_ENVELOPE"
+            },
+            "message": {
+              "type": "string"
+            },
+            "details": {
+              "type": "object",
+              "properties": {
+                "field": {
+                  "type": "string"
+                },
+                "reason": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "field",
+                "reason"
+              ],
+              "additionalProperties": {
+                "$ref": "#/$defs/jsonValue"
+              }
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "details"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "ok",
+        "cliContractVersion",
+        "command",
+        "documentId",
+        "graphVersion",
+        "data",
+        "error"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "const": false
+        },
+        "cliContractVersion": {
+          "const": 1
+        },
+        "command": {
+          "type": "string"
+        },
+        "documentId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+              "maxLength": 128
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "graphVersion": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "data": {
+          "type": "null"
+        },
+        "error": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "const": "DOCUMENT_NOT_FOUND"
+            },
+            "message": {
+              "type": "string"
+            },
+            "details": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "path"
+              ],
+              "additionalProperties": {
+                "$ref": "#/$defs/jsonValue"
+              }
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "details"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "ok",
+        "cliContractVersion",
+        "command",
+        "documentId",
+        "graphVersion",
+        "data",
+        "error"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "const": false
+        },
+        "cliContractVersion": {
+          "const": 1
+        },
+        "command": {
+          "type": "string"
+        },
+        "documentId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+              "maxLength": 128
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "graphVersion": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "data": {
+          "type": "null"
+        },
+        "error": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "const": "ALREADY_EXISTS"
+            },
+            "message": {
+              "type": "string"
+            },
+            "details": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "path"
+              ],
+              "additionalProperties": {
+                "$ref": "#/$defs/jsonValue"
+              }
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "details"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "ok",
+        "cliContractVersion",
+        "command",
+        "documentId",
+        "graphVersion",
+        "data",
+        "error"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "const": false
+        },
+        "cliContractVersion": {
+          "const": 1
+        },
+        "command": {
+          "type": "string"
+        },
+        "documentId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+              "maxLength": 128
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "graphVersion": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "data": {
+          "type": "null"
+        },
+        "error": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "const": "UNSUPPORTED_SCHEMA"
+            },
+            "message": {
+              "type": "string"
+            },
+            "details": {
+              "type": "object",
+              "properties": {
+                "actualVersion": {
+                  "$ref": "#/$defs/jsonValue"
+                },
+                "supportedVersions": {
+                  "const": [
+                    2
+                  ]
+                }
+              },
+              "required": [
+                "actualVersion",
+                "supportedVersions"
+              ],
+              "additionalProperties": {
+                "$ref": "#/$defs/jsonValue"
+              }
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "details"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "ok",
+        "cliContractVersion",
+        "command",
+        "documentId",
+        "graphVersion",
+        "data",
+        "error"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "const": false
+        },
+        "cliContractVersion": {
+          "const": 1
+        },
+        "command": {
+          "type": "string"
+        },
+        "documentId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+              "maxLength": 128
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "graphVersion": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "data": {
+          "type": "null"
+        },
+        "error": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "const": "INVALID_DOCUMENT"
+            },
+            "message": {
+              "type": "string"
+            },
+            "details": {
+              "type": "object",
+              "properties": {
+                "field": {
+                  "type": "string"
+                },
+                "reason": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "field",
+                "reason"
+              ],
+              "additionalProperties": {
+                "$ref": "#/$defs/jsonValue"
+              }
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "details"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "ok",
+        "cliContractVersion",
+        "command",
+        "documentId",
+        "graphVersion",
+        "data",
+        "error"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "const": false
+        },
+        "cliContractVersion": {
+          "const": 1
+        },
+        "command": {
+          "type": "string"
+        },
+        "documentId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+              "maxLength": 128
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "graphVersion": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "data": {
+          "type": "null"
+        },
+        "error": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "const": "NOT_FOUND"
+            },
+            "message": {
+              "type": "string"
+            },
+            "details": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "enum": [
+                    "node",
+                    "edge",
+                    "receipt"
+                  ]
+                },
+                "id": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                  "maxLength": 128
+                }
+              },
+              "required": [
+                "kind",
+                "id"
+              ],
+              "additionalProperties": {
+                "$ref": "#/$defs/jsonValue"
+              }
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "details"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "ok",
+        "cliContractVersion",
+        "command",
+        "documentId",
+        "graphVersion",
+        "data",
+        "error"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "const": false
+        },
+        "cliContractVersion": {
+          "const": 1
+        },
+        "command": {
+          "type": "string"
+        },
+        "documentId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+              "maxLength": 128
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "graphVersion": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "data": {
+          "type": "null"
+        },
+        "error": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "const": "INVALID_OPERATION"
+            },
+            "message": {
+              "type": "string"
+            },
+            "details": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "reason": {
+                      "const": "invalid_final_graph"
+                    },
+                    "field": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "reason",
+                    "field"
+                  ],
+                  "additionalProperties": {
+                    "$ref": "#/$defs/jsonValue"
+                  }
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "reason": {
+                      "enum": [
+                        "id_exists",
+                        "target_missing",
+                        "endpoint_missing"
+                      ]
+                    },
+                    "operationIndex": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "type": {
+                      "enum": [
+                        "addNode",
+                        "updateNode",
+                        "removeNode",
+                        "addEdge",
+                        "updateEdge",
+                        "removeEdge",
+                        "setEntryNode",
+                        "reorderEdges",
+                        "updateDocument"
+                      ]
+                    },
+                    "id": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                      "maxLength": 128
+                    }
+                  },
+                  "required": [
+                    "reason",
+                    "operationIndex",
+                    "type",
+                    "id"
+                  ],
+                  "additionalProperties": {
+                    "$ref": "#/$defs/jsonValue"
+                  }
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "reason": {
+                      "const": "edge_set_mismatch"
+                    },
+                    "operationIndex": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "type": {
+                      "const": "reorderEdges"
+                    },
+                    "expectedEdgeIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                        "maxLength": 128
+                      }
+                    },
+                    "actualEdgeIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                        "maxLength": 128
+                      }
+                    }
+                  },
+                  "required": [
+                    "reason",
+                    "operationIndex",
+                    "type",
+                    "expectedEdgeIds",
+                    "actualEdgeIds"
+                  ],
+                  "additionalProperties": {
+                    "$ref": "#/$defs/jsonValue"
+                  }
+                }
+              ]
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "details"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "ok",
+        "cliContractVersion",
+        "command",
+        "documentId",
+        "graphVersion",
+        "data",
+        "error"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "const": false
+        },
+        "cliContractVersion": {
+          "const": 1
+        },
+        "command": {
+          "type": "string"
+        },
+        "documentId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+              "maxLength": 128
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "graphVersion": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "data": {
+          "type": "null"
+        },
+        "error": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "const": "SCOPE_VIOLATION"
+            },
+            "message": {
+              "type": "string"
+            },
+            "details": {
+              "type": "object",
+              "properties": {
+                "nodeIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                    "maxLength": 128
+                  }
+                },
+                "edgeIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                    "maxLength": 128
+                  }
+                },
+                "documentFields": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "reason": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "nodeIds",
+                "edgeIds",
+                "documentFields",
+                "reason"
+              ],
+              "additionalProperties": {
+                "$ref": "#/$defs/jsonValue"
+              }
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "details"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "ok",
+        "cliContractVersion",
+        "command",
+        "documentId",
+        "graphVersion",
+        "data",
+        "error"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "const": false
+        },
+        "cliContractVersion": {
+          "const": 1
+        },
+        "command": {
+          "type": "string"
+        },
+        "documentId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+              "maxLength": 128
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "graphVersion": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "data": {
+          "type": "null"
+        },
+        "error": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "const": "LIMIT_EXCEEDED"
+            },
+            "message": {
+              "type": "string"
+            },
+            "details": {
+              "type": "object",
+              "properties": {
+                "limit": {
+                  "type": "string"
+                },
+                "maximum": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "actual": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": [
+                "limit",
+                "maximum",
+                "actual"
+              ],
+              "additionalProperties": {
+                "$ref": "#/$defs/jsonValue"
+              }
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "details"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "ok",
+        "cliContractVersion",
+        "command",
+        "documentId",
+        "graphVersion",
+        "data",
+        "error"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "const": false
+        },
+        "cliContractVersion": {
+          "const": 1
+        },
+        "command": {
+          "type": "string"
+        },
+        "documentId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+              "maxLength": 128
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "graphVersion": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "data": {
+          "type": "null"
+        },
+        "error": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "const": "OPERATION_ID_REUSE"
+            },
+            "message": {
+              "type": "string"
+            },
+            "details": {
+              "type": "object",
+              "properties": {
+                "operationId": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                  "maxLength": 128
+                },
+                "committedGraphVersion": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": [
+                "operationId",
+                "committedGraphVersion"
+              ],
+              "additionalProperties": {
+                "$ref": "#/$defs/jsonValue"
+              }
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "details"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "ok",
+        "cliContractVersion",
+        "command",
+        "documentId",
+        "graphVersion",
+        "data",
+        "error"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "const": false
+        },
+        "cliContractVersion": {
+          "const": 1
+        },
+        "command": {
+          "type": "string"
+        },
+        "documentId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+              "maxLength": 128
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "graphVersion": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "data": {
+          "type": "null"
+        },
+        "error": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "const": "CONFLICT"
+            },
+            "message": {
+              "type": "string"
+            },
+            "details": {
+              "type": "object",
+              "properties": {
+                "expectedVersion": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "currentVersion": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": [
+                "expectedVersion",
+                "currentVersion"
+              ],
+              "additionalProperties": {
+                "$ref": "#/$defs/jsonValue"
+              }
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "details"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "ok",
+        "cliContractVersion",
+        "command",
+        "documentId",
+        "graphVersion",
+        "data",
+        "error"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "command": {
+                "const": "apply"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "error": {
+                "properties": {
+                  "details": {
+                    "required": [
+                      "operationId",
+                      "committed"
+                    ],
+                    "properties": {
+                      "operationId": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                        "maxLength": 128
+                      },
+                      "committed": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "const": false
+        },
+        "cliContractVersion": {
+          "const": 1
+        },
+        "command": {
+          "type": "string"
+        },
+        "documentId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+              "maxLength": 128
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "graphVersion": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "data": {
+          "type": "null"
+        },
+        "error": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "const": "LOCK_TIMEOUT"
+            },
+            "message": {
+              "type": "string"
+            },
+            "details": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string"
+                },
+                "timeoutMs": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": [
+                "path",
+                "timeoutMs"
+              ],
+              "additionalProperties": {
+                "$ref": "#/$defs/jsonValue"
+              }
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "details"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "ok",
+        "cliContractVersion",
+        "command",
+        "documentId",
+        "graphVersion",
+        "data",
+        "error"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "const": false
+        },
+        "cliContractVersion": {
+          "const": 1
+        },
+        "command": {
+          "type": "string"
+        },
+        "documentId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+              "maxLength": 128
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "graphVersion": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "data": {
+          "type": "null"
+        },
+        "error": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "const": "LOCK_UNAVAILABLE"
+            },
+            "message": {
+              "type": "string"
+            },
+            "details": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string"
+                },
+                "platform": {
+                  "type": "string"
+                },
+                "reason": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "path",
+                "platform",
+                "reason"
+              ],
+              "additionalProperties": {
+                "$ref": "#/$defs/jsonValue"
+              }
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "details"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "ok",
+        "cliContractVersion",
+        "command",
+        "documentId",
+        "graphVersion",
+        "data",
+        "error"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "const": false
+        },
+        "cliContractVersion": {
+          "const": 1
+        },
+        "command": {
+          "type": "string"
+        },
+        "documentId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+              "maxLength": 128
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "graphVersion": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "data": {
+          "type": "null"
+        },
+        "error": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "const": "IO_ERROR"
+            },
+            "message": {
+              "type": "string"
+            },
+            "details": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string"
+                },
+                "phase": {
+                  "type": "string"
+                },
+                "osCode": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "path",
+                "phase",
+                "osCode"
+              ],
+              "additionalProperties": {
+                "$ref": "#/$defs/jsonValue"
+              }
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "details"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "ok",
+        "cliContractVersion",
+        "command",
+        "documentId",
+        "graphVersion",
+        "data",
+        "error"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "const": false
+        },
+        "cliContractVersion": {
+          "const": 1
+        },
+        "command": {
+          "type": "string"
+        },
+        "documentId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+              "maxLength": 128
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "graphVersion": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "data": {
+          "type": "null"
+        },
+        "error": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "const": "UNSUPPORTED_STORAGE"
+            },
+            "message": {
+              "type": "string"
+            },
+            "details": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string"
+                },
+                "reason": {
+                  "enum": [
+                    "hard_link",
+                    "path_identity",
+                    "platform",
+                    "filesystem"
+                  ]
+                }
+              },
+              "required": [
+                "path",
+                "reason"
+              ],
+              "additionalProperties": {
+                "$ref": "#/$defs/jsonValue"
+              }
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "details"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "ok",
+        "cliContractVersion",
+        "command",
+        "documentId",
+        "graphVersion",
+        "data",
+        "error"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "const": false
+        },
+        "cliContractVersion": {
+          "const": 1
+        },
+        "command": {
+          "type": "string"
+        },
+        "documentId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+              "maxLength": 128
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "graphVersion": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "data": {
+          "type": "null"
+        },
+        "error": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "const": "COMMIT_OUTCOME_UNKNOWN"
+            },
+            "message": {
+              "type": "string"
+            },
+            "details": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string"
+                },
+                "operationId": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                      "maxLength": 128
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "outcome": {
+                  "const": "unknown"
+                },
+                "phase": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "path",
+                "operationId",
+                "outcome",
+                "phase"
+              ],
+              "additionalProperties": {
+                "$ref": "#/$defs/jsonValue"
+              }
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "details"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "ok",
+        "cliContractVersion",
+        "command",
+        "documentId",
+        "graphVersion",
+        "data",
+        "error"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "const": false
+        },
+        "cliContractVersion": {
+          "const": 1
+        },
+        "command": {
+          "type": "string"
+        },
+        "documentId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+              "maxLength": 128
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "graphVersion": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "data": {
+          "type": "null"
+        },
+        "error": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "const": "INTERNAL_ERROR"
+            },
+            "message": {
+              "type": "string"
+            },
+            "details": {
+              "type": "object",
+              "properties": {
+                "outcome": {
+                  "enum": [
+                    "not_published",
+                    "unknown"
+                  ]
+                },
+                "phase": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "outcome",
+                "phase"
+              ],
+              "additionalProperties": {
+                "$ref": "#/$defs/jsonValue"
+              }
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "details"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "ok",
+        "cliContractVersion",
+        "command",
+        "documentId",
+        "graphVersion",
+        "data",
+        "error"
+      ],
+      "additionalProperties": false
+    }
+  ],
+  "$defs": {
+    "jsonValue": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/jsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/jsonValue"
+          }
+        }
+      ]
+    },
+    "versionSuccess": {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "const": true
+        },
+        "cliContractVersion": {
+          "const": 1
+        },
+        "command": {
+          "const": "version"
+        },
+        "documentId": {
+          "type": "null"
+        },
+        "graphVersion": {
+          "type": "null"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "product": {
+              "const": "mindmap-cli"
+            },
+            "version": {
+              "type": "string"
+            },
+            "cliContractVersion": {
+              "const": 1
+            },
+            "documentSchemaVersions": {
+              "const": [
+                2
+              ]
+            }
+          },
+          "required": [
+            "product",
+            "version",
+            "cliContractVersion",
+            "documentSchemaVersions"
+          ],
+          "additionalProperties": false
+        },
+        "error": {
+          "type": "null"
+        }
+      },
+      "required": [
+        "ok",
+        "cliContractVersion",
+        "command",
+        "documentId",
+        "graphVersion",
+        "data",
+        "error"
+      ],
+      "additionalProperties": false
+    },
+    "helpSuccess": {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "const": true
+        },
+        "cliContractVersion": {
+          "const": 1
+        },
+        "command": {
+          "const": "help"
+        },
+        "documentId": {
+          "type": "null"
+        },
+        "graphVersion": {
+          "type": "null"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "usage": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "arguments": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "required": {
+                    "type": "boolean"
+                  },
+                  "values": {
+                    "anyOf": [
+                      {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "required",
+                  "values",
+                  "description"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "options": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "valueType": {
+                    "enum": [
+                      "boolean",
+                      "string",
+                      "integer",
+                      "string-list"
+                    ]
+                  },
+                  "required": {
+                    "type": "boolean"
+                  },
+                  "default": {
+                    "$ref": "#/$defs/jsonValue"
+                  },
+                  "enum": {
+                    "anyOf": [
+                      {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/$defs/jsonValue"
+                        }
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "bounds": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "min": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 9007199254740991
+                          },
+                          "max": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 9007199254740991
+                          }
+                        },
+                        "required": [
+                          "min",
+                          "max"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "valueType",
+                  "required",
+                  "default",
+                  "enum",
+                  "bounds",
+                  "description"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "examples": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "usage",
+            "description",
+            "arguments",
+            "options",
+            "examples"
+          ],
+          "additionalProperties": false
+        },
+        "error": {
+          "type": "null"
+        }
+      },
+      "required": [
+        "ok",
+        "cliContractVersion",
+        "command",
+        "documentId",
+        "graphVersion",
+        "data",
+        "error"
+      ],
+      "additionalProperties": false
+    },
+    "capabilitiesSuccess": {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "const": true
+        },
+        "cliContractVersion": {
+          "const": 1
+        },
+        "command": {
+          "const": "capabilities"
+        },
+        "documentId": {
+          "type": "null"
+        },
+        "graphVersion": {
+          "type": "null"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "product": {
+              "const": "mindmap-cli"
+            },
+            "version": {
+              "type": "string"
+            },
+            "cliContractVersion": {
+              "const": 1
+            },
+            "documentSchemaVersions": {
+              "const": [
+                2
+              ]
+            },
+            "commands": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "usage": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "arguments": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "required": {
+                          "type": "boolean"
+                        },
+                        "values": {
+                          "anyOf": [
+                            {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "description": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "required",
+                        "values",
+                        "description"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "options": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "valueType": {
+                          "enum": [
+                            "boolean",
+                            "string",
+                            "integer",
+                            "string-list"
+                          ]
+                        },
+                        "required": {
+                          "type": "boolean"
+                        },
+                        "default": {
+                          "$ref": "#/$defs/jsonValue"
+                        },
+                        "enum": {
+                          "anyOf": [
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/$defs/jsonValue"
+                              }
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "bounds": {
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "min": {
+                                  "type": "integer",
+                                  "minimum": 0,
+                                  "maximum": 9007199254740991
+                                },
+                                "max": {
+                                  "type": "integer",
+                                  "minimum": 0,
+                                  "maximum": 9007199254740991
+                                }
+                              },
+                              "required": [
+                                "min",
+                                "max"
+                              ],
+                              "additionalProperties": false
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "description": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "valueType",
+                        "required",
+                        "default",
+                        "enum",
+                        "bounds",
+                        "description"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "examples": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "inputSchema": {
+                    "type": "object",
+                    "properties": {
+                      "$schema": {
+                        "const": "https://json-schema.org/draft/2020-12/schema"
+                      },
+                      "$id": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "$schema"
+                    ],
+                    "additionalProperties": true
+                  },
+                  "resultRef": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "usage",
+                  "description",
+                  "arguments",
+                  "options",
+                  "examples",
+                  "inputSchema",
+                  "resultRef"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "topologies": {
+              "const": [
+                "directed"
+              ]
+            },
+            "cycles": {
+              "const": true
+            },
+            "multipleParents": {
+              "const": true
+            },
+            "selfLoops": {
+              "const": true
+            },
+            "parallelEdges": {
+              "const": true
+            },
+            "disconnectedComponents": {
+              "const": true
+            },
+            "contextFormats": {
+              "const": [
+                "json",
+                "mermaid"
+              ]
+            },
+            "visualLayouts": {
+              "const": []
+            },
+            "requiresServer": {
+              "const": false
+            },
+            "offlineGraphCommands": {
+              "const": true
+            },
+            "limits": {
+              "type": "object",
+              "properties": {
+                "documentBytes": {
+                  "const": 67108864
+                },
+                "operationInputBytes": {
+                  "const": 8388608
+                },
+                "operationsPerBatch": {
+                  "const": 10000
+                },
+                "idMaxCharacters": {
+                  "const": 128
+                },
+                "queryDefaults": {
+                  "const": {
+                    "maxNodes": 200,
+                    "maxEdges": 400,
+                    "maxBoundaryEdges": 100,
+                    "maxTextBytes": 4096
+                  }
+                },
+                "queryMaximums": {
+                  "const": {
+                    "maxNodes": 10000,
+                    "maxEdges": 20000,
+                    "maxBoundaryEdges": 20000,
+                    "maxTextBytes": 1048576
+                  }
+                },
+                "depthMaximum": {
+                  "const": 100
+                },
+                "lockTimeoutDefaultMs": {
+                  "const": 5000
+                },
+                "lockTimeoutMaximumMs": {
+                  "const": 60000
+                }
+              },
+              "required": [
+                "documentBytes",
+                "operationInputBytes",
+                "operationsPerBatch",
+                "idMaxCharacters",
+                "queryDefaults",
+                "queryMaximums",
+                "depthMaximum",
+                "lockTimeoutDefaultMs",
+                "lockTimeoutMaximumMs"
+              ],
+              "additionalProperties": false
+            },
+            "storage": {
+              "type": "object",
+              "properties": {
+                "writeSupport": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "os": {
+                        "type": "string"
+                      },
+                      "arch": {
+                        "type": "string"
+                      },
+                      "filesystems": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nodeVersions": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "required": [
+                      "os",
+                      "arch",
+                      "filesystems",
+                      "nodeVersions"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "readsRequireLockAdapter": {
+                  "const": false
+                }
+              },
+              "required": [
+                "writeSupport",
+                "readsRequireLockAdapter"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "product",
+            "version",
+            "cliContractVersion",
+            "documentSchemaVersions",
+            "commands",
+            "topologies",
+            "cycles",
+            "multipleParents",
+            "selfLoops",
+            "parallelEdges",
+            "disconnectedComponents",
+            "contextFormats",
+            "visualLayouts",
+            "requiresServer",
+            "offlineGraphCommands",
+            "limits",
+            "storage"
+          ],
+          "additionalProperties": false
+        },
+        "error": {
+          "type": "null"
+        }
+      },
+      "required": [
+        "ok",
+        "cliContractVersion",
+        "command",
+        "documentId",
+        "graphVersion",
+        "data",
+        "error"
+      ],
+      "additionalProperties": false
+    },
+    "schemaSuccess": {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "const": true
+        },
+        "cliContractVersion": {
+          "const": 1
+        },
+        "command": {
+          "const": "schema"
+        },
+        "documentId": {
+          "type": "null"
+        },
+        "graphVersion": {
+          "type": "null"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "$schema": {
+              "const": "https://json-schema.org/draft/2020-12/schema"
+            },
+            "$id": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "$schema"
+          ],
+          "additionalProperties": true
+        },
+        "error": {
+          "type": "null"
+        }
+      },
+      "required": [
+        "ok",
+        "cliContractVersion",
+        "command",
+        "documentId",
+        "graphVersion",
+        "data",
+        "error"
+      ],
+      "additionalProperties": false
+    },
+    "createSuccess": {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "const": true
+        },
+        "cliContractVersion": {
+          "const": 1
+        },
+        "command": {
+          "const": "create"
+        },
+        "documentId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+          "maxLength": 128
+        },
+        "graphVersion": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string"
+            },
+            "document": {
+              "type": "object",
+              "properties": {
+                "JSON-SchemaVersion": {
+                  "const": 2
+                },
+                "metadata": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                      "maxLength": 128
+                    },
+                    "title": {
+                      "type": "string",
+                      "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
+                    },
+                    "graphVersion": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "title",
+                    "graphVersion",
+                    "createdAt",
+                    "updatedAt"
+                  ],
+                  "additionalProperties": false
+                },
+                "graph": {
+                  "type": "object",
+                  "properties": {
+                    "topology": {
+                      "const": "directed"
+                    },
+                    "semanticType": {
+                      "type": "string",
+                      "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
+                    },
+                    "entryNodeId": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                          "maxLength": 128
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "nodes": {
+                      "type": "object",
+                      "propertyNames": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                        "maxLength": 128
+                      },
+                      "additionalProperties": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                            "maxLength": 128
+                          },
+                          "title": {
+                            "type": "string",
+                            "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
+                          },
+                          "cardContent": {
+                            "type": "string"
+                          },
+                          "notes": {
+                            "type": "string"
+                          },
+                          "meta": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "$ref": "#/$defs/jsonValue"
+                            }
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "title",
+                          "cardContent",
+                          "notes",
+                          "meta"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "edges": {
+                      "type": "object",
+                      "propertyNames": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                        "maxLength": 128
+                      },
+                      "additionalProperties": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                            "maxLength": 128
+                          },
+                          "source": {
+                            "type": "string",
+                            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                            "maxLength": 128
+                          },
+                          "target": {
+                            "type": "string",
+                            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                            "maxLength": 128
+                          },
+                          "kind": {
+                            "type": "string",
+                            "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
+                          },
+                          "order": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 9007199254740991
+                          },
+                          "meta": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "$ref": "#/$defs/jsonValue"
+                            }
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "source",
+                          "target",
+                          "kind",
+                          "meta"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "topology",
+                    "semanticType",
+                    "entryNodeId",
+                    "nodes",
+                    "edges"
+                  ],
+                  "additionalProperties": false
+                },
+                "commits": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "operationId": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                        "maxLength": 128
+                      },
+                      "requestHash": {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      "baseGraphVersion": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "committedGraphVersion": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 9007199254740991
+                      },
+                      "committedAt": {
+                        "type": "string",
+                        "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+                      },
+                      "actor": {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "enum": [
+                              "human",
+                              "agent",
+                              "system"
+                            ]
+                          },
+                          "name": {
+                            "type": "string",
+                            "pattern": "\\S"
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "name"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "affectedNodeIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                          "maxLength": 128
+                        },
+                        "uniqueItems": true
+                      },
+                      "affectedEdgeIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                          "maxLength": 128
+                        },
+                        "uniqueItems": true
+                      },
+                      "summary": {
+                        "type": "object",
+                        "properties": {
+                          "operationCount": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 10000
+                          },
+                          "nodeCount": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 9007199254740991
+                          },
+                          "edgeCount": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 9007199254740991
+                          }
+                        },
+                        "required": [
+                          "operationCount",
+                          "nodeCount",
+                          "edgeCount"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "required": [
+                      "operationId",
+                      "requestHash",
+                      "baseGraphVersion",
+                      "committedGraphVersion",
+                      "committedAt",
+                      "affectedNodeIds",
+                      "affectedEdgeIds",
+                      "summary"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "JSON-SchemaVersion",
+                "metadata",
+                "graph",
+                "commits"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "path",
+            "document"
+          ],
+          "additionalProperties": false
+        },
+        "error": {
+          "type": "null"
+        }
+      },
+      "required": [
+        "ok",
+        "cliContractVersion",
+        "command",
+        "documentId",
+        "graphVersion",
+        "data",
+        "error"
+      ],
+      "additionalProperties": false
+    },
+    "inspectSuccess": {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "const": true
+        },
+        "cliContractVersion": {
+          "const": 1
+        },
+        "command": {
+          "const": "inspect"
+        },
+        "documentId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+          "maxLength": 128
+        },
+        "graphVersion": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "data": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string"
+                },
+                "metadata": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                      "maxLength": 128
+                    },
+                    "title": {
+                      "type": "string",
+                      "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
+                    },
+                    "graphVersion": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "title",
+                    "graphVersion",
+                    "createdAt",
+                    "updatedAt"
+                  ],
+                  "additionalProperties": false
+                },
+                "topology": {
+                  "const": "directed"
+                },
+                "semanticType": {
+                  "type": "string"
+                },
+                "entryNodeId": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                      "maxLength": 128
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "nodeCount": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "edgeCount": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "relationCounts": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  }
+                },
+                "commitCount": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": [
+                "path",
+                "metadata",
+                "topology",
+                "semanticType",
+                "entryNodeId",
+                "nodeCount",
+                "edgeCount",
+                "relationCounts",
+                "commitCount"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string"
+                },
+                "receipt": {
+                  "type": "object",
+                  "properties": {
+                    "operationId": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                      "maxLength": 128
+                    },
+                    "requestHash": {
+                      "type": "string",
+                      "pattern": "^[a-f0-9]{64}$"
+                    },
+                    "baseGraphVersion": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "committedGraphVersion": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9007199254740991
+                    },
+                    "committedAt": {
+                      "type": "string",
+                      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+                    },
+                    "actor": {
+                      "type": "object",
+                      "properties": {
+                        "kind": {
+                          "enum": [
+                            "human",
+                            "agent",
+                            "system"
+                          ]
+                        },
+                        "name": {
+                          "type": "string",
+                          "pattern": "\\S"
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "name"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "affectedNodeIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                        "maxLength": 128
+                      },
+                      "uniqueItems": true
+                    },
+                    "affectedEdgeIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                        "maxLength": 128
+                      },
+                      "uniqueItems": true
+                    },
+                    "summary": {
+                      "type": "object",
+                      "properties": {
+                        "operationCount": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 10000
+                        },
+                        "nodeCount": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "edgeCount": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        }
+                      },
+                      "required": [
+                        "operationCount",
+                        "nodeCount",
+                        "edgeCount"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "operationId",
+                    "requestHash",
+                    "baseGraphVersion",
+                    "committedGraphVersion",
+                    "committedAt",
+                    "affectedNodeIds",
+                    "affectedEdgeIds",
+                    "summary"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "path",
+                "receipt"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "error": {
+          "type": "null"
+        }
+      },
+      "required": [
+        "ok",
+        "cliContractVersion",
+        "command",
+        "documentId",
+        "graphVersion",
+        "data",
+        "error"
+      ],
+      "additionalProperties": false
+    },
+    "exportSuccess": {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "const": true
+        },
+        "cliContractVersion": {
+          "const": 1
+        },
+        "command": {
+          "const": "export"
+        },
+        "documentId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+          "maxLength": 128
+        },
+        "graphVersion": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string"
+            },
+            "document": {
+              "type": "object",
+              "properties": {
+                "JSON-SchemaVersion": {
+                  "const": 2
+                },
+                "metadata": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                      "maxLength": 128
+                    },
+                    "title": {
+                      "type": "string",
+                      "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
+                    },
+                    "graphVersion": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "title",
+                    "graphVersion",
+                    "createdAt",
+                    "updatedAt"
+                  ],
+                  "additionalProperties": false
+                },
+                "graph": {
+                  "type": "object",
+                  "properties": {
+                    "topology": {
+                      "const": "directed"
+                    },
+                    "semanticType": {
+                      "type": "string",
+                      "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
+                    },
+                    "entryNodeId": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                          "maxLength": 128
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "nodes": {
+                      "type": "object",
+                      "propertyNames": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                        "maxLength": 128
+                      },
+                      "additionalProperties": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                            "maxLength": 128
+                          },
+                          "title": {
+                            "type": "string",
+                            "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
+                          },
+                          "cardContent": {
+                            "type": "string"
+                          },
+                          "notes": {
+                            "type": "string"
+                          },
+                          "meta": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "$ref": "#/$defs/jsonValue"
+                            }
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "title",
+                          "cardContent",
+                          "notes",
+                          "meta"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "edges": {
+                      "type": "object",
+                      "propertyNames": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                        "maxLength": 128
+                      },
+                      "additionalProperties": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                            "maxLength": 128
+                          },
+                          "source": {
+                            "type": "string",
+                            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                            "maxLength": 128
+                          },
+                          "target": {
+                            "type": "string",
+                            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                            "maxLength": 128
+                          },
+                          "kind": {
+                            "type": "string",
+                            "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
+                          },
+                          "order": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 9007199254740991
+                          },
+                          "meta": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "$ref": "#/$defs/jsonValue"
+                            }
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "source",
+                          "target",
+                          "kind",
+                          "meta"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "topology",
+                    "semanticType",
+                    "entryNodeId",
+                    "nodes",
+                    "edges"
+                  ],
+                  "additionalProperties": false
+                },
+                "commits": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "operationId": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                        "maxLength": 128
+                      },
+                      "requestHash": {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      "baseGraphVersion": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "committedGraphVersion": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 9007199254740991
+                      },
+                      "committedAt": {
+                        "type": "string",
+                        "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+                      },
+                      "actor": {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "enum": [
+                              "human",
+                              "agent",
+                              "system"
+                            ]
+                          },
+                          "name": {
+                            "type": "string",
+                            "pattern": "\\S"
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "name"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "affectedNodeIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                          "maxLength": 128
+                        },
+                        "uniqueItems": true
+                      },
+                      "affectedEdgeIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                          "maxLength": 128
+                        },
+                        "uniqueItems": true
+                      },
+                      "summary": {
+                        "type": "object",
+                        "properties": {
+                          "operationCount": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 10000
+                          },
+                          "nodeCount": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 9007199254740991
+                          },
+                          "edgeCount": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 9007199254740991
+                          }
+                        },
+                        "required": [
+                          "operationCount",
+                          "nodeCount",
+                          "edgeCount"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "required": [
+                      "operationId",
+                      "requestHash",
+                      "baseGraphVersion",
+                      "committedGraphVersion",
+                      "committedAt",
+                      "affectedNodeIds",
+                      "affectedEdgeIds",
+                      "summary"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "JSON-SchemaVersion",
+                "metadata",
+                "graph",
+                "commits"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "path",
+            "document"
+          ],
+          "additionalProperties": false
+        },
+        "error": {
+          "type": "null"
+        }
+      },
+      "required": [
+        "ok",
+        "cliContractVersion",
+        "command",
+        "documentId",
+        "graphVersion",
+        "data",
+        "error"
+      ],
+      "additionalProperties": false
+    },
+    "nodeSuccess": {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "const": true
+        },
+        "cliContractVersion": {
+          "const": 1
+        },
+        "command": {
+          "const": "node"
+        },
+        "documentId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+          "maxLength": 128
+        },
+        "graphVersion": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "node": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                      "maxLength": 128
+                    },
+                    "title": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "title"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                      "maxLength": 128
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "cardContent": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "title",
+                    "cardContent"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                      "maxLength": 128
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "cardContent": {
+                      "type": "string"
+                    },
+                    "notes": {
+                      "type": "string"
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "$ref": "#/$defs/jsonValue"
+                      }
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "title",
+                    "cardContent",
+                    "notes",
+                    "meta"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            },
+            "omissions": {
+              "type": "object",
+              "properties": {
+                "fields": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "nodeId": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                        "maxLength": 128
+                      },
+                      "field": {
+                        "enum": [
+                          "title",
+                          "cardContent",
+                          "notes",
+                          "meta"
+                        ]
+                      },
+                      "reason": {
+                        "enum": [
+                          "not_requested",
+                          "text_limit"
+                        ]
+                      },
+                      "omittedBytes": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      }
+                    },
+                    "required": [
+                      "nodeId",
+                      "field",
+                      "reason",
+                      "omittedBytes"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "fields"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "node",
+            "omissions"
+          ],
+          "additionalProperties": false
+        },
+        "error": {
+          "type": "null"
+        }
+      },
+      "required": [
+        "ok",
+        "cliContractVersion",
+        "command",
+        "documentId",
+        "graphVersion",
+        "data",
+        "error"
+      ],
+      "additionalProperties": false
+    },
+    "neighborsSuccess": {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "const": true
+        },
+        "cliContractVersion": {
+          "const": 1
+        },
+        "command": {
+          "const": "neighbors"
+        },
+        "documentId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+          "maxLength": 128
+        },
+        "graphVersion": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "scope": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "mode": {
+                      "const": "all"
+                    },
+                    "nodeIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                        "maxLength": 128
+                      },
+                      "uniqueItems": true,
+                      "maxItems": 0
+                    },
+                    "edgeIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                        "maxLength": 128
+                      },
+                      "uniqueItems": true,
+                      "maxItems": 0
+                    },
+                    "direction": {
+                      "type": "null"
+                    },
+                    "depth": {
+                      "type": "null"
+                    },
+                    "kinds": {
+                      "anyOf": [
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
+                          },
+                          "uniqueItems": true,
+                          "minItems": 1
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "limits": {
+                      "type": "object",
+                      "properties": {
+                        "maxNodes": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 10000
+                        },
+                        "maxEdges": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 20000
+                        },
+                        "maxBoundaryEdges": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 20000
+                        },
+                        "maxTextBytes": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 1048576
+                        }
+                      },
+                      "required": [
+                        "maxNodes",
+                        "maxEdges",
+                        "maxBoundaryEdges",
+                        "maxTextBytes"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "mode",
+                    "nodeIds",
+                    "edgeIds",
+                    "direction",
+                    "depth",
+                    "kinds",
+                    "limits"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "mode": {
+                      "const": "ids"
+                    },
+                    "nodeIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                        "maxLength": 128
+                      },
+                      "uniqueItems": true
+                    },
+                    "edgeIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                        "maxLength": 128
+                      },
+                      "uniqueItems": true
+                    },
+                    "direction": {
+                      "enum": [
+                        "outgoing",
+                        "incoming",
+                        "both"
+                      ]
+                    },
+                    "depth": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 100
+                    },
+                    "kinds": {
+                      "anyOf": [
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
+                          },
+                          "uniqueItems": true,
+                          "minItems": 1
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "limits": {
+                      "type": "object",
+                      "properties": {
+                        "maxNodes": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 10000
+                        },
+                        "maxEdges": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 20000
+                        },
+                        "maxBoundaryEdges": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 20000
+                        },
+                        "maxTextBytes": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 1048576
+                        }
+                      },
+                      "required": [
+                        "maxNodes",
+                        "maxEdges",
+                        "maxBoundaryEdges",
+                        "maxTextBytes"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "mode",
+                    "nodeIds",
+                    "edgeIds",
+                    "direction",
+                    "depth",
+                    "kinds",
+                    "limits"
+                  ],
+                  "additionalProperties": false,
+                  "anyOf": [
+                    {
+                      "properties": {
+                        "nodeIds": {
+                          "minItems": 1
+                        }
+                      }
+                    },
+                    {
+                      "properties": {
+                        "edgeIds": {
+                          "minItems": 1
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "mode": {
+                      "const": "neighbors"
+                    },
+                    "nodeIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                        "maxLength": 128
+                      },
+                      "uniqueItems": true,
+                      "minItems": 1,
+                      "maxItems": 1
+                    },
+                    "edgeIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                        "maxLength": 128
+                      },
+                      "uniqueItems": true,
+                      "maxItems": 0
+                    },
+                    "direction": {
+                      "enum": [
+                        "outgoing",
+                        "incoming",
+                        "both"
+                      ]
+                    },
+                    "depth": {
+                      "const": 1
+                    },
+                    "kinds": {
+                      "anyOf": [
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
+                          },
+                          "uniqueItems": true,
+                          "minItems": 1
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "limits": {
+                      "type": "object",
+                      "properties": {
+                        "maxNodes": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 10000
+                        },
+                        "maxEdges": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 20000
+                        },
+                        "maxBoundaryEdges": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 20000
+                        },
+                        "maxTextBytes": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 1048576
+                        }
+                      },
+                      "required": [
+                        "maxNodes",
+                        "maxEdges",
+                        "maxBoundaryEdges",
+                        "maxTextBytes"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "mode",
+                    "nodeIds",
+                    "edgeIds",
+                    "direction",
+                    "depth",
+                    "kinds",
+                    "limits"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            },
+            "nodes": {
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                        "maxLength": 128
+                      },
+                      "title": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "title"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                        "maxLength": 128
+                      },
+                      "title": {
+                        "type": "string"
+                      },
+                      "cardContent": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "title",
+                      "cardContent"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                        "maxLength": 128
+                      },
+                      "title": {
+                        "type": "string"
+                      },
+                      "cardContent": {
+                        "type": "string"
+                      },
+                      "notes": {
+                        "type": "string"
+                      },
+                      "meta": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "$ref": "#/$defs/jsonValue"
+                        }
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "title",
+                      "cardContent",
+                      "notes",
+                      "meta"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              }
+            },
+            "edges": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                    "maxLength": 128
+                  },
+                  "source": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                    "maxLength": 128
+                  },
+                  "target": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                    "maxLength": 128
+                  },
+                  "kind": {
+                    "type": "string",
+                    "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
+                  },
+                  "order": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "meta": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "$ref": "#/$defs/jsonValue"
+                    }
+                  }
+                },
+                "required": [
+                  "id",
+                  "source",
+                  "target",
+                  "kind",
+                  "meta"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "boundaryEdges": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                    "maxLength": 128
+                  },
+                  "source": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                    "maxLength": 128
+                  },
+                  "target": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                    "maxLength": 128
+                  },
+                  "kind": {
+                    "type": "string",
+                    "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
+                  }
+                },
+                "required": [
+                  "id",
+                  "source",
+                  "target",
+                  "kind"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "omissions": {
+              "type": "object",
+              "properties": {
+                "nodes": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "edges": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "boundaryEdges": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "fields": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "nodeId": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                        "maxLength": 128
+                      },
+                      "field": {
+                        "enum": [
+                          "title",
+                          "cardContent",
+                          "notes",
+                          "meta"
+                        ]
+                      },
+                      "reason": {
+                        "enum": [
+                          "not_requested",
+                          "text_limit"
+                        ]
+                      },
+                      "omittedBytes": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      }
+                    },
+                    "required": [
+                      "nodeId",
+                      "field",
+                      "reason",
+                      "omittedBytes"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "nodes",
+                "edges",
+                "boundaryEdges",
+                "fields"
+              ],
+              "additionalProperties": false
+            },
+            "mermaid": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "text": {
+                      "type": "string"
+                    },
+                    "nodeIds": {
+                      "type": "object",
+                      "patternProperties": {
+                        "^n_[0-9]+$": {
+                          "type": "string",
+                          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                          "maxLength": 128
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "edgeIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "index": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 9007199254740991
+                          },
+                          "edgeId": {
+                            "type": "string",
+                            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                            "maxLength": 128
+                          },
+                          "source": {
+                            "type": "string",
+                            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                            "maxLength": 128
+                          },
+                          "target": {
+                            "type": "string",
+                            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                            "maxLength": 128
+                          },
+                          "kind": {
+                            "type": "string",
+                            "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
+                          },
+                          "order": {
+                            "anyOf": [
+                              {
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 9007199254740991
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          }
+                        },
+                        "required": [
+                          "index",
+                          "edgeId",
+                          "source",
+                          "target",
+                          "kind",
+                          "order"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "text",
+                    "nodeIds",
+                    "edgeIds"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "scope",
+            "nodes",
+            "edges",
+            "boundaryEdges",
+            "omissions",
+            "mermaid"
+          ],
+          "additionalProperties": false
+        },
+        "error": {
+          "type": "null"
+        }
+      },
+      "required": [
+        "ok",
+        "cliContractVersion",
+        "command",
+        "documentId",
+        "graphVersion",
+        "data",
+        "error"
+      ],
+      "additionalProperties": false
+    },
+    "contextSuccess": {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "const": true
+        },
+        "cliContractVersion": {
+          "const": 1
+        },
+        "command": {
+          "const": "context"
+        },
+        "documentId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+          "maxLength": 128
+        },
+        "graphVersion": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "scope": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "mode": {
+                      "const": "all"
+                    },
+                    "nodeIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                        "maxLength": 128
+                      },
+                      "uniqueItems": true,
+                      "maxItems": 0
+                    },
+                    "edgeIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                        "maxLength": 128
+                      },
+                      "uniqueItems": true,
+                      "maxItems": 0
+                    },
+                    "direction": {
+                      "type": "null"
+                    },
+                    "depth": {
+                      "type": "null"
+                    },
+                    "kinds": {
+                      "anyOf": [
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
+                          },
+                          "uniqueItems": true,
+                          "minItems": 1
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "limits": {
+                      "type": "object",
+                      "properties": {
+                        "maxNodes": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 10000
+                        },
+                        "maxEdges": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 20000
+                        },
+                        "maxBoundaryEdges": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 20000
+                        },
+                        "maxTextBytes": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 1048576
+                        }
+                      },
+                      "required": [
+                        "maxNodes",
+                        "maxEdges",
+                        "maxBoundaryEdges",
+                        "maxTextBytes"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "mode",
+                    "nodeIds",
+                    "edgeIds",
+                    "direction",
+                    "depth",
+                    "kinds",
+                    "limits"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "mode": {
+                      "const": "ids"
+                    },
+                    "nodeIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                        "maxLength": 128
+                      },
+                      "uniqueItems": true
+                    },
+                    "edgeIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                        "maxLength": 128
+                      },
+                      "uniqueItems": true
+                    },
+                    "direction": {
+                      "enum": [
+                        "outgoing",
+                        "incoming",
+                        "both"
+                      ]
+                    },
+                    "depth": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 100
+                    },
+                    "kinds": {
+                      "anyOf": [
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
+                          },
+                          "uniqueItems": true,
+                          "minItems": 1
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "limits": {
+                      "type": "object",
+                      "properties": {
+                        "maxNodes": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 10000
+                        },
+                        "maxEdges": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 20000
+                        },
+                        "maxBoundaryEdges": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 20000
+                        },
+                        "maxTextBytes": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 1048576
+                        }
+                      },
+                      "required": [
+                        "maxNodes",
+                        "maxEdges",
+                        "maxBoundaryEdges",
+                        "maxTextBytes"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "mode",
+                    "nodeIds",
+                    "edgeIds",
+                    "direction",
+                    "depth",
+                    "kinds",
+                    "limits"
+                  ],
+                  "additionalProperties": false,
+                  "anyOf": [
+                    {
+                      "properties": {
+                        "nodeIds": {
+                          "minItems": 1
+                        }
+                      }
+                    },
+                    {
+                      "properties": {
+                        "edgeIds": {
+                          "minItems": 1
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "mode": {
+                      "const": "neighbors"
+                    },
+                    "nodeIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                        "maxLength": 128
+                      },
+                      "uniqueItems": true,
+                      "minItems": 1,
+                      "maxItems": 1
+                    },
+                    "edgeIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                        "maxLength": 128
+                      },
+                      "uniqueItems": true,
+                      "maxItems": 0
+                    },
+                    "direction": {
+                      "enum": [
+                        "outgoing",
+                        "incoming",
+                        "both"
+                      ]
+                    },
+                    "depth": {
+                      "const": 1
+                    },
+                    "kinds": {
+                      "anyOf": [
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
+                          },
+                          "uniqueItems": true,
+                          "minItems": 1
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "limits": {
+                      "type": "object",
+                      "properties": {
+                        "maxNodes": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 10000
+                        },
+                        "maxEdges": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 20000
+                        },
+                        "maxBoundaryEdges": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 20000
+                        },
+                        "maxTextBytes": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 1048576
+                        }
+                      },
+                      "required": [
+                        "maxNodes",
+                        "maxEdges",
+                        "maxBoundaryEdges",
+                        "maxTextBytes"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "mode",
+                    "nodeIds",
+                    "edgeIds",
+                    "direction",
+                    "depth",
+                    "kinds",
+                    "limits"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            },
+            "nodes": {
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                        "maxLength": 128
+                      },
+                      "title": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "title"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                        "maxLength": 128
+                      },
+                      "title": {
+                        "type": "string"
+                      },
+                      "cardContent": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "title",
+                      "cardContent"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                        "maxLength": 128
+                      },
+                      "title": {
+                        "type": "string"
+                      },
+                      "cardContent": {
+                        "type": "string"
+                      },
+                      "notes": {
+                        "type": "string"
+                      },
+                      "meta": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "$ref": "#/$defs/jsonValue"
+                        }
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "title",
+                      "cardContent",
+                      "notes",
+                      "meta"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              }
+            },
+            "edges": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                    "maxLength": 128
+                  },
+                  "source": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                    "maxLength": 128
+                  },
+                  "target": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                    "maxLength": 128
+                  },
+                  "kind": {
+                    "type": "string",
+                    "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
+                  },
+                  "order": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "meta": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "$ref": "#/$defs/jsonValue"
+                    }
+                  }
+                },
+                "required": [
+                  "id",
+                  "source",
+                  "target",
+                  "kind",
+                  "meta"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "boundaryEdges": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                    "maxLength": 128
+                  },
+                  "source": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                    "maxLength": 128
+                  },
+                  "target": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                    "maxLength": 128
+                  },
+                  "kind": {
+                    "type": "string",
+                    "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
+                  }
+                },
+                "required": [
+                  "id",
+                  "source",
+                  "target",
+                  "kind"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "omissions": {
+              "type": "object",
+              "properties": {
+                "nodes": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "edges": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "boundaryEdges": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "fields": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "nodeId": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                        "maxLength": 128
+                      },
+                      "field": {
+                        "enum": [
+                          "title",
+                          "cardContent",
+                          "notes",
+                          "meta"
+                        ]
+                      },
+                      "reason": {
+                        "enum": [
+                          "not_requested",
+                          "text_limit"
+                        ]
+                      },
+                      "omittedBytes": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      }
+                    },
+                    "required": [
+                      "nodeId",
+                      "field",
+                      "reason",
+                      "omittedBytes"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "nodes",
+                "edges",
+                "boundaryEdges",
+                "fields"
+              ],
+              "additionalProperties": false
+            },
+            "mermaid": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "text": {
+                      "type": "string"
+                    },
+                    "nodeIds": {
+                      "type": "object",
+                      "patternProperties": {
+                        "^n_[0-9]+$": {
+                          "type": "string",
+                          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                          "maxLength": 128
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "edgeIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "index": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 9007199254740991
+                          },
+                          "edgeId": {
+                            "type": "string",
+                            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                            "maxLength": 128
+                          },
+                          "source": {
+                            "type": "string",
+                            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                            "maxLength": 128
+                          },
+                          "target": {
+                            "type": "string",
+                            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                            "maxLength": 128
+                          },
+                          "kind": {
+                            "type": "string",
+                            "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
+                          },
+                          "order": {
+                            "anyOf": [
+                              {
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 9007199254740991
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          }
+                        },
+                        "required": [
+                          "index",
+                          "edgeId",
+                          "source",
+                          "target",
+                          "kind",
+                          "order"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "text",
+                    "nodeIds",
+                    "edgeIds"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "scope",
+            "nodes",
+            "edges",
+            "boundaryEdges",
+            "omissions",
+            "mermaid"
+          ],
+          "additionalProperties": false
+        },
+        "error": {
+          "type": "null"
+        }
+      },
+      "required": [
+        "ok",
+        "cliContractVersion",
+        "command",
+        "documentId",
+        "graphVersion",
+        "data",
+        "error"
+      ],
+      "additionalProperties": false
+    },
+    "previewSuccess": {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "const": true
+        },
+        "cliContractVersion": {
+          "const": 1
+        },
+        "command": {
+          "const": "preview"
+        },
+        "documentId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+          "maxLength": 128
+        },
+        "graphVersion": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "operationId": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+              "maxLength": 128
+            },
+            "baseGraphVersion": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "nextGraphVersion": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "operationCount": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000
+            },
+            "affectedNodeIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                "maxLength": 128
+              },
+              "uniqueItems": true
+            },
+            "affectedEdgeIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                "maxLength": 128
+              },
+              "uniqueItems": true
+            },
+            "diff": {
+              "type": "object",
+              "properties": {
+                "nodes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                        "maxLength": 128
+                      },
+                      "before": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                                "maxLength": 128
+                              },
+                              "title": {
+                                "type": "string",
+                                "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
+                              },
+                              "cardContent": {
+                                "type": "string"
+                              },
+                              "notes": {
+                                "type": "string"
+                              },
+                              "meta": {
+                                "type": "object",
+                                "additionalProperties": {
+                                  "$ref": "#/$defs/jsonValue"
+                                }
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "title",
+                              "cardContent",
+                              "notes",
+                              "meta"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "after": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                                "maxLength": 128
+                              },
+                              "title": {
+                                "type": "string",
+                                "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
+                              },
+                              "cardContent": {
+                                "type": "string"
+                              },
+                              "notes": {
+                                "type": "string"
+                              },
+                              "meta": {
+                                "type": "object",
+                                "additionalProperties": {
+                                  "$ref": "#/$defs/jsonValue"
+                                }
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "title",
+                              "cardContent",
+                              "notes",
+                              "meta"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "before",
+                      "after"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "edges": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                        "maxLength": 128
+                      },
+                      "before": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                                "maxLength": 128
+                              },
+                              "source": {
+                                "type": "string",
+                                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                                "maxLength": 128
+                              },
+                              "target": {
+                                "type": "string",
+                                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                                "maxLength": 128
+                              },
+                              "kind": {
+                                "type": "string",
+                                "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
+                              },
+                              "order": {
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 9007199254740991
+                              },
+                              "meta": {
+                                "type": "object",
+                                "additionalProperties": {
+                                  "$ref": "#/$defs/jsonValue"
+                                }
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "source",
+                              "target",
+                              "kind",
+                              "meta"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "after": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                                "maxLength": 128
+                              },
+                              "source": {
+                                "type": "string",
+                                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                                "maxLength": 128
+                              },
+                              "target": {
+                                "type": "string",
+                                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                                "maxLength": 128
+                              },
+                              "kind": {
+                                "type": "string",
+                                "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
+                              },
+                              "order": {
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 9007199254740991
+                              },
+                              "meta": {
+                                "type": "object",
+                                "additionalProperties": {
+                                  "$ref": "#/$defs/jsonValue"
+                                }
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "source",
+                              "target",
+                              "kind",
+                              "meta"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "before",
+                      "after"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "document": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "before": {
+                          "type": "object",
+                          "properties": {
+                            "title": {
+                              "type": "string",
+                              "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
+                            },
+                            "semanticType": {
+                              "type": "string",
+                              "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
+                            },
+                            "entryNodeId": {
+                              "anyOf": [
+                                {
+                                  "type": "string",
+                                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                                  "maxLength": 128
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            }
+                          },
+                          "required": [
+                            "title",
+                            "semanticType",
+                            "entryNodeId"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "after": {
+                          "type": "object",
+                          "properties": {
+                            "title": {
+                              "type": "string",
+                              "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
+                            },
+                            "semanticType": {
+                              "type": "string",
+                              "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
+                            },
+                            "entryNodeId": {
+                              "anyOf": [
+                                {
+                                  "type": "string",
+                                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                                  "maxLength": 128
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            }
+                          },
+                          "required": [
+                            "title",
+                            "semanticType",
+                            "entryNodeId"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "required": [
+                        "before",
+                        "after"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "nodes",
+                "edges",
+                "document"
+              ],
+              "additionalProperties": false
+            },
+            "summary": {
+              "type": "object",
+              "properties": {
+                "operationCount": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 10000
+                },
+                "nodeCount": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "edgeCount": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": [
+                "operationCount",
+                "nodeCount",
+                "edgeCount"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "operationId",
+            "baseGraphVersion",
+            "nextGraphVersion",
+            "operationCount",
+            "affectedNodeIds",
+            "affectedEdgeIds",
+            "diff",
+            "summary"
+          ],
+          "additionalProperties": false
+        },
+        "error": {
+          "type": "null"
+        }
+      },
+      "required": [
+        "ok",
+        "cliContractVersion",
+        "command",
+        "documentId",
+        "graphVersion",
+        "data",
+        "error"
+      ],
+      "additionalProperties": false
+    },
+    "applySuccess": {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "const": true
+        },
+        "cliContractVersion": {
+          "const": 1
+        },
+        "command": {
+          "const": "apply"
+        },
+        "documentId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+          "maxLength": 128
+        },
+        "graphVersion": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "receipt": {
+              "type": "object",
+              "properties": {
+                "operationId": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                  "maxLength": 128
+                },
+                "requestHash": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "baseGraphVersion": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "committedGraphVersion": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "committedAt": {
+                  "type": "string",
+                  "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+                },
+                "actor": {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "enum": [
+                        "human",
+                        "agent",
+                        "system"
+                      ]
+                    },
+                    "name": {
+                      "type": "string",
+                      "pattern": "\\S"
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "name"
+                  ],
+                  "additionalProperties": false
+                },
+                "affectedNodeIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                    "maxLength": 128
+                  },
+                  "uniqueItems": true
+                },
+                "affectedEdgeIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                    "maxLength": 128
+                  },
+                  "uniqueItems": true
+                },
+                "summary": {
+                  "type": "object",
+                  "properties": {
+                    "operationCount": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 10000
+                    },
+                    "nodeCount": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "edgeCount": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    }
+                  },
+                  "required": [
+                    "operationCount",
+                    "nodeCount",
+                    "edgeCount"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "operationId",
+                "requestHash",
+                "baseGraphVersion",
+                "committedGraphVersion",
+                "committedAt",
+                "affectedNodeIds",
+                "affectedEdgeIds",
+                "summary"
+              ],
+              "additionalProperties": false
+            },
+            "replayed": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "receipt",
+            "replayed"
+          ],
+          "additionalProperties": false
+        },
+        "error": {
+          "type": "null"
+        }
+      },
+      "required": [
+        "ok",
+        "cliContractVersion",
+        "command",
+        "documentId",
+        "graphVersion",
+        "data",
+        "error"
+      ],
+      "additionalProperties": false
+    },
+    "validateSuccess": {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "const": true
+        },
+        "cliContractVersion": {
+          "const": 1
+        },
+        "command": {
+          "const": "validate"
+        },
+        "documentId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+          "maxLength": 128
+        },
+        "graphVersion": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "valid": {
+              "const": true
+            },
+            "documentSchemaVersion": {
+              "const": 2
+            },
+            "nodeCount": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "edgeCount": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "commitCount": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "valid",
+            "documentSchemaVersion",
+            "nodeCount",
+            "edgeCount",
+            "commitCount"
+          ],
+          "additionalProperties": false
+        },
+        "error": {
+          "type": "null"
+        }
+      },
+      "required": [
+        "ok",
+        "cliContractVersion",
+        "command",
+        "documentId",
+        "graphVersion",
+        "data",
+        "error"
+      ],
+      "additionalProperties": false
+    },
+    "doctorSuccess": {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "const": true
+        },
+        "cliContractVersion": {
+          "const": 1
+        },
+        "command": {
+          "const": "doctor"
+        },
+        "documentId": {
+          "type": "null"
+        },
+        "graphVersion": {
+          "type": "null"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "type": "object",
+              "properties": {
+                "product": {
+                  "const": "mindmap-cli"
+                },
+                "version": {
+                  "type": "string"
+                },
+                "cliContractVersion": {
+                  "const": 1
+                },
+                "documentSchemaVersions": {
+                  "const": [
+                    2
+                  ]
+                }
+              },
+              "required": [
+                "product",
+                "version",
+                "cliContractVersion",
+                "documentSchemaVersions"
+              ],
+              "additionalProperties": false
+            },
+            "platform": {
+              "type": "object",
+              "properties": {
+                "os": {
+                  "type": "string"
+                },
+                "arch": {
+                  "type": "string"
+                },
+                "nodeVersion": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "os",
+                "arch",
+                "nodeVersion"
+              ],
+              "additionalProperties": false
+            },
+            "checks": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "ok": {
+                    "type": "boolean"
+                  },
+                  "details": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "$ref": "#/$defs/jsonValue"
+                    }
+                  }
+                },
+                "required": [
+                  "name",
+                  "ok",
+                  "details"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "supported": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "identity",
+            "platform",
+            "checks",
+            "supported"
+          ],
+          "additionalProperties": false
+        },
+        "error": {
+          "type": "null"
+        }
+      },
+      "required": [
+        "ok",
+        "cliContractVersion",
+        "command",
+        "documentId",
+        "graphVersion",
+        "data",
+        "error"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
