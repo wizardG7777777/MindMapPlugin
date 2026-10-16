@@ -1,8 +1,0 @@
-{
-  "envelopeVersion": 1,
-  "documentId": "plan",
-  "baseGraphVersion": 1,
-  "operationId": "writer-b-1",
-  "scope": {"mode": "ids", "nodeIds": ["b"], "edgeIds": [], "allowDelete": false},
-  "operations": [{"type": "updateNode", "nodeId": "b", "patch": {"title": "Implementation refined"}}]
-}

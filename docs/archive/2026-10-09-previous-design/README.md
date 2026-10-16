@@ -2,7 +2,7 @@
 
 归档日期：2026-10-09（Australia/Perth）。
 
-**状态：历史资料，不再作为新架构的规范或实施依据。新架构仍待讨论。**
+**状态：历史资料，不再作为新架构的规范或实施依据。新架构在归档时尚待讨论，当前进展见[文档入口](../../README.md)。**
 
 本归档保存归档时的工作区内容，包括尚未提交的修改和未跟踪文档。它不是仅按 Git HEAD 导出的快照，也不代表这些资料已经提交。
 
@@ -13,7 +13,7 @@
 - [旧 CLI Skill](snapshot/skills/mindmap-cli/SKILL.md)，已从当前 Skill 目录移出。
 - [布局示例](snapshot/examples/layout-gallery/README.md)、[登录鉴权示例](snapshot/examples/login-authentication/README.md)、[AgentGo 架构示例](snapshot/examples/agentgo-architecture/README.md)，含对应图示、源图与生成记录。
 - 历史验收记录位于 snapshot/verification/。这些记录不作为新架构的验收结果。
-- samples/ 与 schemas/ 的原样副本随归档保存，用于保留示例引用和旧格式定义；工作区原件继续留给旧实现使用。
+- samples/ 与 schemas/ 的原样副本随归档保存，用于保留示例引用和旧格式定义；工作区原件已随旧实现于 2026-10-16 移除。
 
 ## 保存方式
 
@@ -23,7 +23,9 @@
 
 ## 旧实现边界
 
-本次没有迁移或重写运行代码、测试、构建配置和依赖。旧版打包验收 test/helpers/evaluate-package.js 仍读取 skills/mindmap-cli/SKILL.md；该历史 Skill 现已归档，因此原打包验收的路径假设需要在后续继续维护旧版时调整。本次仅验证归档完整性与文档链接，不宣称旧版打包验收通过。
+2026-10-09 的归档操作没有迁移或重写运行代码、测试、构建配置和依赖，仅验证归档完整性与文档链接，没有宣称旧版打包验收通过。当时旧版打包验收仍依赖已归档的 Skill 路径。
+
+2026-10-16，旧 CLI/WebUI 代码、测试、根目录依赖及旧构建产物已从工作区移除，根目录命令统一转发到新版 `app/`。本归档的 `snapshot/` 原始字节和 `manifest.json` 保持不变；其中的旧命令、旧路径仅供历史回查。
 
 ## 文档目录
 

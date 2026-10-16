@@ -7,6 +7,7 @@
 ## 构建与检查
 
 在 `app/` 中运行 `npm ci`、`npm run check`、`npm test`、`npm run build`。
+安装依赖后，也可在仓库根目录运行 `npm run check`、`npm test`、`npm run build`，或对应的 `check:html`、`test:html`、`build:html` 同义命令。根目录仅转发到本应用，不再包含旧 CLI/WebUI 的入口或依赖。
 产物位于 `dist/html/`，包含 `maps/minimal.html` 和固定版本的 `runtime/1.0.0-alpha.2/`。
 运行资源为普通 JavaScript 与 CSS；依赖和公式字体已打包，不依赖 CDN、开发服务器或先前缓存。
 这是尚未发布的 alpha 构建，构建命令会重新生成模板。实际编辑与验证应先复制完整目录，避免覆盖工作文件。
