@@ -1,0 +1,667 @@
+{
+  "layoutVersion": 1,
+  "profile": "flowchart",
+  "orientation": "TD",
+  "entryNodeId": "request",
+  "width": 1228.7175,
+  "height": 1582.512,
+  "nodes": [
+    {
+      "id": "execute",
+      "title": "Agent 认领并执行任务",
+      "role": "action",
+      "shape": "rect",
+      "width": 186.83,
+      "height": 54,
+      "x": 711.585,
+      "y": 737.6320000000001,
+      "rank": 4,
+      "lines": [
+        "Agent 认领并执行任务"
+      ]
+    },
+    {
+      "id": "review",
+      "title": "Scheduler 依据新事实规划",
+      "role": "action",
+      "shape": "rect",
+      "width": 217.16,
+      "height": 54,
+      "x": 696.42,
+      "y": 1005.6320000000001,
+      "rank": 6,
+      "lines": [
+        "Scheduler 依据新事实规划"
+      ]
+    },
+    {
+      "id": "plan",
+      "title": "Scheduler 创建或增量更新图",
+      "role": "action",
+      "shape": "rect",
+      "width": 232.16,
+      "height": 54,
+      "x": 493.92,
+      "y": 270.752,
+      "rank": 1,
+      "lines": [
+        "Scheduler 创建或增量更新图"
+      ]
+    },
+    {
+      "id": "waiting",
+      "title": "保留等待原因",
+      "role": "action",
+      "shape": "rect",
+      "width": 160,
+      "height": 54,
+      "x": 140,
+      "y": 603.6320000000001,
+      "rank": 3,
+      "lines": [
+        "保留等待原因"
+      ]
+    },
+    {
+      "id": "dispatch",
+      "title": "冻结输入并发布唯一 Task",
+      "role": "action",
+      "shape": "rect",
+      "width": 207.875,
+      "height": 54,
+      "x": 701.0625,
+      "y": 603.6320000000001,
+      "rank": 3,
+      "lines": [
+        "冻结输入并发布唯一 Task"
+      ]
+    },
+    {
+      "id": "complete",
+      "title": "图级 complete 与必要交付",
+      "role": "action",
+      "shape": "rect",
+      "width": 215.435,
+      "height": 54,
+      "x": 892.2825,
+      "y": 1338.512,
+      "rank": 8,
+      "lines": [
+        "图级 complete 与必要交付"
+      ]
+    },
+    {
+      "id": "answer",
+      "title": "图终态 → 最终答复",
+      "role": "end",
+      "shape": "round",
+      "width": 164.72,
+      "height": 54,
+      "x": 917.64,
+      "y": 1472.512,
+      "rank": 9,
+      "lines": [
+        "图终态 → 最终答复"
+      ]
+    },
+    {
+      "id": "request",
+      "title": "用户提交目标",
+      "role": "start",
+      "shape": "round",
+      "width": 160,
+      "height": 54,
+      "x": 530,
+      "y": 136.752,
+      "rank": 0,
+      "lines": [
+        "用户提交目标"
+      ]
+    },
+    {
+      "id": "finished",
+      "title": "目标达到且结算齐备？",
+      "role": "decision",
+      "shape": "diamond",
+      "width": 326,
+      "height": 118.88,
+      "x": 642,
+      "y": 1139.6319999999998,
+      "rank": 7,
+      "lines": [
+        "目标达到且结算齐备",
+        "？"
+      ]
+    },
+    {
+      "id": "result",
+      "title": "结算 TaskOutcome 与节点结果",
+      "role": "action",
+      "shape": "rect",
+      "width": 245.48,
+      "height": 54,
+      "x": 682.26,
+      "y": 871.6320000000001,
+      "rank": 5,
+      "lines": [
+        "结算 TaskOutcome 与节点结果"
+      ]
+    },
+    {
+      "id": "ready",
+      "title": "输入与执行能力齐备？",
+      "role": "decision",
+      "shape": "diamond",
+      "width": 326,
+      "height": 118.88,
+      "x": 447,
+      "y": 404.752,
+      "rank": 2,
+      "lines": [
+        "输入与执行能力齐备",
+        "？"
+      ]
+    },
+    {
+      "id": "continue",
+      "title": "追加后续工作或等待新信息",
+      "role": "action",
+      "shape": "rect",
+      "width": 218,
+      "height": 54,
+      "x": 501,
+      "y": 1338.512,
+      "rank": 8,
+      "lines": [
+        "追加后续工作或等待新信息"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "e01",
+      "source": "request",
+      "target": "plan",
+      "kind": "新请求",
+      "role": "forward",
+      "points": [
+        {
+          "x": 610,
+          "y": 190.752
+        },
+        {
+          "x": 610,
+          "y": 270.752
+        }
+      ],
+      "label": {
+        "x": 617,
+        "y": 217.788,
+        "width": 45,
+        "height": 25.927999999999997,
+        "lines": [
+          "新请求"
+        ]
+      }
+    },
+    {
+      "id": "e02",
+      "source": "plan",
+      "target": "ready",
+      "kind": "启动 / 追加后扫描",
+      "role": "forward",
+      "points": [
+        {
+          "x": 610,
+          "y": 324.752
+        },
+        {
+          "x": 610,
+          "y": 404.752
+        }
+      ],
+      "label": {
+        "x": 617,
+        "y": 351.788,
+        "width": 98.24,
+        "height": 25.927999999999997,
+        "lines": [
+          "启动 / 追加后扫描"
+        ]
+      }
+    },
+    {
+      "id": "e04",
+      "source": "ready",
+      "target": "waiting",
+      "kind": "否",
+      "role": "branch",
+      "points": [
+        {
+          "x": 610,
+          "y": 523.6320000000001
+        },
+        {
+          "x": 610,
+          "y": 563.6320000000001
+        },
+        {
+          "x": 220,
+          "y": 563.6320000000001
+        },
+        {
+          "x": 220,
+          "y": 603.6320000000001
+        }
+      ],
+      "label": {
+        "x": 227,
+        "y": 570.668,
+        "width": 27,
+        "height": 25.927999999999997,
+        "lines": [
+          "否"
+        ]
+      }
+    },
+    {
+      "id": "e03",
+      "source": "ready",
+      "target": "dispatch",
+      "kind": "是",
+      "role": "forward",
+      "points": [
+        {
+          "x": 610,
+          "y": 523.6320000000001
+        },
+        {
+          "x": 610,
+          "y": 563.6320000000001
+        },
+        {
+          "x": 805,
+          "y": 563.6320000000001
+        },
+        {
+          "x": 805,
+          "y": 603.6320000000001
+        }
+      ],
+      "label": {
+        "x": 617,
+        "y": 530.668,
+        "width": 27,
+        "height": 25.927999999999997,
+        "lines": [
+          "是"
+        ]
+      }
+    },
+    {
+      "id": "e06",
+      "source": "dispatch",
+      "target": "execute",
+      "kind": "按 route 认领",
+      "role": "forward",
+      "points": [
+        {
+          "x": 805,
+          "y": 657.6320000000001
+        },
+        {
+          "x": 805,
+          "y": 737.6320000000001
+        }
+      ],
+      "label": {
+        "x": 812,
+        "y": 684.6679999999999,
+        "width": 77.494,
+        "height": 25.927999999999997,
+        "lines": [
+          "按 route 认领"
+        ]
+      }
+    },
+    {
+      "id": "e07",
+      "source": "execute",
+      "target": "result",
+      "kind": "任务终结并持久化",
+      "role": "forward",
+      "points": [
+        {
+          "x": 805,
+          "y": 791.6320000000001
+        },
+        {
+          "x": 805,
+          "y": 871.6320000000001
+        }
+      ],
+      "label": {
+        "x": 812,
+        "y": 818.6679999999999,
+        "width": 100,
+        "height": 25.927999999999997,
+        "lines": [
+          "任务终结并持久化"
+        ]
+      }
+    },
+    {
+      "id": "e08",
+      "source": "result",
+      "target": "review",
+      "kind": "持久化规划事件",
+      "role": "forward",
+      "points": [
+        {
+          "x": 805,
+          "y": 925.6320000000001
+        },
+        {
+          "x": 805,
+          "y": 1005.6320000000001
+        }
+      ],
+      "label": {
+        "x": 812,
+        "y": 952.6679999999999,
+        "width": 89,
+        "height": 25.927999999999997,
+        "lines": [
+          "持久化规划事件"
+        ]
+      }
+    },
+    {
+      "id": "e10",
+      "source": "review",
+      "target": "finished",
+      "kind": "评估目标与事实",
+      "role": "forward",
+      "points": [
+        {
+          "x": 805,
+          "y": 1059.632
+        },
+        {
+          "x": 805,
+          "y": 1139.6319999999998
+        }
+      ],
+      "label": {
+        "x": 812,
+        "y": 1086.668,
+        "width": 89,
+        "height": 25.927999999999997,
+        "lines": [
+          "评估目标与事实"
+        ]
+      }
+    },
+    {
+      "id": "e12",
+      "source": "finished",
+      "target": "continue",
+      "kind": "否",
+      "role": "branch",
+      "points": [
+        {
+          "x": 805,
+          "y": 1258.512
+        },
+        {
+          "x": 805,
+          "y": 1298.512
+        },
+        {
+          "x": 610,
+          "y": 1298.512
+        },
+        {
+          "x": 610,
+          "y": 1338.512
+        }
+      ],
+      "label": {
+        "x": 617,
+        "y": 1305.548,
+        "width": 27,
+        "height": 25.927999999999997,
+        "lines": [
+          "否"
+        ]
+      }
+    },
+    {
+      "id": "e11",
+      "source": "finished",
+      "target": "complete",
+      "kind": "是：请求完成",
+      "role": "forward",
+      "points": [
+        {
+          "x": 805,
+          "y": 1258.512
+        },
+        {
+          "x": 805,
+          "y": 1298.512
+        },
+        {
+          "x": 1000,
+          "y": 1298.512
+        },
+        {
+          "x": 1000,
+          "y": 1338.512
+        }
+      ],
+      "label": {
+        "x": 812,
+        "y": 1265.548,
+        "width": 78,
+        "height": 25.927999999999997,
+        "lines": [
+          "是：请求完成"
+        ]
+      }
+    },
+    {
+      "id": "e14",
+      "source": "complete",
+      "target": "answer",
+      "kind": "必要交付已确认",
+      "role": "forward",
+      "points": [
+        {
+          "x": 1000,
+          "y": 1392.512
+        },
+        {
+          "x": 1000,
+          "y": 1472.512
+        }
+      ],
+      "label": {
+        "x": 1007,
+        "y": 1419.548,
+        "width": 89,
+        "height": 25.927999999999997,
+        "lines": [
+          "必要交付已确认"
+        ]
+      }
+    },
+    {
+      "id": "e05",
+      "source": "waiting",
+      "target": "ready",
+      "kind": "输入或执行面变化",
+      "role": "retry",
+      "points": [
+        {
+          "x": 140,
+          "y": 630.6320000000001
+        },
+        {
+          "x": 94,
+          "y": 630.6320000000001
+        },
+        {
+          "x": 94,
+          "y": 464.192
+        },
+        {
+          "x": 447,
+          "y": 464.192
+        }
+      ],
+      "label": {
+        "x": 101,
+        "y": 534.448,
+        "width": 100,
+        "height": 25.927999999999997,
+        "lines": [
+          "输入或执行面变化"
+        ]
+      }
+    },
+    {
+      "id": "e09",
+      "source": "result",
+      "target": "ready",
+      "kind": "已有下游可独立就绪",
+      "role": "retry",
+      "points": [
+        {
+          "x": 927.74,
+          "y": 898.6320000000001
+        },
+        {
+          "x": 1172.7175,
+          "y": 898.6320000000001
+        },
+        {
+          "x": 1172.7175,
+          "y": 464.192
+        },
+        {
+          "x": 773,
+          "y": 464.192
+        }
+      ],
+      "label": {
+        "x": 994.72875,
+        "y": 867.704,
+        "width": 111,
+        "height": 25.927999999999997,
+        "lines": [
+          "已有下游可独立就绪"
+        ]
+      }
+    },
+    {
+      "id": "e13",
+      "source": "continue",
+      "target": "plan",
+      "kind": "需追加工作时",
+      "role": "retry",
+      "points": [
+        {
+          "x": 501,
+          "y": 1365.512
+        },
+        {
+          "x": 56,
+          "y": 1365.512
+        },
+        {
+          "x": 56,
+          "y": 297.752
+        },
+        {
+          "x": 493.92,
+          "y": 297.752
+        }
+      ],
+      "label": {
+        "x": 239.5,
+        "y": 1334.5839999999998,
+        "width": 78,
+        "height": 25.927999999999997,
+        "lines": [
+          "需追加工作时"
+        ]
+      }
+    }
+  ],
+  "groups": [
+    {
+      "id": "alternatives-finished",
+      "kind": "alternatives",
+      "nodeIds": [
+        "continue",
+        "complete"
+      ],
+      "entryNodeId": "finished",
+      "mergeNodeId": null
+    },
+    {
+      "id": "alternatives-ready",
+      "kind": "alternatives",
+      "nodeIds": [
+        "waiting",
+        "dispatch"
+      ],
+      "entryNodeId": "ready",
+      "mergeNodeId": null
+    }
+  ],
+  "constraints": {
+    "sameRank": [
+      {
+        "nodeIds": [
+          "continue",
+          "complete"
+        ],
+        "reason": "alternative entries"
+      },
+      {
+        "nodeIds": [
+          "waiting",
+          "dispatch"
+        ],
+        "reason": "alternative entries"
+      }
+    ],
+    "forwardEdgeIds": [
+      "e07",
+      "e04",
+      "e12",
+      "e02",
+      "e14",
+      "e08",
+      "e06",
+      "e01",
+      "e03",
+      "e11",
+      "e10"
+    ],
+    "retryEdgeIds": [
+      "e09",
+      "e05",
+      "e13"
+    ],
+    "secondaryEdgeIds": []
+  },
+  "warnings": [],
+  "font": {
+    "family": "Noto Sans CJK SC",
+    "version": "2.004",
+    "size": 15
+  }
+}

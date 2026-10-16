@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="format" content="mindmap/1">
+  <title>内容区域与可见性源文本示例</title>
+</head>
+<body>
+  <header>
+    <h1>Markdown 图片与表格按所在文本字段归属显示</h1>
+    <p>本页直接展示 Markdown 源码，不实现卡片展开、预览或滚动。三个节点分别引用矩形、菱形和圆形；图片与表格都位于标题、卡片文本或笔记中，没有字段外的图片、表格或图表配置。</p>
+  </header>
+  <section class="map default">
+    <article id="title-media" class="basic rect" data-x="0" data-y="0">
+      <h2 class="title">标题区域的媒体 ![参考图](../assets/card-collapsed-reference.png)
+
+| 类别 | 数值 |
+| --- | --- |
+| A | 2 |
+| B | 3 |</h2>
+      <div class="card">收起时不渲染标题图片；这里的正文仍可查看。</div>
+      <div class="notes">展开后标题区固定在顶部，恢复其图片。</div>
+      <ul class="links">
+        <li><a id="plain-label" href="#card-media">**说明** $x$</a></li>
+      </ul>
+    </article>
+    <article id="card-media" class="basic diamond" data-x="360" data-y="0">
+      <h2 class="title">卡片内容区域的媒体</h2>
+      <div class="card">收起与展开时均完整渲染：![参考图](../assets/card-collapsed-reference.png)
+
+| 类别 | 数值 |
+| --- | --- |
+| A | 4 |
+| B | 5 |</div>
+      <div class="notes">内容过长时通过正文滚动查看，卡片内容不冻结。</div>
+      <ul class="links"></ul>
+    </article>
+    <article id="notes-media" class="basic circle" data-x="720" data-y="0">
+      <h2 class="title">笔记区域的媒体</h2>
+      <div class="card">这段正文在两种形态下都可见。</div>
+      <div class="notes">本区域在收起时全部隐藏：![参考图](../assets/card-collapsed-reference.png)
+
+| 类别 | 数值 |
+| --- | --- |
+| A | 6 |
+| B | 7 |</div>
+      <ul class="links"></ul>
+    </article>
+  </section>
+</body>
+</html>

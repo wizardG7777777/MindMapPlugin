@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="format" content="mindmap/1">
+  <title>层级关系源文本示例</title>
+</head>
+<body>
+  <header>
+    <h1>层级关系与跨分支连线</h1>
+    <p>源文本格式样例：直接显示字段与关系引用，不包含交互式渲染实现；首版按源坐标手动摆放，不提供自动排版。</p>
+  </header>
+  <section class="map default">
+    <article id="plan" class="basic rect" data-x="80" data-y="160">
+      <h2 class="title">产品规划</h2>
+      <div class="card">梳理产品目标与主要工作。</div>
+      <div class="notes">展开本卡片后显示这段详细说明。</div>
+      <ul class="links">
+        <li><a id="plan-requirements" href="#requirements">需求分支</a></li>
+        <li><a id="plan-implementation" href="#implementation">实现分支</a></li>
+      </ul>
+    </article>
+    <article id="requirements" class="basic rect" data-x="420" data-y="80">
+      <h2 class="title">需求设计</h2>
+      <div class="card">明确用户需要完成的任务。</div>
+      <div class="notes">比较方案 A &amp; B，记录讨论结果。</div>
+      <ul class="links">
+        <li><a id="requirements-reference" href="#implementation">参照实现说明</a></li>
+      </ul>
+    </article>
+    <article id="implementation" class="basic rect" data-x="420" data-y="280">
+      <h2 class="title">实现规划</h2>
+      <div class="card">整理需要实现的功能。</div>
+      <div class="notes">后续补充实现范围与验收条件。</div>
+      <ul class="links">
+        <li><a id="implementation-dependency" href="#requirements">依赖需求定义</a></li>
+      </ul>
+    </article>
+  </section>
+</body>
+</html>

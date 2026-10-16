@@ -1,103 +1,45 @@
-# MindMap CLI
+# MindMap
 
-MindMap is a local directed-graph program with one public CLI for people and agents. Readers independently choose the document, nodes, relationships and content they need. A graph may contain cycles, multiple parents, parallel relationships, self-loops and disconnected components.
+项目的首版产品设计基线已齐备，以 HTML、CSS 和 TypeScript 组织网页应用，固定为源文本、外观、逻辑、外壳四部分。当前已有文件流程原型；完整图编辑器继续按已定产品范围开发。
 
-**Status: release 0.2.0, headless CLI implemented.** The executable provides the commands below. The package has not been published to npm. Writable storage is currently limited to macOS arm64 on APFS with Node 24.15.0; the executable reports the tested matrix through `capabilities`. [Acceptance](docs/acceptance.md) defines the runtime and package verification requirements.
+2026-10-16 已完成[第一版文件流程里程碑](app/README.md)（`1.0.0-alpha.2`）：在本机 Chrome 和 Codex 中完成本地 HTML 打开、文件授权、真实保存、Agent 改盘自动刷新、未保存草稿丢弃及撤销历史清空的实际验证。页面与授权由用户操作，文件内容、哈希及代码检查由 Agent 核验，证据见[验证记录](verification/html-milestone/README.md)。根目录 `npm run build:html` 构建新方案，原 `build` 仍属于旧实现。以下为完整首版设计要求，实际实现范围以里程碑记录为准。
 
-| Version | Value | Meaning |
-| --- | --- | --- |
-| Program release | `0.2.0` | MindMap's second version, expressed as a package version |
-| CLI contract | `1` | Command and result compatibility |
-| Document schema | `2` | Persisted graph format |
-| Operation envelope | `1` | Mutation request format |
-| Graph version | Starts at `0` | Per-document committed batch count |
+渲染方案：HTML 节点内容配合 SVG 连线，CSS 定义外观；拖动节点时连线必须实时跟随，不能等拖拽结束才更新。KaTeX 继续保留，允许其局部 SVG 输出；绘制结果不替代 HTML 源文本。
 
-## First delivery
+外壳 S1 已确定：图 HTML 只保留源文本、必要文档结构与资源引用，外观、逻辑、外壳及依赖作为按版本管理的本地公共资源，以相对路径共用。资源准备好后支持离线使用且无需安装插件；首次交付需提供对应资源，图文件不自带完整编辑器。普通保存保持资源版本，不写回运行代码或生成的工具界面。
 
-The first delivery is a complete headless workflow:
+S2 已确定：提供新建图和打开其他图，不提供另存为。新图从一个标题为“新节点”的节点开始，先在内存编辑，首次手动保存时选择文件位置；打开其他图替换当前页面中的图。允许随后删除全部节点并保存空图，打开空图不补节点。
 
-1. Discover the executable's identity, capabilities and schemas.
-2. Create an empty document.
-3. Let a person and several agents read independently, including different parts of the same document.
-4. Prepare a typed operation batch using the version that was read.
-5. Preview its actual changes without acquiring an edit session.
-6. Commit through a cross-process transaction, then read again to verify the result.
+S3 已确定：左侧竖向浮置工具栏常驻且不可收起；右上方横向警告栏常驻，无警告时显示空状态；查找框位于其下方，按需打开，保留结果数量和关闭按钮。三个工具区域默认白底黑边，不随图平移缩放；参考截图不扩展功能。
 
-Ordinary commands run and exit. They require no browser, listening port, background service, account or model API. External agent applications provide reasoning and invoke the same commands available to a person. The program does not generate natural-language plans on its own.
+S4 已确定：文件三按钮始终在左侧最上方；形状按钮有节点焦点时换形、无节点焦点时新增。手动建边先选线工具，既有自动边默认贝塞尔、复制关联边规则保持。撤销仅 Ctrl+Z／Cmd+Z，复制和删除仅快捷键；右上角集中缩放滑块与比例、回原点和查找入口，查找只经上／下箭头逐项定位。S5 暂不展开；S6 仅使用默认主题，不提供主题选择或切换入口。
 
-The only public automation interface is the CLI. There is no separately registered agent tool catalog. Five headless layout profiles and standalone SVG output are available. Interactive visual editing and configurable themes remain deferred.
+当前源文本采用平级节点和有向边，不设置基础关系类型，节点间联系由边的方向和可选说明表达。所有新建图统一为通用有向图，工具栏提供圆角矩形、直角矩形、菱形、平行四边形和圆形五种形态，按 S4 分发新增或换形；形态可混用和自由切换，卡片全部内容保留，不设置图类型或业务节点类型。树是有向图的特例，不强制无环、单父或根节点数量。不提供子树折叠，保留卡片展开笔记；收起时显示所选形状，展开统一为圆角矩形并标识收起形状，不改写持久化形态。
 
-## Independent reads, coordinated commits
+A2 已记录：默认贝塞尔曲线，可创建直角折线或直线；曲线与折线绕开无关节点，直线可被节点覆盖；交叉边异色。显示中的说明框中心在线上、全文扩张并通常避让节点和其他可见说明框。直线空间不足时，其说明框优先级低于节点，允许被节点遮挡；当前暂不解决该极端情况。
 
-A read has explicit selectors and returns one complete committed graph version. It neither changes another reader's scope nor acquires a document edit lock. Different readers may observe different versions if a commit occurs between their reads; each result identifies its version.
+A3 已记录：统一粗描边表示焦点，默认蓝色；框选只选择节点，不同时编辑多个正文。边单击选中，说明框仅双击编辑时显示、退出编辑隐藏，隐藏不影响保存与查找；查找只突出当前定位对象，无悬停反馈或额外操作过程提示。
 
-Read scope is context, not mutation authority. An operation batch declares its own write scope. All writers use the same transaction rules: recheck the current version under a short exclusive commit lock, validate the entire batch, and publish one complete snapshot. Stale edits fail visibly; automatic conflict merging is outside the first delivery.
+A4 已记录：默认画布使用浅灰点阵，画布内所有元素等比缩放，不设最小可辨识尺寸；工具栏、查找工具和警告栏统一采用默认主题的白底黑边。A1–A4 及首版外壳产品规则已确定，技术实现与验证继续落实。
 
-## Example workflow
+主动删除与空标题自动删除共用规则，只清除目标节点和全部入边、出边。其余节点和关系保持原样；回路、多个入边、空图和孤立节点均可保存。
 
-```sh
-mindmap capabilities --json
-mindmap create ./plan.json --id plan --title 'Product plan' --json
-mindmap inspect ./plan.json --json
-mindmap context ./plan.json --all --json
-```
+首版以手动排版为主，不提供按内容场景或关系组织节点的自动排版。无碰撞时保留用户与 Agent 指定的位置；手动流程完整可用后再按具体布局场景设计自动排版，不恢复图类型字段。新建定位、局部避让、连线路径和Markdown 表格内部排版继续保留。
 
-Prepare the operation file described in the [complete workflow](docs/cli-workflows.md), then run:
+节点完全禁止叠放，不提供置顶、置底或逐层调整。用户与 Agent 指定的是期望位置，碰撞时自动移到最近空位，允许局部移动其他节点；批量选集保持内部相对位置。这是基础几何避让，不按内容场景或关系重排整张图；手动保存最终坐标，不保存层叠字段。
 
-```sh
-mindmap preview ./plan.json --input changes.json --json
-mindmap apply ./plan.json --input changes.json --json
-mindmap context ./plan.json --all --mermaid --json
-mindmap validate ./plan.json --json
-```
+打开或刷新后自动调整视野以看见全部节点，随后可手动缩放；提供回原点，不提供手动显示全部或恢复 100%。查找仅按节点／边筛选，无筛选查全部文本；定位节点居中且不展开卡片，编辑焦点自动跟随保持可见。
 
-[Installation](docs/installation.md) covers building from this checkout and installing the package artifact without a source checkout. The [agent skill](skills/mindmap-cli/SKILL.md) teaches the workflow but is not required for CLI access.
+当前图片与 Excel 式行列表格仅使用 Markdown；时序用有向边表达。不提供手绘、表格额外能力、分区边界、线框或模板。
 
-## Render a complete diagram
+- [当前架构设计](docs/design/architecture.md)
+- [源文本设计草案](docs/design/source-text.md)
+- [逻辑设计草案](docs/design/logic.md)
+- [外观设计草案](docs/design/appearance.md)
+- [外壳设计草案](docs/design/shell.md)
+- [通用图、节点形态与内容场景](docs/design/diagram-types.md)
+- [HTML 源文本示例](docs/design/examples/README.md)
+- [文档入口](docs/README.md)
+- [上一轮设计完整归档](docs/archive/2026-10-09-previous-design/README.md)
 
-```sh
-mindmap render ./plan.json --format svg --layout flowchart --orientation TD --raw > plan.svg
-mindmap render ./plan.json --format mermaid --raw > plan.mmd
-mindmap render ./plan.json --format mermaid --layout-hints --raw > plan-with-hints.mmd
-```
-
-The profiles are `flowchart`, `mindmap`, `dependency`, `network` and `fishbone`; `auto` selects one from the graph's semantic type. SVG preserves our measured positions and routes, including Chinese text through packaged glyph outlines. Mermaid hints describe the intended geometry, but an external viewer may ignore them. See [rendering](docs/rendering.md) for control-flow roles, exact output fields and limits.
-
-## Build and verify
-
-Use Node **24.15.0**:
-
-```sh
-npm ci
-npm run build
-node ./bin/mindmap.js --help
-npm test
-npm run test:package
-```
-
-`npm test` runs the CLI, graph, schema, query, native-lock, recovery and measured-layout/SVG tests. `test:package` installs a packed artifact with development dependencies and install scripts disabled, makes its assets read-only, repeats the tests through the installed executable, and runs an independent schema-driven caller with networking and child-process creation denied by the macOS sandbox. Run that package check outside an enclosing sandbox that forbids creating a test sandbox.
-
-The package check writes command transcripts, results and the exact artifact hash under `test-results/package/`. Release verification summaries are recorded in the repository's `verification/` directory. Process-crash tests do not establish power-loss recovery. Linux and Windows writes, graphical editing and automatic merge are not advertised by this release.
-
-## Specification ownership
-
-| Document | Authority |
-| --- | --- |
-| [Architecture](docs/architecture.md) | Module ownership and delivery boundaries |
-| [Data model](docs/data-model.md) | Persisted document fields and graph invariants |
-| [Operation schema](docs/operation-schema.md) | Mutation payloads and write scope |
-| [Command contract](docs/command-contract.md) | Process behavior, results, errors and public schemas |
-| [Command result data](docs/command-results.md) | Exact success payloads and stable error details |
-| [CLI reference](docs/cli-reference.md) | Complete command and option catalog |
-| [Context management](docs/context-management.md) | Independent query scope, limits and returned facts |
-| [Editing architecture](docs/editing-architecture.md) | Human and agent read/prepare/commit workflows |
-| [Persistence and concurrency](docs/persistence-and-concurrency.md) | Snapshot reads, commit locking, durability and retries |
-| [Mermaid projection](docs/mermaid-projection.md) | Structural source and optional layout hints |
-| [Rendering](docs/rendering.md) | Graph-specific layout policies and standalone SVG |
-| [CLI workflows](docs/cli-workflows.md) | End-to-end examples |
-| [Installation](docs/installation.md) | Package contents and release execution |
-| [Acceptance](docs/acceptance.md) | Executable release gates and evidence requirements |
-| [Implementation roadmap](docs/implementation-roadmap.md) | Work order and exit criteria |
-| [View state](docs/view-state.md), [theme and template](docs/theme-template.md) | Deferred visual boundaries |
-
-Each rule has one owning document. Examples and the skill reference these contracts; they do not define alternative mutation semantics. Package release version, CLI contract version, persisted schema version and graph content version are different values.
+上一轮 CLI 与本地 WebUI 设计文档已于 2026-10-09 归档，不再作为新架构的规范。现有实现代码仍保留在工作区，新设计的文档不代表对应实现已经完成。

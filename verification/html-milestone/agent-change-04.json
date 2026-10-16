@@ -1,0 +1,22 @@
+{
+  "at": "2026-10-16T01:56:23.628Z",
+  "target": "/Users/yanchenyu/Desktop/MindMap验证-QKK2j1/选择这个文件.html",
+  "release": "1.0.0-alpha.2",
+  "beforeTitle": "Chrome 保存完成",
+  "afterTitle": "Agent 第二次桌面更新",
+  "beforeSha256": "87ed588e25e63e9d613f13d3d0cea3d1b183df10e68fa5afd95bbeb4dc75e4e4",
+  "afterSha256": "c4f70031d5e185343852c3d93a513e6d4689cdc7482bc7f1fff410b7e1cd539c",
+  "humanSaveConfirmed": true,
+  "unsavedDraftBeforeChange": "user confirmed entering 未保存草稿 without saving",
+  "operation": "atomic replacement; title only",
+  "pageAutoRefreshConfirmed": true,
+  "draftDiscardConfirmed": true,
+  "undoHistoryClearedConfirmed": true,
+  "backup": "/Users/yanchenyu/Documents/WebApps/codexPlugin/mindMap/verification/html-milestone/desktop-human-save-before-agent-04.html.txt",
+  "confirmation": {
+    "at": "2026-10-16T02:01:43.505Z",
+    "source": "user observation",
+    "text": "自动更新，撤销也未恢复草稿",
+    "diskUnchangedAfterUndo": true
+  }
+}

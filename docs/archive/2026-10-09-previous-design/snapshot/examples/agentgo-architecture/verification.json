@@ -1,0 +1,65 @@
+{
+  "date": "2026-09-19",
+  "sourceCommit": "84e7f83e4cf75f9e8db51bd1e5fac686c63e6274",
+  "scope": "source architecture and diagram artifacts; no AgentGo runtime execution",
+  "diagrams": [
+    {
+      "name": "architecture",
+      "graphVersion": 2,
+      "valid": true,
+      "documentSchemaVersion": 2,
+      "nodeCount": 11,
+      "edgeCount": 10,
+      "commitCount": 2,
+      "sourceReferences": 39,
+      "width": 928.8900000000001,
+      "height": 1394.752,
+      "warnings": [],
+      "visualReview": "SVG rasterized and visually inspected"
+    },
+    {
+      "name": "runtime",
+      "graphVersion": 2,
+      "valid": true,
+      "documentSchemaVersion": 2,
+      "nodeCount": 12,
+      "edgeCount": 14,
+      "commitCount": 2,
+      "sourceReferences": 22,
+      "width": 1228.7175,
+      "height": 1582.512,
+      "warnings": [],
+      "visualReview": "SVG rasterized and visually inspected"
+    }
+  ],
+  "browserVerification": {
+    "browser": "Chrome headless",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "diagrams": [
+      {
+        "name": "architecture",
+        "renderedNodes": 11,
+        "selectedNode": "graph",
+        "nodeBodyReadable": true,
+        "pageErrors": []
+      },
+      {
+        "name": "runtime",
+        "renderedNodes": 12,
+        "selectedNode": "result",
+        "nodeBodyReadable": true,
+        "pageErrors": []
+      }
+    ],
+    "documentEditsPerformed": false
+  },
+  "sourceWorktreeAfter": [
+    "?? .DS_Store",
+    "?? docs/.DS_Store",
+    "?? internal/.DS_Store",
+    "?? prompts/.DS_Store"
+  ]
+}

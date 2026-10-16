@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="format" content="mindmap/1">
+  <title>Codex 文件流程验证</title>
+  <link rel="stylesheet" href="./runtime/1.0.0-alpha.2/app.css">
+  <script defer src="./runtime/1.0.0-alpha.2/app.js"></script>
+</head>
+<body>
+  <section class="map default">
+    <article id="node-1" class="basic round-rect" data-x="0" data-y="0">
+      <h2 class="title">Codex 保存完成</h2>
+      <div class="card">在页面中编辑，手动保存后写回这个 HTML。
+
+公式：$x^2 + y^2 = 1$。</div>
+      <div class="notes">这段笔记在收起时隐藏，但仍完整保存。</div>
+      <ul class="links"></ul>
+    </article>
+  </section>
+</body>
+</html>

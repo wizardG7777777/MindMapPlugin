@@ -1,0 +1,14 @@
+{
+  "at": "2026-10-15T09:24:01.350Z",
+  "target": "/Users/yanchenyu/Documents/WebApps/codexPlugin/mindMap/test-results/html-manual-xSMP6R/maps/minimal.html",
+  "operation": "atomic replacement; only node-1 title changed",
+  "beforeTitle": "Chrome 保存验证",
+  "afterTitle": "Agent 改盘刷新验证",
+  "beforeSha256": "d6842892e55f76f03db96ce987a675a1224cfb42f17b49bdaa4bf48ce88dea5f",
+  "afterSha256": "f255fc6826e552b6c7858ff105d6378169e55c9d5d34c7d3b389faf6bdfa7dab",
+  "humanSaveConfirmed": true,
+  "pageAutoRefreshConfirmed": false,
+  "backup": "/Users/yanchenyu/Documents/WebApps/codexPlugin/mindMap/verification/html-milestone/chrome-human-save-before-agent.html.txt",
+  "pageOutcome": "user-reported-error",
+  "errorDetails": "Failed to execute 'getFile' on 'FileSystemFileHandle': The request is not allowed by the user agent or the platform in the current context."
+}

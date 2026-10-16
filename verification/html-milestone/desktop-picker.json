@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-15",
+  "purpose": "mouse-only file picker verification",
+  "directory": "/Users/yanchenyu/Desktop/MindMap验证-QKK2j1",
+  "file": "/Users/yanchenyu/Desktop/MindMap验证-QKK2j1/选择这个文件.html",
+  "release": "1.0.0-alpha.2",
+  "initialTitle": "桌面验证图",
+  "sha256": "1c7ffa1e89437522c16af049a964909a0cd10508c1c415c9f7d0bc03d345949d",
+  "runtimeManifest": {
+    "release": "1.0.0-alpha.2",
+    "format": "mindmap/1",
+    "transport": "local relative classic script",
+    "files": {
+      "app.js": {
+        "bytes": 835848,
+        "sha256": "d981e77af712c682c02fb7ecff8fd2c0c4688e945bd472d50e45952fc82525da"
+      },
+      "app.css": {
+        "bytes": 1460931,
+        "sha256": "38be17b161c18e3713d4300d47cd3a94c287eda44fec7f53f523d78bfa88189c"
+      }
+    }
+  },
+  "boundInBrowser": true,
+  "bindingEvidenceDate": "2026-10-16",
+  "lastAgentChange": "agent-change-04.json",
+  "chromeAutomaticRefreshConfirmed": true,
+  "chromeSaveAndDraftDiscard": "passed",
+  "chromeSaveConfirmed": true,
+  "chromeUndoHistoryClearedConfirmed": true,
+  "chromeMinimalFlow": "passed with native user actions and filesystem evidence"
+}

@@ -1,0 +1,29 @@
+{
+  "ok": true,
+  "cliContractVersion": 1,
+  "command": "create",
+  "documentId": "agentgo-runtime",
+  "graphVersion": 0,
+  "data": {
+    "path": "/Users/yanchenyu/Documents/WebApps/codexPlugin/mindMap/examples/agentgo-architecture/runtime.json",
+    "document": {
+      "JSON-SchemaVersion": 2,
+      "metadata": {
+        "id": "agentgo-runtime",
+        "title": "AgentGo · 任务从输入到交付",
+        "graphVersion": 0,
+        "createdAt": "2026-09-19T08:59:01.678Z",
+        "updatedAt": "2026-09-19T08:59:01.678Z"
+      },
+      "graph": {
+        "topology": "directed",
+        "semanticType": "general",
+        "entryNodeId": null,
+        "nodes": {},
+        "edges": {}
+      },
+      "commits": []
+    }
+  },
+  "error": null
+}

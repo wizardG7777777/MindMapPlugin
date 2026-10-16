@@ -1,0 +1,237 @@
+{
+  "envelopeVersion": 1,
+  "documentId": "agentgo-architecture",
+  "baseGraphVersion": 1,
+  "operationId": "architecture-visual-refine-20260919",
+  "scope": {
+    "mode": "document",
+    "allowDelete": true
+  },
+  "operations": [
+    {
+      "type": "removeEdge",
+      "edgeId": "e01"
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e01",
+        "source": "entry",
+        "target": "scheduler",
+        "kind": "用户目标 / 事件",
+        "meta": {}
+      }
+    },
+    {
+      "type": "removeEdge",
+      "edgeId": "e02"
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e02",
+        "source": "scheduler",
+        "target": "graph",
+        "kind": "受控图操作",
+        "meta": {}
+      }
+    },
+    {
+      "type": "removeEdge",
+      "edgeId": "e03"
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e03",
+        "source": "graph",
+        "target": "loop",
+        "kind": "使用",
+        "meta": {}
+      }
+    },
+    {
+      "type": "removeEdge",
+      "edgeId": "e04"
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e04",
+        "source": "loop",
+        "target": "harness",
+        "kind": "每轮执行",
+        "meta": {}
+      }
+    },
+    {
+      "type": "removeEdge",
+      "edgeId": "e05"
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e05",
+        "source": "harness",
+        "target": "context",
+        "kind": "使用",
+        "meta": {}
+      }
+    },
+    {
+      "type": "removeEdge",
+      "edgeId": "e06"
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e06",
+        "source": "context",
+        "target": "invocation",
+        "kind": "封存后的完整请求",
+        "meta": {}
+      }
+    },
+    {
+      "type": "removeEdge",
+      "edgeId": "e07"
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e07",
+        "source": "invocation",
+        "target": "provider",
+        "kind": "HTTP / SSE",
+        "meta": {}
+      }
+    },
+    {
+      "type": "removeEdge",
+      "edgeId": "e08"
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e08",
+        "source": "harness",
+        "target": "tools",
+        "kind": "使用",
+        "meta": {}
+      }
+    },
+    {
+      "type": "removeEdge",
+      "edgeId": "e09"
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e09",
+        "source": "harness",
+        "target": "storage",
+        "kind": "使用",
+        "meta": {}
+      }
+    },
+    {
+      "type": "removeEdge",
+      "edgeId": "e10"
+    },
+    {
+      "type": "removeEdge",
+      "edgeId": "e11"
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e11",
+        "source": "graph",
+        "target": "delivery",
+        "kind": "使用",
+        "meta": {}
+      }
+    },
+    {
+      "type": "removeEdge",
+      "edgeId": "e12"
+    },
+    {
+      "type": "updateNode",
+      "nodeId": "entry",
+      "patch": {
+        "title": "入口 · TUI / Web UI"
+      }
+    },
+    {
+      "type": "updateNode",
+      "nodeId": "scheduler",
+      "patch": {
+        "title": "L5 · 图外规划 Scheduler"
+      }
+    },
+    {
+      "type": "updateNode",
+      "nodeId": "graph",
+      "patch": {
+        "title": "L5 · 数据流图 Runtime"
+      }
+    },
+    {
+      "type": "updateNode",
+      "nodeId": "loop",
+      "patch": {
+        "title": "L4 · 多 Agent 任务循环"
+      }
+    },
+    {
+      "type": "updateNode",
+      "nodeId": "harness",
+      "patch": {
+        "title": "L3 · 权限与工具调度"
+      }
+    },
+    {
+      "type": "updateNode",
+      "nodeId": "context",
+      "patch": {
+        "title": "L2 · 上下文装配与封存"
+      }
+    },
+    {
+      "type": "updateNode",
+      "nodeId": "invocation",
+      "patch": {
+        "title": "L1 · 模型调用与 SSE"
+      }
+    },
+    {
+      "type": "updateNode",
+      "nodeId": "provider",
+      "patch": {
+        "title": "外部模型服务"
+      }
+    },
+    {
+      "type": "updateNode",
+      "nodeId": "tools",
+      "patch": {
+        "title": "L3 · 工具与候选工作区"
+      }
+    },
+    {
+      "type": "updateNode",
+      "nodeId": "storage",
+      "patch": {
+        "title": "L3 · 持久化与事实日志"
+      }
+    },
+    {
+      "type": "updateNode",
+      "nodeId": "delivery",
+      "patch": {
+        "title": "L5 · 图级完成与交付"
+      }
+    }
+  ]
+}

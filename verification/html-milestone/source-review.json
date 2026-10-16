@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-15",
+  "stage": "file-capability-switch-fix",
+  "typecheck": "passed",
+  "testsPassed": 17,
+  "nativeFileValidation": "pending",
+  "manualSnapshotUnchanged": true,
+  "source": {
+    "app/src/capability-store.ts": "924f2ae251387dd07a4e3853f73d39dbe36916194dbfcf93bb9a9d85b12cfc22",
+    "app/src/handles.ts": "e555141edfe1974efb35a809829a7c1a3aa6db0ef658a76e63cb32d31e133324",
+    "app/src/app.tsx": "e18c9f6a9e3251c18ccf9c3ad6b223d28da0dca25ac4123b31af954b6627e43b",
+    "app/src/file-session.ts": "a2e8e24af28b7ed352f745ec74058bfc1109b96466d988cedc333dab1d9801b1",
+    "app/test/capability-store.test.ts": "a7965bf485dccd12618e7a5af1b8e4f6134a68d49de49ee727d2849ea029462e"
+  },
+  "runtime": {
+    "js": "bea3af895a60cf92c0eda021000d93507f62e1aa63bb85fb60ef62b509225a06",
+    "css": "38be17b161c18e3713d4300d47cd3a94c287eda44fec7f53f523d78bfa88189c"
+  }
+}

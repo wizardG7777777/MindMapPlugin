@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="format" content="mindmap/1">
+  <title>Markdown、块级公式与图片引用的源文本示例</title>
+</head>
+<body>
+  <header>
+    <h1>三个字段共用 Markdown 与公式能力</h1>
+    <p>本页直接展示源文本，不包含 Markdown 预览、公式渲染或图片失败提示实现。标题也保留多行 Markdown；所有图片标记均为文本。</p>
+    <p>相对图片地址基于此文件所在目录。missing-image.png 故意不存在；运行时应在其图片预览位置显示固定警告，同时保留原始引用。</p>
+  </header>
+  <section class="map default">
+    <article id="markdown" class="basic rect" data-x="120" data-y="100">
+      <h2 class="title">**公式与图示**，内联公式 $a^2+b^2=c^2$
+
+$$
+E = mc^2
+$$</h2>
+      <div class="card">| 内容 | 支持 |
+| --- | --- |
+| 表格 | 是 |
+| 图片与公式 | 是 |
+
+```ts
+const smaller = a &lt; b;
+```
+
+![卡片参考图](../assets/card-collapsed-reference.png)</div>
+      <div class="notes">## 详细笔记
+
+- 支持列表、**强调**与链接。
+- [打开参考图片](../assets/card-collapsed-reference.png) 是普通链接，不自动作为图片渲染。
+
+$$
+\sum_{i=1}^{n} i = \frac{n(n+1)}{2}
+$$
+
+![正常的引用式图片][reference]
+![已失效的图片](./missing-image.png)
+
+[reference]: ../assets/card-collapsed-reference.png
+
+允许内嵌但推荐链接；下方极小 GIF 仅演示数据 URL 编码：
+
+![内嵌像素](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)</div>
+      <ul class="links"></ul>
+    </article>
+  </section>
+</body>
+</html>

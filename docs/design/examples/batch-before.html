@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="format" content="mindmap/1">
+  <title>批量操作前的源文本示例</title>
+</head>
+<body>
+  <header>
+    <h1>批量操作前：选择 A、B，C、D 不选中</h1>
+    <p>静态源文本示例，不包含交互实现。选集只在此说明，不写入图数据；对应的复制后几何演算假设所有节点为 240×160 图单位，实际外框仍需运行时测量。</p>
+  </header>
+  <section class="map default">
+    <article id="a" class="basic rect" data-x="100" data-y="100">
+      <h2 class="title">A</h2>
+      <div class="card">参与批量操作的第一个节点。</div>
+      <div class="notes">副本保留这段笔记、原标题和样式引用。</div>
+      <ul class="links">
+        <li><a id="a-b" href="#b" data-start="1 0.25" data-end="0 0.75">第一条内部边</a></li>
+        <li><a id="a-b-parallel" href="#b">第二条内部边</a></li>
+        <li><a id="a-c" href="#c">外部出边</a></li>
+        <li><a id="a-self" href="#a" data-start="0.75 0" data-end="1 0.25">自环</a></li>
+      </ul>
+    </article>
+    <article id="b" class="basic rect" data-x="420" data-y="160">
+      <h2 class="title">B</h2>
+      <div class="card">参与批量操作的第二个节点。</div>
+      <div class="notes">与 A 的相对位移为 320、60。</div>
+      <ul class="links">
+        <li><a id="b-a" href="#a">返回 A，形成回路</a></li>
+      </ul>
+    </article>
+    <article id="c" class="basic rect" data-x="100" data-y="400">
+      <h2 class="title">C</h2>
+      <div class="card">不选中，也不复制。</div>
+      <div class="notes">复制 A 后，本节点新增指向 A 副本的边，原边仍保留。</div>
+      <ul class="links">
+        <li><a id="c-a" href="#a" data-start="1 0.5" data-end="0 0.5">外部入边</a></li>
+        <li><a id="c-d" href="#d">与选集无关的边</a></li>
+      </ul>
+    </article>
+    <article id="d" class="basic rect" data-x="420" data-y="420">
+      <h2 class="title">D</h2>
+      <div class="card">不参与本次批量操作。</div>
+      <div class="notes"></div>
+      <ul class="links"></ul>
+    </article>
+  </section>
+</body>
+</html>

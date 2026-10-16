@@ -1,0 +1,24 @@
+{
+  "at": "2026-10-16T02:37:41.866Z",
+  "host": "Codex in-app browser",
+  "target": "/Users/yanchenyu/Desktop/MindMap验证-QKK2j1/Codex验证.html",
+  "release": "1.0.0-alpha.2",
+  "beforeTitle": "Codex 保存完成",
+  "afterTitle": "Agent 第二次更新 Codex 图",
+  "beforeSha256": "348af3265daba2c6d5477b357250a19641d0fdb282321ba8cb893aa952392b46",
+  "afterSha256": "8778d4ee063464805cac140cc645bf647e11941ae4c3699348fd5ec60b54ca46",
+  "humanSaveConfirmed": true,
+  "otherContentAndResourcesPreserved": true,
+  "unsavedDraftBeforeChange": "user confirmed Codex 未保存草稿 was entered without saving",
+  "operation": "atomic replacement; title only",
+  "pageAutoRefreshConfirmed": true,
+  "draftDiscardConfirmed": true,
+  "undoHistoryClearedConfirmed": true,
+  "backup": "/Users/yanchenyu/Documents/WebApps/codexPlugin/mindMap/verification/html-milestone/codex-human-save-before-agent-06.html.txt",
+  "confirmation": {
+    "at": "2026-10-16T02:40:54.663Z",
+    "source": "user observation",
+    "text": "自动更新，撤销也未恢复草稿",
+    "diskUnchangedAfterUndo": true
+  }
+}

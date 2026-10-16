@@ -1,0 +1,29 @@
+{
+  "ok": true,
+  "cliContractVersion": 1,
+  "command": "create",
+  "documentId": "agentgo-architecture",
+  "graphVersion": 0,
+  "data": {
+    "path": "/Users/yanchenyu/Documents/WebApps/codexPlugin/mindMap/examples/agentgo-architecture/architecture.json",
+    "document": {
+      "JSON-SchemaVersion": 2,
+      "metadata": {
+        "id": "agentgo-architecture",
+        "title": "AgentGo · 主要模块与五层职责",
+        "graphVersion": 0,
+        "createdAt": "2026-09-19T08:59:00.952Z",
+        "updatedAt": "2026-09-19T08:59:00.952Z"
+      },
+      "graph": {
+        "topology": "directed",
+        "semanticType": "general",
+        "entryNodeId": null,
+        "nodes": {},
+        "edges": {}
+      },
+      "commits": []
+    }
+  },
+  "error": null
+}

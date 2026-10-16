@@ -1,0 +1,31 @@
+:root { font-family: system-ui, sans-serif; color: #202a3a; background: #fafafa; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+body > section.map { display: none; }
+#mindmap-editor { position: fixed; inset: 0; overflow: hidden; }
+.canvas { position: absolute; inset: 0; overflow: hidden; background-image: radial-gradient(circle, #d9d9d9 1px, transparent 1px); }
+.world { position: absolute; transform-origin: 0 0; }
+.edges { position: absolute; overflow: visible; width: 1px; height: 1px; pointer-events: none; }
+.toolbar, .warnings { position: absolute; z-index: 10; background: white; border: 1px solid #151515; border-radius: 14px; box-shadow: 0 3px 14px #0000000c; }
+.toolbar { left: 16px; top: 40px; display: flex; flex-direction: column; gap: 10px; padding: 10px; }
+button { color: #222; background: white; border: 0; cursor: pointer; font: inherit; }
+.toolbar button { width: 36px; height: 36px; font-size: 26px; }
+button:focus-visible { outline: 3px solid #2878e8; outline-offset: 2px; }
+button:disabled { opacity: .4; cursor: default; }
+.warnings { right: 20px; top: 20px; max-width: min(560px, calc(100vw - 120px)); max-height: 110px; overflow: auto; padding: 12px 18px; font-size: 13px; line-height: 1.6; }
+.node { position: absolute; width: 360px; height: 300px; border: 2px solid #b4d1fb; border-radius: 14px; background: white; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 5px 20px #30476f12; }
+.node.focused { outline: 4px solid #2878e8; }
+.node.expanded { width: 520px; height: 460px; }
+.field { min-height: 0; overflow: auto; padding: 12px 16px; font-size: 15px; line-height: 1.55; }
+.field.title { background: #b4d1fb; padding-right: 46px; flex: 0 0 90px; font-size: 19px; font-weight: 600; }
+.field.card { flex: 1 1 auto; }
+.field.notes { flex: 1 1 auto; border-top: 1px solid #e4ebf5; }
+.field > :first-child { margin-top: 0; }
+.field > :last-child { margin-bottom: 0; }
+.field img { max-width: 100%; height: auto; }
+.field pre { white-space: pre-wrap; }
+.field table { border-collapse: collapse; }
+.field td, .field th { border: 1px solid #d5dce8; padding: 4px 8px; }
+.field textarea { display: block; width: 100%; height: 100%; min-height: 50px; resize: none; padding: 0; border: 0; background: transparent; color: inherit; font: inherit; outline: none; }
+.expand { position: absolute; top: 10px; right: 10px; width: 26px; height: 26px; border-radius: 50%; background: white; z-index: 1; }
+.image-warning { font-size: 13px; color: #8a452a; }

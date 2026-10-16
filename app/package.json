@@ -1,0 +1,30 @@
+{
+  "name": "mindmap-html",
+  "version": "1.0.0-alpha.2",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.ts",
+    "check": "tsc --noEmit",
+    "test": "node --test test/*.test.ts",
+    "validate": "node scripts/validate.ts",
+    "prepare:verification": "npm run build && node scripts/prepare-verification.ts"
+  },
+  "dependencies": {
+    "katex": "0.16.47",
+    "parse5": "8.0.1",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "react-markdown": "10.1.0",
+    "rehype-katex": "7.0.1",
+    "remark-gfm": "4.0.1",
+    "remark-math": "6.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.5",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "esbuild": "0.28.2",
+    "typescript": "7.0.2"
+  }
+}

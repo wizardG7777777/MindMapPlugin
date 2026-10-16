@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="format" content="mindmap/1">
+  <title>分类处理前的异常源文本示例</title>
+</head>
+<body>
+  <header>
+    <h1>包含重复节点、缺失位置与无目标连线的输入</h1>
+    <p>这是故意含有异常的输入样例，不是规范化后的有效文档。topic 出现两次，gone 不存在，leaf 缺少位置。</p>
+  </header>
+  <section class="map default">
+    <article id="plan" class="basic rect" data-x="0" data-y="0">
+      <h2 class="title">原点节点</h2>
+      <div class="card">零坐标是有效候选，本例保留原点。</div>
+      <div class="notes">指向 topic 的连线应继续连接第一个同 ID 节点。</div>
+      <ul class="links">
+        <li><a id="plan-topic" href="#topic">保留</a></li>
+        <li><a id="plan-gone" href="#gone">取消无目标连线</a></li>
+      </ul>
+    </article>
+    <article id="topic" class="basic rect" data-x="10" data-y="10">
+      <h2 class="title">第一个 topic</h2>
+      <div class="card">保留此节点，不与副本合并。</div>
+      <div class="notes">已有位置先作候选；若发生碰撞则局部避让，不重新随机。</div>
+      <ul class="links">
+        <li><a id="topic-leaf" href="#leaf">保留原关系</a></li>
+      </ul>
+    </article>
+    <article id="topic" class="basic rect" data-x="-40" data-y="12">
+      <h2 class="title">后出现的 topic 副本</h2>
+      <div class="card">此副本及其自身出向连线被删除。</div>
+      <div class="notes">即使副本位置看起来更合适，也不能替换第一个 topic。</div>
+      <ul class="links">
+        <li><a id="duplicate-leaf" href="#leaf">不合并到第一个节点</a></li>
+        <li><a id="duplicate-gone" href="#gone">随副本删除</a></li>
+      </ul>
+    </article>
+    <article id="leaf" class="basic rect">
+      <h2 class="title">缺失位置的节点</h2>
+      <div class="card">先补齐随机候选，再避让；保留内容和有效关系。</div>
+      <div class="notes">初始候选位于原点半径 5 内，最终避让坐标可以超出该范围。</div>
+      <ul class="links">
+        <li><a id="leaf-topic" href="#topic">仍指向第一个 topic</a></li>
+        <li><a id="leaf-gone" href="#gone">取消无目标连线</a></li>
+      </ul>
+    </article>
+  </section>
+</body>
+</html>

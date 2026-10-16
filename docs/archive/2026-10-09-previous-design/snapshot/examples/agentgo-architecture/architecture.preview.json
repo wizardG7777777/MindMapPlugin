@@ -1,0 +1,425 @@
+{
+  "ok": true,
+  "cliContractVersion": 1,
+  "command": "preview",
+  "documentId": "agentgo-architecture",
+  "graphVersion": 0,
+  "data": {
+    "operationId": "agentgo-architecture-20260919",
+    "baseGraphVersion": 0,
+    "nextGraphVersion": 1,
+    "operationCount": 25,
+    "affectedNodeIds": [
+      "context",
+      "delivery",
+      "entry",
+      "graph",
+      "harness",
+      "invocation",
+      "loop",
+      "provider",
+      "scheduler",
+      "storage",
+      "tools"
+    ],
+    "affectedEdgeIds": [
+      "e01",
+      "e02",
+      "e03",
+      "e04",
+      "e05",
+      "e06",
+      "e07",
+      "e08",
+      "e09",
+      "e10",
+      "e11",
+      "e12"
+    ],
+    "diff": {
+      "nodes": [
+        {
+          "id": "context",
+          "before": null,
+          "after": {
+            "id": "context",
+            "title": "L2 · Context Runtime\n原文装配、封存与重放",
+            "cardContent": "装配指令、目标、记忆、完整历史、上游输入与工具定义。ContextSnapshot 持久化成功后才能调用 L1。请求封存后不可修改。当前策略保留原文，不采用旧 Observation 或裁剪控制链。\n\n接收模型输出增量、检查完整结果与 provider replay，并提供 WatchModelOutput。记忆语义属于 L2，存储实现由 L3 注入。",
+            "notes": "核对日期：2026-09-19\n源码基线：84e7f83e4cf75f9e8db51bd1e5fac686c63e6274\n\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/contextruntime/runtime.go:93\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/contextruntime/runtime.go:160\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/contextruntime/adapter.go:1\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/docs/design/five-layer-engineering-architecture.md:17",
+            "meta": {
+              "repository": "/Users/yanchenyu/Documents/ClawSeries/AgentGo",
+              "commit": "84e7f83e4cf75f9e8db51bd1e5fac686c63e6274",
+              "sources": [
+                "internal/contextruntime/runtime.go:93",
+                "internal/contextruntime/runtime.go:160",
+                "internal/contextruntime/adapter.go:1",
+                "docs/design/five-layer-engineering-architecture.md:17"
+              ]
+            }
+          }
+        },
+        {
+          "id": "delivery",
+          "before": null,
+          "after": {
+            "id": "delivery",
+            "title": "L5 · 图级完成与交付\n结果校验 → 提交 → 回执",
+            "cardContent": "Scheduler 显式请求 complete，校验选定 result_refs、全部节点结算与失败处置，冻结完成意图。若涉及代码候选，由 L3 Workspace/Effect 执行提交，Delivery 记录回执后才形成图终态。\n\n纯文本交付可以没有文件提交。基线冲突拒绝覆盖；交付结果 unknown 不自动重放。普通检查任务没有特殊提交权。",
+            "notes": "核对日期：2026-09-19\n源码基线：84e7f83e4cf75f9e8db51bd1e5fac686c63e6274\n\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/graph/dataflow_terminal.go:126\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/graph/dataflow_terminal.go:231\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/bootstrap/dataflow_runtime.go:301\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/delivery/store.go:1",
+            "meta": {
+              "repository": "/Users/yanchenyu/Documents/ClawSeries/AgentGo",
+              "commit": "84e7f83e4cf75f9e8db51bd1e5fac686c63e6274",
+              "sources": [
+                "internal/graph/dataflow_terminal.go:126",
+                "internal/graph/dataflow_terminal.go:231",
+                "internal/bootstrap/dataflow_runtime.go:301",
+                "internal/delivery/store.go:1"
+              ]
+            }
+          }
+        },
+        {
+          "id": "entry",
+          "before": null,
+          "after": {
+            "id": "entry",
+            "title": "入口与装配\nmain / Bootstrap / UI Hub",
+            "cardContent": "main 启动 Bootstrap，装配共享存储、Graph Runtime、Scheduler 与各 Runner。TUI 和 Web 前端通过 UI Hub 提交输入、取消、回答交互和查看状态。Bootstrap 不构成第六层。\n\nTrace 是跨层审计；流式模型输出来自 L2 的 WatchModelOutput，UI 只消费，不承担模型输出持久化。",
+            "notes": "核对日期：2026-09-19\n源码基线：84e7f83e4cf75f9e8db51bd1e5fac686c63e6274\n\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/main.go:57\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/bootstrap/bootstrap.go:759\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/bootstrap/bootstrap.go:1311\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/ui/control.go:35\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/ui/model_output.go:1",
+            "meta": {
+              "repository": "/Users/yanchenyu/Documents/ClawSeries/AgentGo",
+              "commit": "84e7f83e4cf75f9e8db51bd1e5fac686c63e6274",
+              "sources": [
+                "main.go:57",
+                "internal/bootstrap/bootstrap.go:759",
+                "internal/bootstrap/bootstrap.go:1311",
+                "internal/ui/control.go:35",
+                "internal/ui/model_output.go:1"
+              ]
+            }
+          }
+        },
+        {
+          "id": "graph",
+          "before": null,
+          "after": {
+            "id": "graph",
+            "title": "L5 · Graph Runtime\n输入就绪与唯一派发",
+            "cardContent": "唯一业务节点类型是 agentTask。inputs 声明 node_result 或 graph_input 数据依赖；每个 revision 必须是 DAG。输入齐备且真实 route/tools 可用时，冻结定义和输入，创建唯一 Activation/Task。\n\n既有下游可自动就绪；返工追加新 node_id，不重开已执行节点。缺输入或执行者时保存可见等待原因。",
+            "notes": "核对日期：2026-09-19\n源码基线：84e7f83e4cf75f9e8db51bd1e5fac686c63e6274\n\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/graph/dataflow_contract.go:15\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/graph/dataflow_inputs.go:18\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/graph/dataflow_runtime.go:359\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/bootstrap/dataflow_runtime.go:42",
+            "meta": {
+              "repository": "/Users/yanchenyu/Documents/ClawSeries/AgentGo",
+              "commit": "84e7f83e4cf75f9e8db51bd1e5fac686c63e6274",
+              "sources": [
+                "internal/graph/dataflow_contract.go:15",
+                "internal/graph/dataflow_inputs.go:18",
+                "internal/graph/dataflow_runtime.go:359",
+                "internal/bootstrap/dataflow_runtime.go:42"
+              ]
+            }
+          }
+        },
+        {
+          "id": "harness",
+          "before": null,
+          "after": {
+            "id": "harness",
+            "title": "L3 · Harness\nLease、权限与工具路由",
+            "cardContent": "冻结执行规格和工具视图，绑定 Task/Attempt/Turn/Invocation 身份。完整模型结果返回后，检查 gate、权限和 finalizing 状态，再由 ToolRouter 执行工具并登记事实。\n\nLLMExecutor 的工具 gate/dispatch 属于 L3，不能因文件位于 agent 包就把它全部划入 L4。",
+            "notes": "核对日期：2026-09-19\n源码基线：84e7f83e4cf75f9e8db51bd1e5fac686c63e6274\n\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/agent/llm_executor.go:328\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/agent/llm_executor.go:671\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/agent/execution_lease.go:1\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/agent/tool_router_snapshot.go:1",
+            "meta": {
+              "repository": "/Users/yanchenyu/Documents/ClawSeries/AgentGo",
+              "commit": "84e7f83e4cf75f9e8db51bd1e5fac686c63e6274",
+              "sources": [
+                "internal/agent/llm_executor.go:328",
+                "internal/agent/llm_executor.go:671",
+                "internal/agent/execution_lease.go:1",
+                "internal/agent/tool_router_snapshot.go:1"
+              ]
+            }
+          }
+        },
+        {
+          "id": "invocation",
+          "before": null,
+          "after": {
+            "id": "invocation",
+            "title": "L1 · Model Invocation\n完整请求与 SSE 协议",
+            "cardContent": "只负责完整请求校验、协议编码、HTTP/SSE 传输、归一化结果/失败与调用时序。不会装配角色、读取业务文件或补写 Prompt。\n\n支持显式选择 Responses 或 Chat Completions，均使用 SSE；不自动切协议。部分流式工具参数不得被当成完整调用执行。",
+            "notes": "核对日期：2026-09-19\n源码基线：84e7f83e4cf75f9e8db51bd1e5fac686c63e6274\n\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/llm/request.go:1\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/llm/sse_transport.go:1\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/docs/design/five-layer-engineering-architecture.md:17",
+            "meta": {
+              "repository": "/Users/yanchenyu/Documents/ClawSeries/AgentGo",
+              "commit": "84e7f83e4cf75f9e8db51bd1e5fac686c63e6274",
+              "sources": [
+                "internal/llm/request.go:1",
+                "internal/llm/sse_transport.go:1",
+                "docs/design/five-layer-engineering-architecture.md:17"
+              ]
+            }
+          }
+        },
+        {
+          "id": "loop",
+          "before": null,
+          "after": {
+            "id": "loop",
+            "title": "L4 · Runner / Agent Loop\n认领任务与逐轮执行",
+            "cardContent": "Runner 装配 Agent 执行环境；Agent 按路由认领 Task 并运行 processTask。管理 Attempt/Turn、授权重试、取消与 finalizing。每个任务只结算唯一终态。\n\n模型调用结束、工具执行结束、任务完成与图完成是不同事实。TaskOutcome 经 Bootstrap 接缝回填 Graph。",
+            "notes": "核对日期：2026-09-19\n源码基线：84e7f83e4cf75f9e8db51bd1e5fac686c63e6274\n\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/runner/runner.go:221\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/agent/agent.go:433\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/agent/agent.go:495\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/bootstrap/task_outcome.go:1",
+            "meta": {
+              "repository": "/Users/yanchenyu/Documents/ClawSeries/AgentGo",
+              "commit": "84e7f83e4cf75f9e8db51bd1e5fac686c63e6274",
+              "sources": [
+                "internal/runner/runner.go:221",
+                "internal/agent/agent.go:433",
+                "internal/agent/agent.go:495",
+                "internal/bootstrap/task_outcome.go:1"
+              ]
+            }
+          }
+        },
+        {
+          "id": "provider",
+          "before": null,
+          "after": {
+            "id": "provider",
+            "title": "外部模型服务\nResponses / Chat Completions",
+            "cardContent": "系统边界之外的模型供应方。L1 发送已封存请求并接收 SSE。此图仅核对源码结构，没有启动 AgentGo，也没有发起真实模型调用。",
+            "notes": "核对日期：2026-09-19\n源码基线：84e7f83e4cf75f9e8db51bd1e5fac686c63e6274\n\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/bootstrap/runtime_builder.go:33\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/llm/sse_transport.go:1",
+            "meta": {
+              "repository": "/Users/yanchenyu/Documents/ClawSeries/AgentGo",
+              "commit": "84e7f83e4cf75f9e8db51bd1e5fac686c63e6274",
+              "sources": [
+                "internal/bootstrap/runtime_builder.go:33",
+                "internal/llm/sse_transport.go:1"
+              ]
+            }
+          }
+        },
+        {
+          "id": "scheduler",
+          "before": null,
+          "after": {
+            "id": "scheduler",
+            "title": "L5 · Scheduler\n业务图外的规划 Agent",
+            "cardContent": "依据用户目标创建一张图；也可以先只有调查任务。通过受控图工具创建、启动、增量更新或完成同一张图。持久化规划事件触发后续规划，没有新事件就不重复调用规划模型。\n\nScheduler 自身同样使用 Agent Loop、L3 工具和 L2/L1 调用链；本图只画业务任务的主干，避免重复画两套执行栈。",
+            "notes": "核对日期：2026-09-19\n源码基线：84e7f83e4cf75f9e8db51bd1e5fac686c63e6274\n\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/scheduler/scheduler.go:54\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/bootstrap/dataflow_runtime.go:234",
+            "meta": {
+              "repository": "/Users/yanchenyu/Documents/ClawSeries/AgentGo",
+              "commit": "84e7f83e4cf75f9e8db51bd1e5fac686c63e6274",
+              "sources": [
+                "internal/scheduler/scheduler.go:54",
+                "internal/bootstrap/dataflow_runtime.go:234"
+              ]
+            }
+          }
+        },
+        {
+          "id": "storage",
+          "before": null,
+          "after": {
+            "id": "storage",
+            "title": "L3 · 持久化设施\n任务、快照与事实日志",
+            "cardContent": "Graph 定义/执行/输入/回执/完成意图共用 graphs-v8 日志；另有 TaskOutcome、Loop、TaskMemory、ContextSnapshot、Delivery 与 Effect 等存储。\n\n图与任务的业务状态归 L5/L4，文件读写、日志、版本和恢复设施属于 L3。这里合并画存储设施，不表示所有事实都在同一个文件或数据库。",
+            "notes": "核对日期：2026-09-19\n源码基线：84e7f83e4cf75f9e8db51bd1e5fac686c63e6274\n\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/bootstrap/dataflow_runtime.go:118\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/bootstrap/bootstrap.go:448\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/contextstore/store.go:1\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/graph/dataflow_store.go:1\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/docs/design/contract-freeze-2026-08-30.md:23",
+            "meta": {
+              "repository": "/Users/yanchenyu/Documents/ClawSeries/AgentGo",
+              "commit": "84e7f83e4cf75f9e8db51bd1e5fac686c63e6274",
+              "sources": [
+                "internal/bootstrap/dataflow_runtime.go:118",
+                "internal/bootstrap/bootstrap.go:448",
+                "internal/contextstore/store.go:1",
+                "internal/graph/dataflow_store.go:1",
+                "docs/design/contract-freeze-2026-08-30.md:23"
+              ]
+            }
+          }
+        },
+        {
+          "id": "tools",
+          "before": null,
+          "after": {
+            "id": "tools",
+            "title": "L3 · 工具与工作环境\nShell / 文件 / 候选版本",
+            "cardContent": "核心工具分执行、编排、检视、通信四类；可用工具取决于注册与授权，不是每个 Agent 都有全部权限。run_shell/read_file/apply_change 等作用于受控工作视图。\n\n输入候选决定工作基线；候选版本不可变。Git 工作副本具备独立 Git 状态；Shell 差异回收进入同一候选体系。候选生成不等于提交到主项目。",
+            "notes": "核对日期：2026-09-19\n源码基线：84e7f83e4cf75f9e8db51bd1e5fac686c63e6274\n\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/tools/known_tools.go:10\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/workspace/dataflow.go:1\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/workspace/snapshot_git.go:1\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/tools/shell.go:1",
+            "meta": {
+              "repository": "/Users/yanchenyu/Documents/ClawSeries/AgentGo",
+              "commit": "84e7f83e4cf75f9e8db51bd1e5fac686c63e6274",
+              "sources": [
+                "internal/tools/known_tools.go:10",
+                "internal/workspace/dataflow.go:1",
+                "internal/workspace/snapshot_git.go:1",
+                "internal/tools/shell.go:1"
+              ]
+            }
+          }
+        }
+      ],
+      "edges": [
+        {
+          "id": "e01",
+          "before": null,
+          "after": {
+            "id": "e01",
+            "order": 0,
+            "source": "entry",
+            "target": "scheduler",
+            "kind": "用户目标 / 事件",
+            "meta": {}
+          }
+        },
+        {
+          "id": "e02",
+          "before": null,
+          "after": {
+            "id": "e02",
+            "order": 1,
+            "source": "scheduler",
+            "target": "graph",
+            "kind": "受控图操作",
+            "meta": {}
+          }
+        },
+        {
+          "id": "e03",
+          "before": null,
+          "after": {
+            "id": "e03",
+            "order": 2,
+            "source": "graph",
+            "target": "loop",
+            "kind": "发布就绪 Task",
+            "meta": {}
+          }
+        },
+        {
+          "id": "e04",
+          "before": null,
+          "after": {
+            "id": "e04",
+            "order": 3,
+            "source": "loop",
+            "target": "harness",
+            "kind": "每轮执行",
+            "meta": {}
+          }
+        },
+        {
+          "id": "e05",
+          "before": null,
+          "after": {
+            "id": "e05",
+            "order": 4,
+            "source": "harness",
+            "target": "context",
+            "kind": "交付执行规格",
+            "meta": {}
+          }
+        },
+        {
+          "id": "e06",
+          "before": null,
+          "after": {
+            "id": "e06",
+            "order": 5,
+            "source": "context",
+            "target": "invocation",
+            "kind": "封存后的完整请求",
+            "meta": {}
+          }
+        },
+        {
+          "id": "e07",
+          "before": null,
+          "after": {
+            "id": "e07",
+            "order": 6,
+            "source": "invocation",
+            "target": "provider",
+            "kind": "HTTP / SSE",
+            "meta": {}
+          }
+        },
+        {
+          "id": "e08",
+          "before": null,
+          "after": {
+            "id": "e08",
+            "order": 7,
+            "source": "harness",
+            "target": "tools",
+            "kind": "授权后执行工具",
+            "meta": {}
+          }
+        },
+        {
+          "id": "e09",
+          "before": null,
+          "after": {
+            "id": "e09",
+            "order": 8,
+            "source": "harness",
+            "target": "storage",
+            "kind": "注入存储端口",
+            "meta": {}
+          }
+        },
+        {
+          "id": "e10",
+          "before": null,
+          "after": {
+            "id": "e10",
+            "order": 9,
+            "source": "context",
+            "target": "storage",
+            "kind": "封存快照与输出",
+            "meta": {}
+          }
+        },
+        {
+          "id": "e11",
+          "before": null,
+          "after": {
+            "id": "e11",
+            "order": 10,
+            "source": "graph",
+            "target": "delivery",
+            "kind": "受理图级 complete",
+            "meta": {}
+          }
+        },
+        {
+          "id": "e12",
+          "before": null,
+          "after": {
+            "id": "e12",
+            "order": 11,
+            "source": "delivery",
+            "target": "tools",
+            "kind": "必要时提交候选",
+            "meta": {}
+          }
+        }
+      ],
+      "document": {
+        "before": {
+          "title": "AgentGo · 主要模块与五层职责",
+          "semanticType": "general",
+          "entryNodeId": null
+        },
+        "after": {
+          "title": "AgentGo · 主要模块与五层职责",
+          "semanticType": "dependency",
+          "entryNodeId": "entry"
+        }
+      }
+    },
+    "summary": {
+      "operationCount": 25,
+      "nodeCount": 11,
+      "edgeCount": 12
+    }
+  },
+  "error": null
+}

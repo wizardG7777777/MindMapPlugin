@@ -1,0 +1,48 @@
+{
+  "date": "2026-10-15",
+  "release": "1.0.0-alpha.2",
+  "status": "awaiting-native-retest",
+  "typecheck": "passed",
+  "testsPassed": 22,
+  "fix": "remount whole editor and reread using the live authorized file handle; no navigation for automatic refresh",
+  "files": [
+    {
+      "browser": "chrome",
+      "file": "/Users/yanchenyu/Documents/WebApps/codexPlugin/mindMap/test-results/html-manual-xSMP6R/maps/chrome-fixed.html",
+      "sha256": "4df1e9606241901f7cfb2ab9091bcb5d32f537ee74b363df011c81950ace3dfe"
+    },
+    {
+      "browser": "codex",
+      "file": "/Users/yanchenyu/Documents/WebApps/codexPlugin/mindMap/test-results/html-manual-xSMP6R/maps/codex-fixed.html",
+      "sha256": "cf5a06a13ed3c30dbeba056da68e740a30d048269a6f077a198b634b80bbf39a"
+    }
+  ],
+  "httpStartup": {
+    "result": "passed",
+    "host": "Codex in-app browser",
+    "url": "http://127.0.0.1:8767/maps/minimal.html",
+    "releaseFromConsole": "1.0.0-alpha.2",
+    "screenshot": "alpha2-http-startup.jpg"
+  },
+  "nativeAttempt": {
+    "result": "wrong-entry-page",
+    "userConfirmedEntry": "chrome.html",
+    "reportedError": "目标图的运行资源版本尚不受当前版本支持，当前图保持不变。",
+    "interpretation": "Old alpha.1 page selected an alpha.2 file; native alpha.2 has not been started yet."
+  },
+  "runtime": {
+    "release": "1.0.0-alpha.2",
+    "format": "mindmap/1",
+    "transport": "local relative classic script",
+    "files": {
+      "app.js": {
+        "bytes": 835848,
+        "sha256": "d981e77af712c682c02fb7ecff8fd2c0c4688e945bd472d50e45952fc82525da"
+      },
+      "app.css": {
+        "bytes": 1460931,
+        "sha256": "38be17b161c18e3713d4300d47cd3a94c287eda44fec7f53f523d78bfa88189c"
+      }
+    }
+  }
+}

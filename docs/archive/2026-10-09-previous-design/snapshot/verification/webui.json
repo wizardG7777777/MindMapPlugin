@@ -1,0 +1,44 @@
+{
+  "version": "0.2.0",
+  "artifact": "mindmap-cli-0.2.0.tgz",
+  "sha256": "b2014e30c260c80550e194520c765abd83fda07c53f4f63b1e74fa9dd719e6b2",
+  "nodeVersion": "24.15.0",
+  "os": "darwin",
+  "osRelease": "25.6.0",
+  "arch": "arm64",
+  "filesystemType": 26,
+  "installScripts": false,
+  "developmentDependencies": false,
+  "immutableAssets": true,
+  "localWebUI": true,
+  "browserEditingAndReferences": true,
+  "layoutProfiles": [
+    "flowchart",
+    "mindmap",
+    "dependency",
+    "network",
+    "fishbone"
+  ],
+  "svgAndMermaidHints": true,
+  "bundledFont": true,
+  "missingAdapterVerified": true,
+  "offlineCommands": true,
+  "childProcessesDenied": true,
+  "independentEvaluator": "separate schema-driven program; no source or internal fixtures",
+  "powerLossTested": false,
+  "completedAt": "2026-09-11T08:43:43.467Z",
+  "coreAndServiceTests": {
+    "tests": 47,
+    "pass": 47,
+    "fail": 0
+  },
+  "browserTests": {
+    "tests": 5,
+    "pass": 5,
+    "fail": 0
+  },
+  "notes": [
+    "Browser tests use isolated profiles and temporary writable graph copies. Installed package assets remain read-only.",
+    "Live UI URLs and capability tokens are not recorded here."
+  ]
+}

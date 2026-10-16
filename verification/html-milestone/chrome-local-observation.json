@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-15",
+  "source": "user screenshot at 17:18:27 Australia/Perth",
+  "screenshot": "chrome-local-open.png",
+  "observed": {
+    "browser": "Chrome",
+    "urlScheme": "file",
+    "pageFile": "test-results/html-manual-xSMP6R/maps/chrome.html",
+    "visibleNodeTitle": "最小图文件",
+    "warning": "暂无警告"
+  },
+  "limitations": [
+    "Screenshot proves local page rendering, not a completed save.",
+    "Displayed node title differs from the chrome.html source; same-page file selection may target a different file.",
+    "Codex native file workflow and forced refresh are not yet verified."
+  ],
+  "disk": [
+    {
+      "file": "test-results/html-manual-xSMP6R/maps/chrome.html",
+      "sha256": "35bd5e8865b78418d866164bdb26da05d56fa87b91c0cb31f109061e5be4116a",
+      "modified": "2026-10-15T08:54:31.065Z"
+    },
+    {
+      "file": "test-results/html-manual-xSMP6R/maps/codex.html",
+      "sha256": "4fa68704c9349de33342d49bb37cdf8cc3d9b9f3dc7552ba59fc9f4ac900b73a",
+      "modified": "2026-10-15T08:54:31.065Z"
+    },
+    {
+      "file": "test-results/html-manual-xSMP6R/maps/minimal.html",
+      "sha256": "2439f40fa61ce16fec9ca68fafde80f75105539237232485d42619b9c3af51ce",
+      "modified": "2026-10-15T08:54:31.059Z"
+    },
+    {
+      "file": "dist/html/maps/minimal.html",
+      "sha256": "2439f40fa61ce16fec9ca68fafde80f75105539237232485d42619b9c3af51ce",
+      "modified": "2026-10-15T09:04:38.449Z"
+    }
+  ]
+}

@@ -1,0 +1,477 @@
+{
+  "envelopeVersion": 1,
+  "documentId": "agentgo-runtime",
+  "baseGraphVersion": 0,
+  "operationId": "agentgo-runtime-20260919",
+  "actor": {
+    "kind": "agent",
+    "name": "Architecture source audit"
+  },
+  "scope": {
+    "mode": "document",
+    "allowDelete": false
+  },
+  "operations": [
+    {
+      "type": "updateDocument",
+      "patch": {
+        "semanticType": "flowchart"
+      }
+    },
+    {
+      "type": "addNode",
+      "node": {
+        "id": "request",
+        "title": "用户提交目标",
+        "cardContent": "TUI 或 Web UI 经 Hub 提交用户目标，Activator 创建本轮原始任务。这里只画一次请求的主干生命周期，不是 AgentGo 可执行 graph/v7 定义。",
+        "notes": "核对日期：2026-09-19\n源码基线：84e7f83e4cf75f9e8db51bd1e5fac686c63e6274\n\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/ui/control.go:84\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/scheduler/activator.go:1",
+        "meta": {
+          "repository": "/Users/yanchenyu/Documents/ClawSeries/AgentGo",
+          "commit": "84e7f83e4cf75f9e8db51bd1e5fac686c63e6274",
+          "sources": [
+            "internal/ui/control.go:84",
+            "internal/scheduler/activator.go:1"
+          ],
+          "flow": {
+            "role": "start"
+          }
+        }
+      }
+    },
+    {
+      "type": "addNode",
+      "node": {
+        "id": "plan",
+        "title": "Scheduler 创建或增量更新图",
+        "cardContent": "首次 create + start；收到规划事件后更新同一张图。可以先调查再扩图。修改已执行工作需新增 node_id，不能改写原结果。",
+        "notes": "核对日期：2026-09-19\n源码基线：84e7f83e4cf75f9e8db51bd1e5fac686c63e6274\n\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/scheduler/scheduler.go:54\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/graph/dataflow_runtime.go:135",
+        "meta": {
+          "repository": "/Users/yanchenyu/Documents/ClawSeries/AgentGo",
+          "commit": "84e7f83e4cf75f9e8db51bd1e5fac686c63e6274",
+          "sources": [
+            "internal/scheduler/scheduler.go:54",
+            "internal/graph/dataflow_runtime.go:135"
+          ],
+          "flow": {
+            "role": "action"
+          }
+        }
+      }
+    },
+    {
+      "type": "addNode",
+      "node": {
+        "id": "ready",
+        "title": "输入与执行能力齐备？",
+        "cardContent": "逐个检查尚未激活的节点：解析各输入槽及候选谱系，核对 route 和真实工具能力。不同就绪任务可以并发执行；此处是单个节点的代表路径。",
+        "notes": "核对日期：2026-09-19\n源码基线：84e7f83e4cf75f9e8db51bd1e5fac686c63e6274\n\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/graph/dataflow_runtime.go:359\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/graph/dataflow_inputs.go:18",
+        "meta": {
+          "repository": "/Users/yanchenyu/Documents/ClawSeries/AgentGo",
+          "commit": "84e7f83e4cf75f9e8db51bd1e5fac686c63e6274",
+          "sources": [
+            "internal/graph/dataflow_runtime.go:359",
+            "internal/graph/dataflow_inputs.go:18"
+          ],
+          "flow": {
+            "role": "decision"
+          }
+        }
+      }
+    },
+    {
+      "type": "addNode",
+      "node": {
+        "id": "waiting",
+        "title": "保留等待原因",
+        "cardContent": "缺输入、执行者或输入无效时显示 waiting 原因。有效外部输入或上游结果到达后再次检查；需要改变规划时生成规划事件。没有事实变化时不凭空重复规划。",
+        "notes": "核对日期：2026-09-19\n源码基线：84e7f83e4cf75f9e8db51bd1e5fac686c63e6274\n\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/graph/dataflow_runtime.go:413\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/graph/dataflow_runtime.go:232",
+        "meta": {
+          "repository": "/Users/yanchenyu/Documents/ClawSeries/AgentGo",
+          "commit": "84e7f83e4cf75f9e8db51bd1e5fac686c63e6274",
+          "sources": [
+            "internal/graph/dataflow_runtime.go:413",
+            "internal/graph/dataflow_runtime.go:232"
+          ],
+          "flow": {
+            "role": "error"
+          }
+        }
+      }
+    },
+    {
+      "type": "addNode",
+      "node": {
+        "id": "dispatch",
+        "title": "冻结输入并发布唯一 Task",
+        "cardContent": "先持久化 Activation、定义与输入，再通过公告板发布 Task。已有派发身份被重试时复用，不新建第二个同节点任务。",
+        "notes": "核对日期：2026-09-19\n源码基线：84e7f83e4cf75f9e8db51bd1e5fac686c63e6274\n\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/graph/dataflow_runtime.go:447\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/bootstrap/dataflow_runtime.go:66",
+        "meta": {
+          "repository": "/Users/yanchenyu/Documents/ClawSeries/AgentGo",
+          "commit": "84e7f83e4cf75f9e8db51bd1e5fac686c63e6274",
+          "sources": [
+            "internal/graph/dataflow_runtime.go:447",
+            "internal/bootstrap/dataflow_runtime.go:66"
+          ],
+          "flow": {
+            "role": "action"
+          }
+        }
+      }
+    },
+    {
+      "type": "addNode",
+      "node": {
+        "id": "execute",
+        "title": "Agent 认领并执行任务",
+        "cardContent": "L4 驱动多轮执行：L3 冻结权限 → L2 装配与封存 → L1 调用模型 → L3 执行完整工具调用 → L4 决定继续或终结。多个 Runner 按各自真实 route 认领。",
+        "notes": "核对日期：2026-09-19\n源码基线：84e7f83e4cf75f9e8db51bd1e5fac686c63e6274\n\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/agent/agent.go:433\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/agent/llm_executor.go:328\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/runner/runner.go:221",
+        "meta": {
+          "repository": "/Users/yanchenyu/Documents/ClawSeries/AgentGo",
+          "commit": "84e7f83e4cf75f9e8db51bd1e5fac686c63e6274",
+          "sources": [
+            "internal/agent/agent.go:433",
+            "internal/agent/llm_executor.go:328",
+            "internal/runner/runner.go:221"
+          ],
+          "flow": {
+            "role": "action"
+          }
+        }
+      }
+    },
+    {
+      "type": "addNode",
+      "node": {
+        "id": "result",
+        "title": "结算 TaskOutcome 与节点结果",
+        "cardContent": "终态事实绑定唯一 Task/Activation/Attempt。成功任务登记不可变 ResultRef，可带候选与证据；失败任务保留失败事实。纯文本结果和结构化 submit_task_result 均可正常结算。",
+        "notes": "核对日期：2026-09-19\n源码基线：84e7f83e4cf75f9e8db51bd1e5fac686c63e6274\n\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/graph/dataflow_terminal.go:68\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/bootstrap/task_outcome.go:1",
+        "meta": {
+          "repository": "/Users/yanchenyu/Documents/ClawSeries/AgentGo",
+          "commit": "84e7f83e4cf75f9e8db51bd1e5fac686c63e6274",
+          "sources": [
+            "internal/graph/dataflow_terminal.go:68",
+            "internal/bootstrap/task_outcome.go:1"
+          ],
+          "flow": {
+            "role": "action"
+          }
+        }
+      }
+    },
+    {
+      "type": "addNode",
+      "node": {
+        "id": "review",
+        "title": "Scheduler 依据新事实规划",
+        "cardContent": "Runtime 会独立推进已定义且就绪的下游；Bootstrap 同时把持久化图事件转换成图外规划任务。不是每个下游都要等 Scheduler 再次批准。",
+        "notes": "核对日期：2026-09-19\n源码基线：84e7f83e4cf75f9e8db51bd1e5fac686c63e6274\n\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/bootstrap/dataflow_runtime.go:167\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/bootstrap/dataflow_runtime.go:234",
+        "meta": {
+          "repository": "/Users/yanchenyu/Documents/ClawSeries/AgentGo",
+          "commit": "84e7f83e4cf75f9e8db51bd1e5fac686c63e6274",
+          "sources": [
+            "internal/bootstrap/dataflow_runtime.go:167",
+            "internal/bootstrap/dataflow_runtime.go:234"
+          ],
+          "flow": {
+            "role": "action"
+          }
+        }
+      }
+    },
+    {
+      "type": "addNode",
+      "node": {
+        "id": "finished",
+        "title": "目标达到且结算齐备？",
+        "cardContent": "由 Scheduler 判断目标是否达到；complete 入口仍机械检查选定结果、全部节点的结算权威和必要失败处置。不以单个模型回复或复核文本直接认定图成功。",
+        "notes": "核对日期：2026-09-19\n源码基线：84e7f83e4cf75f9e8db51bd1e5fac686c63e6274\n\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/graph/dataflow_terminal.go:126",
+        "meta": {
+          "repository": "/Users/yanchenyu/Documents/ClawSeries/AgentGo",
+          "commit": "84e7f83e4cf75f9e8db51bd1e5fac686c63e6274",
+          "sources": [
+            "internal/graph/dataflow_terminal.go:126"
+          ],
+          "flow": {
+            "role": "decision"
+          }
+        }
+      }
+    },
+    {
+      "type": "addNode",
+      "node": {
+        "id": "continue",
+        "title": "追加后续工作或等待新信息",
+        "cardContent": "返工/新任务追加为新实例并引用真实上游结果。无新事实时等待；如果最终无法完成，可另请求 failed/blocked。图中的反馈箭头表达运行时再次规划，不是业务 DAG 中的回边。",
+        "notes": "核对日期：2026-09-19\n源码基线：84e7f83e4cf75f9e8db51bd1e5fac686c63e6274\n\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/bootstrap/dataflow_runtime.go:234\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/scheduler/scheduler.go:54",
+        "meta": {
+          "repository": "/Users/yanchenyu/Documents/ClawSeries/AgentGo",
+          "commit": "84e7f83e4cf75f9e8db51bd1e5fac686c63e6274",
+          "sources": [
+            "internal/bootstrap/dataflow_runtime.go:234",
+            "internal/scheduler/scheduler.go:54"
+          ],
+          "flow": {
+            "role": "error"
+          }
+        }
+      }
+    },
+    {
+      "type": "addNode",
+      "node": {
+        "id": "complete",
+        "title": "图级 complete 与必要交付",
+        "cardContent": "校验请求版本及 result_refs，冻结完成意图；有代码候选时提交工作成果并持久化 Delivery 回执。交付失败或 unknown 保持明确异常，不虚报成功或自动重放。",
+        "notes": "核对日期：2026-09-19\n源码基线：84e7f83e4cf75f9e8db51bd1e5fac686c63e6274\n\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/graph/dataflow_terminal.go:126\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/graph/dataflow_terminal.go:231\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/bootstrap/dataflow_runtime.go:301",
+        "meta": {
+          "repository": "/Users/yanchenyu/Documents/ClawSeries/AgentGo",
+          "commit": "84e7f83e4cf75f9e8db51bd1e5fac686c63e6274",
+          "sources": [
+            "internal/graph/dataflow_terminal.go:126",
+            "internal/graph/dataflow_terminal.go:231",
+            "internal/bootstrap/dataflow_runtime.go:301"
+          ],
+          "flow": {
+            "role": "action"
+          }
+        }
+      }
+    },
+    {
+      "type": "addNode",
+      "node": {
+        "id": "answer",
+        "title": "图终态 → 最终答复",
+        "cardContent": "图级成功后，Scheduler 依据结果及交付回执向用户答复。图完成不等于外部 SWE 判题通过；Python Runner 的判题是独立事实。",
+        "notes": "核对日期：2026-09-19\n源码基线：84e7f83e4cf75f9e8db51bd1e5fac686c63e6274\n\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/internal/bootstrap/dataflow_runtime.go:260\n/Users/yanchenyu/Documents/ClawSeries/AgentGo/scripts/swe_test_runner/README.md:1",
+        "meta": {
+          "repository": "/Users/yanchenyu/Documents/ClawSeries/AgentGo",
+          "commit": "84e7f83e4cf75f9e8db51bd1e5fac686c63e6274",
+          "sources": [
+            "internal/bootstrap/dataflow_runtime.go:260",
+            "scripts/swe_test_runner/README.md:1"
+          ],
+          "flow": {
+            "role": "end"
+          }
+        }
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e01",
+        "order": 0,
+        "source": "request",
+        "target": "plan",
+        "kind": "新请求",
+        "meta": {
+          "flow": {
+            "role": "forward"
+          }
+        }
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e02",
+        "order": 1,
+        "source": "plan",
+        "target": "ready",
+        "kind": "启动 / 追加后扫描",
+        "meta": {
+          "flow": {
+            "role": "forward"
+          }
+        }
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e03",
+        "order": 2,
+        "source": "ready",
+        "target": "dispatch",
+        "kind": "是",
+        "meta": {
+          "flow": {
+            "role": "forward"
+          }
+        }
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e04",
+        "order": 3,
+        "source": "ready",
+        "target": "waiting",
+        "kind": "否",
+        "meta": {
+          "flow": {
+            "role": "error"
+          }
+        }
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e05",
+        "order": 4,
+        "source": "waiting",
+        "target": "ready",
+        "kind": "输入或执行面变化",
+        "meta": {
+          "flow": {
+            "role": "retry"
+          }
+        }
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e06",
+        "order": 5,
+        "source": "dispatch",
+        "target": "execute",
+        "kind": "按 route 认领",
+        "meta": {
+          "flow": {
+            "role": "forward"
+          }
+        }
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e07",
+        "order": 6,
+        "source": "execute",
+        "target": "result",
+        "kind": "任务终结并持久化",
+        "meta": {
+          "flow": {
+            "role": "forward"
+          }
+        }
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e08",
+        "order": 7,
+        "source": "result",
+        "target": "review",
+        "kind": "持久化规划事件",
+        "meta": {
+          "flow": {
+            "role": "forward"
+          }
+        }
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e09",
+        "order": 8,
+        "source": "result",
+        "target": "ready",
+        "kind": "已有下游可独立就绪",
+        "meta": {
+          "flow": {
+            "role": "retry"
+          }
+        }
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e10",
+        "order": 9,
+        "source": "review",
+        "target": "finished",
+        "kind": "评估目标与事实",
+        "meta": {
+          "flow": {
+            "role": "forward"
+          }
+        }
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e11",
+        "order": 10,
+        "source": "finished",
+        "target": "complete",
+        "kind": "是：请求完成",
+        "meta": {
+          "flow": {
+            "role": "forward"
+          }
+        }
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e12",
+        "order": 11,
+        "source": "finished",
+        "target": "continue",
+        "kind": "否",
+        "meta": {
+          "flow": {
+            "role": "error"
+          }
+        }
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e13",
+        "order": 12,
+        "source": "continue",
+        "target": "plan",
+        "kind": "需追加工作时",
+        "meta": {
+          "flow": {
+            "role": "retry"
+          }
+        }
+      }
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e14",
+        "order": 13,
+        "source": "complete",
+        "target": "answer",
+        "kind": "必要交付已确认",
+        "meta": {
+          "flow": {
+            "role": "forward"
+          }
+        }
+      }
+    },
+    {
+      "type": "setEntryNode",
+      "nodeId": "request"
+    }
+  ]
+}

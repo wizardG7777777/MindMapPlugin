@@ -1,0 +1,13 @@
+✔ B01: write node content, follow/insert references, add a node/edge and delete through the UI (1931.831667ms)
+✔ B02: reference snapshots, independent selections and external edits preserve drafts with reviewed-version conflicts (3706.230917ms)
+✔ B03: lost apply response retries identical bytes without a duplicate commit; export and screenshot (1069.278125ms)
+✔ B04: clicking the graph opens its editor, tab reload restores a draft, keyboard save persists it (1376.735791ms)
+✔ B05: unavailable layout does not block writing or repairing a node through the list (963.9785ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9238.77725

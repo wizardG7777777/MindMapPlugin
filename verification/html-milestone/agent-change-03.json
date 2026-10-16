@@ -1,0 +1,16 @@
+{
+  "at": "2026-10-16T01:53:19.800Z",
+  "target": "/Users/yanchenyu/Desktop/MindMap验证-QKK2j1/选择这个文件.html",
+  "release": "1.0.0-alpha.2",
+  "operation": "atomic replacement; only node-1 title changed",
+  "beforeTitle": "桌面验证图",
+  "afterTitle": "Agent 已更新桌面图",
+  "beforeSha256": "1c7ffa1e89437522c16af049a964909a0cd10508c1c415c9f7d0bc03d345949d",
+  "afterSha256": "414caed25983454b7da3a8af6fddfdf8d26b8a97ba89f2aa08686efb06ebb4d7",
+  "bindingEvidence": "User screenshot dated 2026-10-16 09:52 Australia/Perth shows 桌面验证图 and 暂无警告 in chrome-fixed.html",
+  "pageAutoRefreshConfirmed": true,
+  "backup": "/Users/yanchenyu/Documents/WebApps/codexPlugin/mindMap/verification/html-milestone/desktop-before-agent-03.html.txt",
+  "pageOutcome": "user confirmed automatic new title without manual refresh",
+  "userObservation": "已自动变成新标题",
+  "bindingScreenshot": "chrome-desktop-bound.png"
+}

@@ -1,0 +1,111 @@
+{
+  "JSON-SchemaVersion": 2,
+  "metadata": {
+    "id": "fishbone",
+    "title": "质量问题原因分析",
+    "graphVersion": 0,
+    "createdAt": "2026-09-05T00:00:00.000Z",
+    "updatedAt": "2026-09-05T00:00:00.000Z"
+  },
+  "graph": {
+    "topology": "directed",
+    "semanticType": "fishbone",
+    "entryNodeId": "effect",
+    "nodes": {
+      "effect": {
+        "id": "effect",
+        "title": "质量问题",
+        "cardContent": "",
+        "notes": "",
+        "meta": {}
+      },
+      "people": {
+        "id": "people",
+        "title": "人员",
+        "cardContent": "",
+        "notes": "",
+        "meta": {}
+      },
+      "process": {
+        "id": "process",
+        "title": "流程",
+        "cardContent": "",
+        "notes": "",
+        "meta": {}
+      },
+      "tools": {
+        "id": "tools",
+        "title": "工具",
+        "cardContent": "",
+        "notes": "",
+        "meta": {}
+      },
+      "training": {
+        "id": "training",
+        "title": "培训不足",
+        "cardContent": "",
+        "notes": "",
+        "meta": {}
+      },
+      "review": {
+        "id": "review",
+        "title": "缺少复核",
+        "cardContent": "",
+        "notes": "",
+        "meta": {}
+      },
+      "legacy": {
+        "id": "legacy",
+        "title": "旧工具链",
+        "cardContent": "",
+        "notes": "",
+        "meta": {}
+      }
+    },
+    "edges": {
+      "e01": {
+        "id": "e01",
+        "source": "people",
+        "target": "effect",
+        "kind": "原因",
+        "meta": {}
+      },
+      "e02": {
+        "id": "e02",
+        "source": "process",
+        "target": "effect",
+        "kind": "原因",
+        "meta": {}
+      },
+      "e03": {
+        "id": "e03",
+        "source": "tools",
+        "target": "effect",
+        "kind": "原因",
+        "meta": {}
+      },
+      "e04": {
+        "id": "e04",
+        "source": "training",
+        "target": "people",
+        "kind": "细分原因",
+        "meta": {}
+      },
+      "e05": {
+        "id": "e05",
+        "source": "review",
+        "target": "process",
+        "kind": "细分原因",
+        "meta": {}
+      },
+      "e06": {
+        "id": "e06",
+        "source": "legacy",
+        "target": "tools",
+        "kind": "细分原因",
+        "meta": {}
+      }
+    }
+  },
+  "commits": []
+}

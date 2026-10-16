@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="format" content="mindmap/1">
+  <title>带警告文件：有效编辑保存之后</title>
+</head>
+<body>
+  <header>
+    <h1>只保存有效内容</h1>
+    <p>valid-a 的编辑已经保存；invalid-title 及 excluded-reference 不写入结果。重新打开时展示两个有效节点，不再报告已排除内容的警告。</p>
+  </header>
+  <section class="map default">
+    <article id="valid-a" class="basic rect" data-x="0" data-y="0">
+      <h2 class="title">可编辑节点 A</h2>
+      <div class="card">已经保存的有效编辑。</div>
+      <div class="notes">其他错误不阻止这里的有效编辑。</div>
+      <ul class="links"></ul>
+    </article>
+    <article id="valid-b" class="basic rect" data-x="720" data-y="0">
+      <h2 class="title">可编辑节点 B</h2>
+      <div class="card">有效节点保留，指向无效目标的连线排除。</div>
+      <div class="notes">有效笔记即使在卡片收起时不可见，也要完整保存。</div>
+      <ul class="links"></ul>
+    </article>
+  </section>
+</body>
+</html>

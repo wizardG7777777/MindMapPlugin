@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="format" content="mindmap/1">
+  <title>一般有向关系源文本示例</title>
+</head>
+<body>
+  <header>
+    <h1>多个入边、平行边、回路与自环</h1>
+    <p>格式边界样例：所有关系按原样记录，不要求成为树；尚未包含导图交互和布局实现。</p>
+  </header>
+  <section class="map default">
+    <article id="alpha" class="basic rect">
+      <h2 class="title">分类 A</h2>
+      <div class="card">与分类 B 共同指向共享节点。</div>
+      <div class="notes">同一对节点之间可以有两条说明不同的边；说明是用户文本，不是内置类型。</div>
+      <ul class="links">
+        <li><a id="alpha-shared" href="#shared">包含共享内容</a></li>
+        <li><a id="alpha-reference" href="#shared">引用共享内容</a></li>
+      </ul>
+    </article>
+    <article id="beta" class="basic rect">
+      <h2 class="title">分类 B</h2>
+      <div class="card">提供另一条指向共享节点的边。</div>
+      <div class="notes">自环作为显式关系保留，不自动删除。</div>
+      <ul class="links">
+        <li><a id="beta-shared" href="#shared">包含共享内容</a></li>
+        <li><a id="beta-self" href="#beta">自环边界样例</a></li>
+      </ul>
+    </article>
+    <article id="shared" class="basic rect">
+      <h2 class="title">共享节点</h2>
+      <div class="card">接收多个节点的入边，并指回分类 A。</div>
+      <div class="notes">这些有向边形成回路，但不违反源文本格式约定。</div>
+      <ul class="links">
+        <li><a id="shared-alpha" href="#alpha">返回分类 A</a></li>
+      </ul>
+    </article>
+  </section>
+</body>
+</html>

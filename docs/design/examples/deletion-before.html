@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="format" content="mindmap/1">
+  <title>节点删除前的源文本示例</title>
+</head>
+<body>
+  <header>
+    <h1>删除中间节点之前</h1>
+    <p>有效源文本样例：下一步删除 topic，清除它的全部入边、出边，保留其余节点和关系。</p>
+  </header>
+  <section class="map default">
+    <article id="plan" class="basic rect">
+      <h2 class="title">产品规划</h2>
+      <div class="card">组织两个工作分支。</div>
+      <div class="notes">删除中间节点不自动改变其他分支的归属。</div>
+      <ul class="links">
+        <li><a id="plan-topic" href="#topic">主题分支</a></li>
+        <li><a id="plan-other" href="#other">其他分支</a></li>
+      </ul>
+    </article>
+    <article id="topic" class="basic rect">
+      <h2 class="title">待删除主题</h2>
+      <div class="card">此节点拥有一个层级子节点，并依赖其他分支。</div>
+      <div class="notes">测试自动删除时清空标题与卡片文本；这段非空笔记不豁免删除。</div>
+      <ul class="links">
+        <li><a id="topic-leaf" href="#leaf">具体内容</a></li>
+        <li><a id="topic-other" href="#other">依赖其他分支</a></li>
+      </ul>
+    </article>
+    <article id="other" class="basic rect">
+      <h2 class="title">其他分支</h2>
+      <div class="card">引用主题和具体内容。</div>
+      <div class="notes">删除主题后，指向具体内容的引用继续保留。</div>
+      <ul class="links">
+        <li><a id="other-topic" href="#topic">主题引用</a></li>
+        <li><a id="other-leaf" href="#leaf">内容引用</a></li>
+      </ul>
+    </article>
+    <article id="leaf" class="basic rect">
+      <h2 class="title">具体内容</h2>
+      <div class="card">相邻节点被删除、失去原有入边后仍保留。</div>
+      <div class="notes">保留方案 A &amp; B 的说明，不自动挂到其他节点下面。</div>
+      <ul class="links"></ul>
+    </article>
+    <article id="note" class="basic rect">
+      <h2 class="title">独立说明</h2>
+      <div class="card">这是原本就没有任何连线的节点。</div>
+      <div class="notes">删除其他节点不会修改这里的内容。</div>
+      <ul class="links"></ul>
+    </article>
+  </section>
+</body>
+</html>

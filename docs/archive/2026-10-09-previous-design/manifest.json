@@ -1,0 +1,670 @@
+{
+  "archiveDate": "2026-10-09",
+  "timezone": "Australia/Perth",
+  "status": "historical-reference-only",
+  "source": {
+    "kind": "working-tree",
+    "head": "26ac4a12251f17a7f3aa9b9b3d3e23eb08677ef4",
+    "includesUncommittedChanges": true
+  },
+  "files": [
+    {
+      "originalPath": "README.md",
+      "archivedPath": "snapshot/README.md",
+      "action": "move",
+      "bytes": 8040,
+      "sha256": "44a2bb59a73591596ba2ffbfd9740a76ff5681f60f7fa919e3f20c9f6179deca"
+    },
+    {
+      "originalPath": "docs/acceptance.md",
+      "archivedPath": "snapshot/docs/acceptance.md",
+      "action": "move",
+      "bytes": 16080,
+      "sha256": "451705b50bf796f607c0ca16bd7f3095f56bd1b1adbbb8318a3ee8c02059432e"
+    },
+    {
+      "originalPath": "docs/architecture.md",
+      "archivedPath": "snapshot/docs/architecture.md",
+      "action": "move",
+      "bytes": 5646,
+      "sha256": "9649273bda4cd48fc697891bfe8b3b8367416bdd2dfb9dd40e6ec5da414c97ff"
+    },
+    {
+      "originalPath": "docs/cli-reference.md",
+      "archivedPath": "snapshot/docs/cli-reference.md",
+      "action": "move",
+      "bytes": 8075,
+      "sha256": "f99ca7261990fd3ad5af951eacc148d56af1c2e674c336c064e4665f002b3149"
+    },
+    {
+      "originalPath": "docs/cli-workflows.md",
+      "archivedPath": "snapshot/docs/cli-workflows.md",
+      "action": "move",
+      "bytes": 5816,
+      "sha256": "b02d133ffe5bf17898ca1e44fbbd7c68f2bc48d1e49075d8ad079694e3c84e9f"
+    },
+    {
+      "originalPath": "docs/command-contract.md",
+      "archivedPath": "snapshot/docs/command-contract.md",
+      "action": "move",
+      "bytes": 6783,
+      "sha256": "aad58286a8e5c4b4c488a15db39ad28ac898969d3fdd96004841fd4ff9a65a5d"
+    },
+    {
+      "originalPath": "docs/command-results.md",
+      "archivedPath": "snapshot/docs/command-results.md",
+      "action": "move",
+      "bytes": 10491,
+      "sha256": "6f0e769e19be75f4d35c1f71ab05fa0c11a6649917f70cf6862c275407805498"
+    },
+    {
+      "originalPath": "docs/context-management.md",
+      "archivedPath": "snapshot/docs/context-management.md",
+      "action": "move",
+      "bytes": 6643,
+      "sha256": "b85af096f2bb2f80640d059a766107f9eaa2096fb3babe606e183a0d21481b0e"
+    },
+    {
+      "originalPath": "docs/data-model.md",
+      "archivedPath": "snapshot/docs/data-model.md",
+      "action": "move",
+      "bytes": 6112,
+      "sha256": "56da7bb20580a93f1a0b7d40a7e937ea2b4ab491fa0dcfaf21591f7a5a19ec10"
+    },
+    {
+      "originalPath": "docs/editing-architecture.md",
+      "archivedPath": "snapshot/docs/editing-architecture.md",
+      "action": "move",
+      "bytes": 5137,
+      "sha256": "de64bc773d1ce01cc2d1b44eecb8cea18af799df380a1f6a38bac301e98782c6"
+    },
+    {
+      "originalPath": "docs/implementation-roadmap.md",
+      "archivedPath": "snapshot/docs/implementation-roadmap.md",
+      "action": "move",
+      "bytes": 4363,
+      "sha256": "170b291838bd825df3d068ec5d0e04f6f68456634d89c5f55bff2901fcb7d6e3"
+    },
+    {
+      "originalPath": "docs/installation.md",
+      "archivedPath": "snapshot/docs/installation.md",
+      "action": "move",
+      "bytes": 5354,
+      "sha256": "9ed8b4a9c3590200de0af6376bf1539fcab509441b1e569da4d50a2009e3a695"
+    },
+    {
+      "originalPath": "docs/mermaid-projection.md",
+      "archivedPath": "snapshot/docs/mermaid-projection.md",
+      "action": "move",
+      "bytes": 4047,
+      "sha256": "257e7f61119ed6e1dfe3cf1c52f980c63f4b28ca5163d004865475cacef88df6"
+    },
+    {
+      "originalPath": "docs/operation-schema.md",
+      "archivedPath": "snapshot/docs/operation-schema.md",
+      "action": "move",
+      "bytes": 7031,
+      "sha256": "8ca95273ea8d34e01df2110e85089dc218e6b7bb18bd850c95d7abdc1da3bfbb"
+    },
+    {
+      "originalPath": "docs/persistence-and-concurrency.md",
+      "archivedPath": "snapshot/docs/persistence-and-concurrency.md",
+      "action": "move",
+      "bytes": 8863,
+      "sha256": "297aa2d53884ee8d31c9749b42c38e3305a4a626f0aa947434d8bf0571c413e7"
+    },
+    {
+      "originalPath": "docs/rendering.md",
+      "archivedPath": "snapshot/docs/rendering.md",
+      "action": "move",
+      "bytes": 10877,
+      "sha256": "be0d468bfcdd977684bc9388acb4c9ae012ae03ac181bd018352e9ba2da71481"
+    },
+    {
+      "originalPath": "docs/theme-template.md",
+      "archivedPath": "snapshot/docs/theme-template.md",
+      "action": "move",
+      "bytes": 1733,
+      "sha256": "6bd3efc44146b06c167eff73b1d9a6503cf248362d92b7840f55efe1e01c0491"
+    },
+    {
+      "originalPath": "docs/view-state.md",
+      "archivedPath": "snapshot/docs/view-state.md",
+      "action": "move",
+      "bytes": 1182,
+      "sha256": "e4d041416eb73304c64830f4399f2de9a1d0e5a8068825588970810e383c5563"
+    },
+    {
+      "originalPath": "docs/webui.md",
+      "archivedPath": "snapshot/docs/webui.md",
+      "action": "move",
+      "bytes": 11498,
+      "sha256": "8ef9189c045fd3a1b18f7aa2ba7867f0b963e25188b6a47106b14d19820fb7ef"
+    },
+    {
+      "originalPath": "skills/mindmap-cli/SKILL.md",
+      "archivedPath": "snapshot/skills/mindmap-cli/SKILL.md",
+      "action": "move",
+      "bytes": 5534,
+      "sha256": "316436d28d811ccfbf5800a33c6c11de6635fb5cff649bc92394aee7d90d9ef2"
+    },
+    {
+      "originalPath": "examples/agentgo-architecture/README.md",
+      "archivedPath": "snapshot/examples/agentgo-architecture/README.md",
+      "action": "move",
+      "bytes": 6807,
+      "sha256": "51126b9cf3bca95624254324d26aa31d2642ca978460b96540f7ffafe45c4dec"
+    },
+    {
+      "originalPath": "examples/agentgo-architecture/architecture.context.json",
+      "archivedPath": "snapshot/examples/agentgo-architecture/architecture.context.json",
+      "action": "move",
+      "bytes": 15906,
+      "sha256": "fe8ced7a0fdc0a1eef37e51e7f4c1d793298578398c5527dfb778eb3c4d9096f"
+    },
+    {
+      "originalPath": "examples/agentgo-architecture/architecture.create.json",
+      "archivedPath": "snapshot/examples/agentgo-architecture/architecture.create.json",
+      "action": "move",
+      "bytes": 767,
+      "sha256": "b333aa18b94838c40786809cad313603b4e0aab25541953c8be45267c2831c83"
+    },
+    {
+      "originalPath": "examples/agentgo-architecture/architecture.editor.png",
+      "archivedPath": "snapshot/examples/agentgo-architecture/architecture.editor.png",
+      "action": "move",
+      "bytes": 152231,
+      "sha256": "3eb72e349464bd8f0b1b3dd64d789f08246a2d47e63c7627ab14e1df87e3ed38"
+    },
+    {
+      "originalPath": "examples/agentgo-architecture/architecture.json",
+      "archivedPath": "snapshot/examples/agentgo-architecture/architecture.json",
+      "action": "move",
+      "bytes": 14326,
+      "sha256": "8ef3293222148ba74e4910f6c8f42aea8bec939ff76bf0ba1741953f7a14f285"
+    },
+    {
+      "originalPath": "examples/agentgo-architecture/architecture.layout.json",
+      "archivedPath": "snapshot/examples/agentgo-architecture/architecture.layout.json",
+      "action": "move",
+      "bytes": 9958,
+      "sha256": "f19758c97f73d3e89dfd0c6d041847bb3c2926b952e877b67e67d3f94c251771"
+    },
+    {
+      "originalPath": "examples/agentgo-architecture/architecture.mmd",
+      "archivedPath": "snapshot/examples/agentgo-architecture/architecture.mmd",
+      "action": "move",
+      "bytes": 710,
+      "sha256": "dc3c0a8acd25ce6d02981a86a22ad6a3e9e116a3d735cf76e951928a11efa0ee"
+    },
+    {
+      "originalPath": "examples/agentgo-architecture/architecture.operations.json",
+      "archivedPath": "snapshot/examples/agentgo-architecture/architecture.operations.json",
+      "action": "move",
+      "bytes": 17426,
+      "sha256": "0e713370b4c83277b69ce55d2e9e2c0a8282700fff11b35927ca0a9bedc8b204"
+    },
+    {
+      "originalPath": "examples/agentgo-architecture/architecture.png",
+      "archivedPath": "snapshot/examples/agentgo-architecture/architecture.png",
+      "action": "move",
+      "bytes": 103768,
+      "sha256": "bda3ced654f4cbfe8706b7a68e71d83bd1df90a0d134edd876ee9070ab2a9b79"
+    },
+    {
+      "originalPath": "examples/agentgo-architecture/architecture.preview.json",
+      "archivedPath": "snapshot/examples/agentgo-architecture/architecture.preview.json",
+      "action": "move",
+      "bytes": 20273,
+      "sha256": "446c3eb00b269ad9fb5badc938902e7fd984c192fe48c87155d4d09beae84f2c"
+    },
+    {
+      "originalPath": "examples/agentgo-architecture/architecture.refine.operations.json",
+      "archivedPath": "snapshot/examples/agentgo-architecture/architecture.refine.operations.json",
+      "action": "move",
+      "bytes": 4431,
+      "sha256": "41f92eb4f4a7fedcdd72779d0336c419526f35fea29a76fc3b4d89afce3e75a8"
+    },
+    {
+      "originalPath": "examples/agentgo-architecture/architecture.svg",
+      "archivedPath": "snapshot/examples/agentgo-architecture/architecture.svg",
+      "action": "move",
+      "bytes": 82020,
+      "sha256": "61e502cd42c0b94e5449063c3a623c0e46e179230afcc667d54008ae637ef228"
+    },
+    {
+      "originalPath": "examples/agentgo-architecture/runtime.context.json",
+      "archivedPath": "snapshot/examples/agentgo-architecture/runtime.context.json",
+      "action": "move",
+      "bytes": 15226,
+      "sha256": "b1f895efc806a5cc8d348849dbb273c7f7cd2289d084740a9fcf37ac658f690c"
+    },
+    {
+      "originalPath": "examples/agentgo-architecture/runtime.create.json",
+      "archivedPath": "snapshot/examples/agentgo-architecture/runtime.create.json",
+      "action": "move",
+      "bytes": 749,
+      "sha256": "6ddba30dca573595e2d44c70e9f2e0acc4773255eaea9f828e02ed3de773e9da"
+    },
+    {
+      "originalPath": "examples/agentgo-architecture/runtime.editor.png",
+      "archivedPath": "snapshot/examples/agentgo-architecture/runtime.editor.png",
+      "action": "move",
+      "bytes": 139967,
+      "sha256": "911af25d8fcc7a68961d4a352f917e26b26c418a5f6f48fb138ad0d2b84f4a0c"
+    },
+    {
+      "originalPath": "examples/agentgo-architecture/runtime.json",
+      "archivedPath": "snapshot/examples/agentgo-architecture/runtime.json",
+      "action": "move",
+      "bytes": 12450,
+      "sha256": "368ad714cec7c303ffc07e7be27a32251e7f87c14e3771e186c717aa94f0b55c"
+    },
+    {
+      "originalPath": "examples/agentgo-architecture/runtime.layout.json",
+      "archivedPath": "snapshot/examples/agentgo-architecture/runtime.layout.json",
+      "action": "move",
+      "bytes": 12813,
+      "sha256": "b237317e4fe18740984b6bca87be27477880929a8c57b6f28065abd2a9aac80e"
+    },
+    {
+      "originalPath": "examples/agentgo-architecture/runtime.mmd",
+      "archivedPath": "snapshot/examples/agentgo-architecture/runtime.mmd",
+      "action": "move",
+      "bytes": 974,
+      "sha256": "ca36cf0dc872d98b41e3f6ac1d1720970f7b5bfd3ec0d6d92ce7ad863c9aca13"
+    },
+    {
+      "originalPath": "examples/agentgo-architecture/runtime.operations.json",
+      "archivedPath": "snapshot/examples/agentgo-architecture/runtime.operations.json",
+      "action": "move",
+      "bytes": 16513,
+      "sha256": "83fd6e013b915d53c7c70c80e58e39c4041a8c6fc02b64155e09d36cb701cfb4"
+    },
+    {
+      "originalPath": "examples/agentgo-architecture/runtime.png",
+      "archivedPath": "snapshot/examples/agentgo-architecture/runtime.png",
+      "action": "move",
+      "bytes": 123148,
+      "sha256": "686d035c0c77315322aa974d96444d55195abbca739385a7fb1bfb21fd58f9c0"
+    },
+    {
+      "originalPath": "examples/agentgo-architecture/runtime.preview.json",
+      "archivedPath": "snapshot/examples/agentgo-architecture/runtime.preview.json",
+      "action": "move",
+      "bytes": 19672,
+      "sha256": "7ba57b0b00563e65a93fe0a25d718f203b57e2bfbdcef93ed0f6a939fa5700a1"
+    },
+    {
+      "originalPath": "examples/agentgo-architecture/runtime.refine.operations.json",
+      "archivedPath": "snapshot/examples/agentgo-architecture/runtime.refine.operations.json",
+      "action": "move",
+      "bytes": 5754,
+      "sha256": "7ab061f9284fffae1f54f597f1271ce5bbec2a3769650353efe019fa99f4c145"
+    },
+    {
+      "originalPath": "examples/agentgo-architecture/runtime.svg",
+      "archivedPath": "snapshot/examples/agentgo-architecture/runtime.svg",
+      "action": "move",
+      "bytes": 107480,
+      "sha256": "0441b84f78723875843d34cf75bba47c770e8a8f3e028c29869c0f1bf2a6aafb"
+    },
+    {
+      "originalPath": "examples/agentgo-architecture/verification.json",
+      "archivedPath": "snapshot/examples/agentgo-architecture/verification.json",
+      "action": "move",
+      "bytes": 1577,
+      "sha256": "9d00b84074f1c9e985edcfb04bb57929b574e2227e9403c4981856c2661d8bc8"
+    },
+    {
+      "originalPath": "examples/layout-gallery/README.md",
+      "archivedPath": "snapshot/examples/layout-gallery/README.md",
+      "action": "move",
+      "bytes": 175,
+      "sha256": "cb39021b585f93bfb4a8e68c3bd3d6c898dac9a7e8fdd64a7b640ee9b8e506e9"
+    },
+    {
+      "originalPath": "examples/layout-gallery/dependency.png",
+      "archivedPath": "snapshot/examples/layout-gallery/dependency.png",
+      "action": "move",
+      "bytes": 53012,
+      "sha256": "87b0f3d6a5e19bc659709fce4dce41528d028a794683e812c2300a0df6a5d8e2"
+    },
+    {
+      "originalPath": "examples/layout-gallery/dependency.svg",
+      "archivedPath": "snapshot/examples/layout-gallery/dependency.svg",
+      "action": "move",
+      "bytes": 28881,
+      "sha256": "632138b7a5d2a13dba31bc4fd58c5517210d9ef6fd64a27412492a8baa367d94"
+    },
+    {
+      "originalPath": "examples/layout-gallery/fishbone.png",
+      "archivedPath": "snapshot/examples/layout-gallery/fishbone.png",
+      "action": "move",
+      "bytes": 35812,
+      "sha256": "1f1c8ddb446f938e1baf6037eb4f0919f704f8c972ffd8f34d464d5cc0e5696f"
+    },
+    {
+      "originalPath": "examples/layout-gallery/fishbone.svg",
+      "archivedPath": "snapshot/examples/layout-gallery/fishbone.svg",
+      "action": "move",
+      "bytes": 29148,
+      "sha256": "788cc07250d6b9095a0619063773bacce28da9220d9a61ebb73e00d14e83fa6e"
+    },
+    {
+      "originalPath": "examples/layout-gallery/mindmap.png",
+      "archivedPath": "snapshot/examples/layout-gallery/mindmap.png",
+      "action": "move",
+      "bytes": 53359,
+      "sha256": "638c16aa59797bb2cf7eee57adbce4b41c2b937fc1573c5c509bf371da63c671"
+    },
+    {
+      "originalPath": "examples/layout-gallery/mindmap.svg",
+      "archivedPath": "snapshot/examples/layout-gallery/mindmap.svg",
+      "action": "move",
+      "bytes": 43338,
+      "sha256": "4158df9a014d914383dc62fa346fc006f84b2268dc3c87137f9e7f512950cf35"
+    },
+    {
+      "originalPath": "examples/layout-gallery/network.png",
+      "archivedPath": "snapshot/examples/layout-gallery/network.png",
+      "action": "move",
+      "bytes": 50878,
+      "sha256": "6630651602f771d4a0c49b1443e4312f8e1a35245c9511fb3f44687385190efd"
+    },
+    {
+      "originalPath": "examples/layout-gallery/network.svg",
+      "archivedPath": "snapshot/examples/layout-gallery/network.svg",
+      "action": "move",
+      "bytes": 43438,
+      "sha256": "3035eef6fefe53b15ddb7bfca69e48ca57e395eab05c7e0fc82b5ac64c7dc2bb"
+    },
+    {
+      "originalPath": "examples/login-authentication/README.md",
+      "archivedPath": "snapshot/examples/login-authentication/README.md",
+      "action": "move",
+      "bytes": 800,
+      "sha256": "b38041babd4184b9d5f97791b0102dcf3fcea5e064fa9e90cf26a2bfcf61daa2"
+    },
+    {
+      "originalPath": "examples/login-authentication/apply-result.json",
+      "archivedPath": "snapshot/examples/login-authentication/apply-result.json",
+      "action": "move",
+      "bytes": 1032,
+      "sha256": "944ef88731869e780077d10d5e41ab68afe2e5b16f36fa5450937b4e9996b964"
+    },
+    {
+      "originalPath": "examples/login-authentication/checks.json",
+      "archivedPath": "snapshot/examples/login-authentication/checks.json",
+      "action": "move",
+      "bytes": 1406,
+      "sha256": "64a16c4e752547d5934868786210c1c69d9784ce1b7d5181ad2c629d8b327ea8"
+    },
+    {
+      "originalPath": "examples/login-authentication/context-a_input.json",
+      "archivedPath": "snapshot/examples/login-authentication/context-a_input.json",
+      "action": "move",
+      "bytes": 2084,
+      "sha256": "1462410a7b18373e81503b68e9fe0162885ab474aabcaf096efd8a7c85a71314"
+    },
+    {
+      "originalPath": "examples/login-authentication/context-b_authorize.json",
+      "archivedPath": "snapshot/examples/login-authentication/context-b_authorize.json",
+      "action": "move",
+      "bytes": 3312,
+      "sha256": "df1af43e7307d5113e35f6c959e7c46235531ec55f9059e4b5b6ce69e02c6ff6"
+    },
+    {
+      "originalPath": "examples/login-authentication/context-c_authorize.json",
+      "archivedPath": "snapshot/examples/login-authentication/context-c_authorize.json",
+      "action": "move",
+      "bytes": 3270,
+      "sha256": "12ec4ce9fb87cbef633079d94e97dd0e883a6956be8ff094fedaf1f47558a433"
+    },
+    {
+      "originalPath": "examples/login-authentication/context.json",
+      "archivedPath": "snapshot/examples/login-authentication/context.json",
+      "action": "move",
+      "bytes": 16422,
+      "sha256": "3c1a35aac7234b44f6946e96f448d6a0fc79d8638982fb71d9671156348a5299"
+    },
+    {
+      "originalPath": "examples/login-authentication/create-result.json",
+      "archivedPath": "snapshot/examples/login-authentication/create-result.json",
+      "action": "move",
+      "bytes": 570,
+      "sha256": "0c170361d99d1b80f461c5f70188abe03409081c31f616fb3a402cad8e02e78a"
+    },
+    {
+      "originalPath": "examples/login-authentication/diagram-with-layout.mmd",
+      "archivedPath": "snapshot/examples/login-authentication/diagram-with-layout.mmd",
+      "action": "move",
+      "bytes": 18142,
+      "sha256": "7d9829184bf0821878ace353ac867de761758194370838547dd5c645e7cdd9a1"
+    },
+    {
+      "originalPath": "examples/login-authentication/diagram.mmd",
+      "archivedPath": "snapshot/examples/login-authentication/diagram.mmd",
+      "action": "move",
+      "bytes": 2145,
+      "sha256": "1798bf5eb75676718a59cfd95797359ced9875f9e2786603af4bf3106a0b4942"
+    },
+    {
+      "originalPath": "examples/login-authentication/document.json",
+      "archivedPath": "snapshot/examples/login-authentication/document.json",
+      "action": "move",
+      "bytes": 11893,
+      "sha256": "1072169850261a61f794e73030f15f9c28124618b2310c47c2968fcdd7f6b08d"
+    },
+    {
+      "originalPath": "examples/login-authentication/flowchart-lr.png",
+      "archivedPath": "snapshot/examples/login-authentication/flowchart-lr.png",
+      "action": "move",
+      "bytes": 102375,
+      "sha256": "a1aeb47748ec951c4ae90bbca6f0fd6f033a11c0d36123f03d8a0154af782ca8"
+    },
+    {
+      "originalPath": "examples/login-authentication/flowchart-lr.svg",
+      "archivedPath": "snapshot/examples/login-authentication/flowchart-lr.svg",
+      "action": "move",
+      "bytes": 153056,
+      "sha256": "b2668f7f8860ece07e6cc84ea62eab136ccc4262b2ae23c355002913344f0efd"
+    },
+    {
+      "originalPath": "examples/login-authentication/flowchart.png",
+      "archivedPath": "snapshot/examples/login-authentication/flowchart.png",
+      "action": "move",
+      "bytes": 159805,
+      "sha256": "385408c55f818f91f6cfa7817d0152f6ae0e302e4b8be7083f65c9f15e25dc63"
+    },
+    {
+      "originalPath": "examples/login-authentication/flowchart.svg",
+      "archivedPath": "snapshot/examples/login-authentication/flowchart.svg",
+      "action": "move",
+      "bytes": 152748,
+      "sha256": "ad2ec062ccab3847d9422a5f483175ea71845249e6ae58c7e167e83ed18e9936"
+    },
+    {
+      "originalPath": "examples/login-authentication/layout-receipt.json",
+      "archivedPath": "snapshot/examples/login-authentication/layout-receipt.json",
+      "action": "move",
+      "bytes": 1126,
+      "sha256": "9f4c54ddefa18d37c37bd3bbbbcc28ed4476d17b9d2f0b1ad8fe1bd40c167def"
+    },
+    {
+      "originalPath": "examples/login-authentication/layout-semantics.json",
+      "archivedPath": "snapshot/examples/login-authentication/layout-semantics.json",
+      "action": "move",
+      "bytes": 11396,
+      "sha256": "fb3279ea4efdcb1fa7874bdcb81de613d1d0ba302b66ae8301742146fa158e33"
+    },
+    {
+      "originalPath": "examples/login-authentication/layout.json",
+      "archivedPath": "snapshot/examples/login-authentication/layout.json",
+      "action": "move",
+      "bytes": 28222,
+      "sha256": "854b5a7287120b57a00a19545c43ad70362b7ee5d68898dcce3ab2426234ac40"
+    },
+    {
+      "originalPath": "examples/login-authentication/operations.json",
+      "archivedPath": "snapshot/examples/login-authentication/operations.json",
+      "action": "move",
+      "bytes": 14324,
+      "sha256": "06642b7ff694c088a9fa0ed019f0219a758fea3cbc1872a8e484e7526b5145de"
+    },
+    {
+      "originalPath": "examples/login-authentication/preview-result.json",
+      "archivedPath": "snapshot/examples/login-authentication/preview-result.json",
+      "action": "move",
+      "bytes": 11159,
+      "sha256": "0afb57e0a18b1718d1b7706b09e786e54944c44df0f3a91601aefc19184e452b"
+    },
+    {
+      "originalPath": "examples/login-authentication/validation.json",
+      "archivedPath": "snapshot/examples/login-authentication/validation.json",
+      "action": "move",
+      "bytes": 216,
+      "sha256": "930db8ab6b9dcce893c937624ab797d1c40f9f2a14dd9a9d7be4f2d8afe1178f"
+    },
+    {
+      "originalPath": "verification/0.2.0-tests.txt",
+      "archivedPath": "snapshot/verification/0.2.0-tests.txt",
+      "action": "move",
+      "bytes": 3124,
+      "sha256": "2d5c980876bcf528ffac604f0d058c3f84bc1bdd0f93fb698dc6a8cefabee5f3"
+    },
+    {
+      "originalPath": "verification/0.2.0.json",
+      "archivedPath": "snapshot/verification/0.2.0.json",
+      "action": "move",
+      "bytes": 1894,
+      "sha256": "79385a1fad4d531cca024447c1a1237502537c2c468c0e41230fd39fb77ebb8e"
+    },
+    {
+      "originalPath": "verification/layout-tests.txt",
+      "archivedPath": "snapshot/verification/layout-tests.txt",
+      "action": "move",
+      "bytes": 4022,
+      "sha256": "f727829f50f5c1b714b542fac9caf1e3fd11dcc585a63163c37ff4422ac368b2"
+    },
+    {
+      "originalPath": "verification/layouts.json",
+      "archivedPath": "snapshot/verification/layouts.json",
+      "action": "move",
+      "bytes": 2295,
+      "sha256": "2da58003dcdcad2401091848ec0111706b911f0b8b1662ba79b485df2e0c8722"
+    },
+    {
+      "originalPath": "verification/webui-browser-tests.txt",
+      "archivedPath": "snapshot/verification/webui-browser-tests.txt",
+      "action": "move",
+      "bytes": 701,
+      "sha256": "057ff816b2b977c7f71f0f56079fa4b5f36e2407359144eb21b916575da666ee"
+    },
+    {
+      "originalPath": "verification/webui.json",
+      "archivedPath": "snapshot/verification/webui.json",
+      "action": "move",
+      "bytes": 1181,
+      "sha256": "7ea4acf684f6822de37c2523f5e2abbeaf1b68a5e8aa809dd4005e2882884618"
+    },
+    {
+      "originalPath": "samples/documents/empty-plan.json",
+      "archivedPath": "snapshot/samples/documents/empty-plan.json",
+      "action": "copy",
+      "bytes": 361,
+      "sha256": "f60c944921663dbe8bb8082dc81ecd81cf3c0e2666964b6beb60156a891f07ba"
+    },
+    {
+      "originalPath": "samples/documents/layout-dependency.json",
+      "archivedPath": "snapshot/samples/documents/layout-dependency.json",
+      "action": "copy",
+      "bytes": 2138,
+      "sha256": "3c4fe66d0055c1e6544bb42a1040fdec9824a753c353b443746ea2d0768c8cdb"
+    },
+    {
+      "originalPath": "samples/documents/layout-fishbone.json",
+      "archivedPath": "snapshot/samples/documents/layout-fishbone.json",
+      "action": "copy",
+      "bytes": 2330,
+      "sha256": "21a6cbcff3d7373becac691b99dadf0e7a8e4474376f26acb79f3f36658d8cd9"
+    },
+    {
+      "originalPath": "samples/documents/layout-mindmap.json",
+      "archivedPath": "snapshot/samples/documents/layout-mindmap.json",
+      "action": "copy",
+      "bytes": 2854,
+      "sha256": "8b0188a8d99799a0345772facdbc12aacfa8ba81f308c0c1077ecf083a6290a2"
+    },
+    {
+      "originalPath": "samples/documents/layout-network.json",
+      "archivedPath": "snapshot/samples/documents/layout-network.json",
+      "action": "copy",
+      "bytes": 2428,
+      "sha256": "1f1b1a4232f3b4461cef2ebe53cb00020dcd4f91e274a4a96d226aae2d7eaa5a"
+    },
+    {
+      "originalPath": "samples/documents/login-flow.json",
+      "archivedPath": "snapshot/samples/documents/login-flow.json",
+      "action": "copy",
+      "bytes": 11893,
+      "sha256": "1072169850261a61f794e73030f15f9c28124618b2310c47c2968fcdd7f6b08d"
+    },
+    {
+      "originalPath": "samples/operations/build-general-graph.json",
+      "archivedPath": "snapshot/samples/operations/build-general-graph.json",
+      "action": "copy",
+      "bytes": 1164,
+      "sha256": "9089d150e343a3ebb595d23fc04e544c47edf938019a6405cb594ea62ce3b480"
+    },
+    {
+      "originalPath": "samples/operations/writer-a.json",
+      "archivedPath": "snapshot/samples/operations/writer-a.json",
+      "action": "copy",
+      "bytes": 287,
+      "sha256": "a1201a5bc1e1ff9a6d48c8c15a845fec962d246db175af239d5014812e71d2ce"
+    },
+    {
+      "originalPath": "samples/operations/writer-b.json",
+      "archivedPath": "snapshot/samples/operations/writer-b.json",
+      "action": "copy",
+      "bytes": 293,
+      "sha256": "9979263992e3f2372ec1b9dcd3c0c65cf7c2dd7c3cbb8ea2561f27574fda53ea"
+    },
+    {
+      "originalPath": "schemas/context.json",
+      "archivedPath": "snapshot/schemas/context.json",
+      "action": "copy",
+      "bytes": 31131,
+      "sha256": "5c09d5cda3582f7e7d1229f3aea7adf144541ddb14a61efdb6661256c55c6b38"
+    },
+    {
+      "originalPath": "schemas/document.json",
+      "archivedPath": "snapshot/schemas/document.json",
+      "action": "copy",
+      "bytes": 8040,
+      "sha256": "2d056563599540ce6025df6f187291eaa286a555e3120b8a1478fa290b71871e"
+    },
+    {
+      "originalPath": "schemas/layout.json",
+      "archivedPath": "snapshot/schemas/layout.json",
+      "action": "copy",
+      "bytes": 10478,
+      "sha256": "dab95cb7cce99a56e18928799fe90651fb2dfb5d01b50c6e74b4af8a2f4789c0"
+    },
+    {
+      "originalPath": "schemas/operations.json",
+      "archivedPath": "snapshot/schemas/operations.json",
+      "action": "copy",
+      "bytes": 12564,
+      "sha256": "a6061cf2657254b0cf496b89a172279edaa319452f6e30bc778b3b7c0e6bda27"
+    },
+    {
+      "originalPath": "schemas/result.json",
+      "archivedPath": "snapshot/schemas/result.json",
+      "action": "copy",
+      "bytes": 242766,
+      "sha256": "84b42ea69a5838cba72ba9277f229af08da67657b61c88126b7823e3e97d7538"
+    }
+  ]
+}

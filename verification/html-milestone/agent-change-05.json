@@ -1,0 +1,19 @@
+{
+  "at": "2026-10-16T02:19:58.321Z",
+  "host": "Codex in-app browser",
+  "target": "/Users/yanchenyu/Desktop/MindMap验证-QKK2j1/Codex验证.html",
+  "release": "1.0.0-alpha.2",
+  "beforeTitle": "Codex 验证图",
+  "afterTitle": "Agent 已更新 Codex 图",
+  "beforeSha256": "f1535137f7f0aee83bb4eb0bcda2ed30cbd54a0265d9dc1fc09359a794dd7b29",
+  "afterSha256": "b6af1b4bee78d544a7c08d9282e01f72df41fba251510d494c4913b49ea9e1b2",
+  "operation": "atomic replacement; only node-1 title changed",
+  "bindingEvidence": "user confirmed Codex 验证图 and 暂无警告 after file selection in Codex",
+  "pageAutoRefreshConfirmed": true,
+  "backup": "/Users/yanchenyu/Documents/WebApps/codexPlugin/mindMap/verification/html-milestone/codex-before-agent-05.html.txt",
+  "confirmation": {
+    "source": "user observation",
+    "text": "已自动显示新标题",
+    "at": "2026-10-16T02:29:54.137Z"
+  }
+}

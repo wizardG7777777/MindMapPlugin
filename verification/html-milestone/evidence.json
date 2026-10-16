@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-15",
+  "status": "awaiting-native-file-validation",
+  "directory": "/Users/yanchenyu/Documents/WebApps/codexPlugin/mindMap/test-results/html-manual-xSMP6R",
+  "files": [
+    {
+      "name": "maps/chrome.html",
+      "bytes": 726,
+      "sha256": "35bd5e8865b78418d866164bdb26da05d56fa87b91c0cb31f109061e5be4116a"
+    },
+    {
+      "name": "maps/codex.html",
+      "bytes": 724,
+      "sha256": "4fa68704c9349de33342d49bb37cdf8cc3d9b9f3dc7552ba59fc9f4ac900b73a"
+    },
+    {
+      "name": "runtime/1.0.0-alpha.1/app.js",
+      "bytes": 833919,
+      "sha256": "0c214b6ffaaf07ed108917d21e88bc710853d01feb665fb11866f39b85d47e3a"
+    },
+    {
+      "name": "runtime/1.0.0-alpha.1/app.css",
+      "bytes": 1460931,
+      "sha256": "38be17b161c18e3713d4300d47cd3a94c287eda44fec7f53f523d78bfa88189c"
+    }
+  ],
+  "cssUrlCount": 60,
+  "allCssUrlsInline": true,
+  "sourceTestsPassed": 13,
+  "browserTransport": "http://127.0.0.1:8767",
+  "nativeFileTestsPassed": false
+}

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="format" content="mindmap/1">
+  <title>分类处理后的源文本示例</title>
+</head>
+<body>
+  <header>
+    <h1>保留首个节点、取消无目标连线并补齐摆放</h1>
+    <p>删除后出现的 topic 及其两条出向连线，再取消 plan-gone 和 leaf-gone。其余三个节点与三条有效连线保留。</p>
+    <p>几何演算假设每个节点为 240×160 图单位，按源顺序避让且允许边界接触：plan 保持 (0,0)，topic 从 (10,10) 移至 (10,160)；leaf 的候选 (1.2,-1.6) 位于半径 5 内，最终移至 (1.2,-160)。随机候选不是固定值，实际运行须按真实外框求空位。</p>
+  </header>
+  <section class="map default">
+    <article id="plan" class="basic rect" data-x="0" data-y="0">
+      <h2 class="title">原点节点</h2>
+      <div class="card">零坐标是有效候选，本例保留原点。</div>
+      <div class="notes">指向 topic 的连线应继续连接第一个同 ID 节点。</div>
+      <ul class="links">
+        <li><a id="plan-topic" href="#topic">保留</a></li>
+      </ul>
+    </article>
+    <article id="topic" class="basic rect" data-x="10" data-y="160">
+      <h2 class="title">第一个 topic</h2>
+      <div class="card">保留此节点，不与副本合并。</div>
+      <div class="notes">已有位置先作候选；若发生碰撞则局部避让，不重新随机。</div>
+      <ul class="links">
+        <li><a id="topic-leaf" href="#leaf">保留原关系</a></li>
+      </ul>
+    </article>
+    <article id="leaf" class="basic rect" data-x="1.2" data-y="-160">
+      <h2 class="title">缺失位置的节点</h2>
+      <div class="card">先补齐随机候选，再避让；保留内容和有效关系。</div>
+      <div class="notes">初始候选位于原点半径 5 内，最终避让坐标可以超出该范围。</div>
+      <ul class="links">
+        <li><a id="leaf-topic" href="#topic">仍指向第一个 topic</a></li>
+      </ul>
+    </article>
+  </section>
+</body>
+</html>

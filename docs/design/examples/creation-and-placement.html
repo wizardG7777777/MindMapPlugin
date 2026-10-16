@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="format" content="mindmap/1">
+  <title>新建、拖拽与摆放保存的源文本示例</title>
+</head>
+<body>
+  <header>
+    <h1>新建、拖拽与摆放保存</h1>
+    <p>保存后的有效源文本：node-1 的标题已修改，node-2 保留“新节点”；只保存最终坐标，不保存叠放层级。本页是静态格式样例，没有交互实现。</p>
+    <p>本例演示通用新增逻辑：plan 有焦点时新增 node-1 并自动连线，清除焦点后新增 node-2 则不连线。工具栏形状按钮按 S4 在有节点焦点时只换形，不调用这里的通用新增分支。</p>
+    <p>几何演算假设每张卡片占用 240×160 图坐标单位，边界接触不算重叠。node-2 请求落到 node-1 的 (500,170)，等距优先向下避让到 (500,330)；关系与源顺序不变。真实运行必须按实际外框重新检查。</p>
+  </header>
+  <section class="map default">
+    <article id="plan" class="basic rect" data-x="200" data-y="160">
+      <h2 class="title">原有主题</h2>
+      <div class="card">从此节点新增后续内容。</div>
+      <div class="notes">默认连线只表示指向，不自动表示层级归属。</div>
+      <ul class="links">
+        <li><a id="link-1" href="#node-1"></a></li>
+      </ul>
+    </article>
+    <article id="node-1" class="basic rect" data-x="500" data-y="170">
+      <h2 class="title">后续内容</h2>
+      <div class="card"></div>
+      <div class="notes"></div>
+      <ul class="links"></ul>
+    </article>
+    <article id="node-2" class="basic rect" data-x="500" data-y="330">
+      <h2 class="title">新节点</h2>
+      <div class="card"></div>
+      <div class="notes"></div>
+      <ul class="links"></ul>
+    </article>
+  </section>
+</body>
+</html>

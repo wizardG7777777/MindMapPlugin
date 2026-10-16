@@ -1,0 +1,298 @@
+{
+  "envelopeVersion": 1,
+  "documentId": "agentgo-runtime",
+  "baseGraphVersion": 1,
+  "operationId": "runtime-visual-refine-20260919",
+  "scope": {
+    "mode": "document",
+    "allowDelete": true
+  },
+  "operations": [
+    {
+      "type": "removeEdge",
+      "edgeId": "e01"
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e01",
+        "source": "request",
+        "target": "plan",
+        "kind": "新请求",
+        "meta": {
+          "flow": {
+            "role": "forward"
+          }
+        }
+      }
+    },
+    {
+      "type": "removeEdge",
+      "edgeId": "e02"
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e02",
+        "source": "plan",
+        "target": "ready",
+        "kind": "启动 / 追加后扫描",
+        "meta": {
+          "flow": {
+            "role": "forward"
+          }
+        }
+      }
+    },
+    {
+      "type": "removeEdge",
+      "edgeId": "e03"
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e03",
+        "source": "ready",
+        "target": "dispatch",
+        "kind": "是",
+        "meta": {
+          "flow": {
+            "role": "forward"
+          }
+        }
+      }
+    },
+    {
+      "type": "removeEdge",
+      "edgeId": "e04"
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e04",
+        "source": "ready",
+        "target": "waiting",
+        "kind": "否",
+        "meta": {
+          "flow": {
+            "role": "branch"
+          }
+        }
+      }
+    },
+    {
+      "type": "removeEdge",
+      "edgeId": "e05"
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e05",
+        "source": "waiting",
+        "target": "ready",
+        "kind": "输入或执行面变化",
+        "meta": {
+          "flow": {
+            "role": "retry"
+          }
+        }
+      }
+    },
+    {
+      "type": "removeEdge",
+      "edgeId": "e06"
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e06",
+        "source": "dispatch",
+        "target": "execute",
+        "kind": "按 route 认领",
+        "meta": {
+          "flow": {
+            "role": "forward"
+          }
+        }
+      }
+    },
+    {
+      "type": "removeEdge",
+      "edgeId": "e07"
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e07",
+        "source": "execute",
+        "target": "result",
+        "kind": "任务终结并持久化",
+        "meta": {
+          "flow": {
+            "role": "forward"
+          }
+        }
+      }
+    },
+    {
+      "type": "removeEdge",
+      "edgeId": "e08"
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e08",
+        "source": "result",
+        "target": "review",
+        "kind": "持久化规划事件",
+        "meta": {
+          "flow": {
+            "role": "forward"
+          }
+        }
+      }
+    },
+    {
+      "type": "removeEdge",
+      "edgeId": "e09"
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e09",
+        "source": "result",
+        "target": "ready",
+        "kind": "已有下游可独立就绪",
+        "meta": {
+          "flow": {
+            "role": "retry"
+          }
+        }
+      }
+    },
+    {
+      "type": "removeEdge",
+      "edgeId": "e10"
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e10",
+        "source": "review",
+        "target": "finished",
+        "kind": "评估目标与事实",
+        "meta": {
+          "flow": {
+            "role": "forward"
+          }
+        }
+      }
+    },
+    {
+      "type": "removeEdge",
+      "edgeId": "e11"
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e11",
+        "source": "finished",
+        "target": "complete",
+        "kind": "是：请求完成",
+        "meta": {
+          "flow": {
+            "role": "forward"
+          }
+        }
+      }
+    },
+    {
+      "type": "removeEdge",
+      "edgeId": "e12"
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e12",
+        "source": "finished",
+        "target": "continue",
+        "kind": "否",
+        "meta": {
+          "flow": {
+            "role": "branch"
+          }
+        }
+      }
+    },
+    {
+      "type": "removeEdge",
+      "edgeId": "e13"
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e13",
+        "source": "continue",
+        "target": "plan",
+        "kind": "需追加工作时",
+        "meta": {
+          "flow": {
+            "role": "retry"
+          }
+        }
+      }
+    },
+    {
+      "type": "removeEdge",
+      "edgeId": "e14"
+    },
+    {
+      "type": "addEdge",
+      "edge": {
+        "id": "e14",
+        "source": "complete",
+        "target": "answer",
+        "kind": "必要交付已确认",
+        "meta": {
+          "flow": {
+            "role": "forward"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateNode",
+      "nodeId": "waiting",
+      "patch": {
+        "meta": {
+          "repository": "/Users/yanchenyu/Documents/ClawSeries/AgentGo",
+          "commit": "84e7f83e4cf75f9e8db51bd1e5fac686c63e6274",
+          "sources": [
+            "internal/graph/dataflow_runtime.go:413",
+            "internal/graph/dataflow_runtime.go:232"
+          ],
+          "flow": {
+            "role": "action"
+          }
+        }
+      }
+    },
+    {
+      "type": "updateNode",
+      "nodeId": "continue",
+      "patch": {
+        "meta": {
+          "repository": "/Users/yanchenyu/Documents/ClawSeries/AgentGo",
+          "commit": "84e7f83e4cf75f9e8db51bd1e5fac686c63e6274",
+          "sources": [
+            "internal/bootstrap/dataflow_runtime.go:234",
+            "internal/scheduler/scheduler.go:54"
+          ],
+          "flow": {
+            "role": "action"
+          }
+        }
+      }
+    }
+  ]
+}

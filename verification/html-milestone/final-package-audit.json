@@ -1,0 +1,86 @@
+{
+  "at": "2026-10-16T02:21:35.408Z",
+  "release": "1.0.0-alpha.2",
+  "currentBuildMatchesNativeTestPackage": true,
+  "files": [
+    {
+      "name": "app.js",
+      "builtSha256": "d981e77af712c682c02fb7ecff8fd2c0c4688e945bd472d50e45952fc82525da",
+      "testedSha256": "d981e77af712c682c02fb7ecff8fd2c0c4688e945bd472d50e45952fc82525da",
+      "identical": true
+    },
+    {
+      "name": "app.css",
+      "builtSha256": "38be17b161c18e3713d4300d47cd3a94c287eda44fec7f53f523d78bfa88189c",
+      "testedSha256": "38be17b161c18e3713d4300d47cd3a94c287eda44fec7f53f523d78bfa88189c",
+      "identical": true
+    }
+  ],
+  "cssResourceCount": 60,
+  "allCssResourcesInline": true,
+  "nativeEntryFiles": [
+    {
+      "file": "/Users/yanchenyu/Desktop/MindMap验证-QKK2j1/选择这个文件.html",
+      "exists": true,
+      "references": [
+        {
+          "reference": "./runtime/1.0.0-alpha.2/app.css",
+          "local": true,
+          "exists": true
+        },
+        {
+          "reference": "./runtime/1.0.0-alpha.2/app.js",
+          "local": true,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "file": "/Users/yanchenyu/Desktop/MindMap验证-QKK2j1/Codex验证.html",
+      "exists": true,
+      "references": [
+        {
+          "reference": "./runtime/1.0.0-alpha.2/app.css",
+          "local": true,
+          "exists": true
+        },
+        {
+          "reference": "./runtime/1.0.0-alpha.2/app.js",
+          "local": true,
+          "exists": true
+        }
+      ]
+    }
+  ],
+  "status": "passed",
+  "completedAt": "2026-10-16T02:46:29.428Z",
+  "nativeResults": [
+    {
+      "receipt": "agent-change-04.json",
+      "file": "/Users/yanchenyu/Desktop/MindMap验证-QKK2j1/选择这个文件.html",
+      "save": true,
+      "automaticRefresh": true,
+      "draftDiscard": true,
+      "historyCleared": true,
+      "diskHash": "c4f70031d5e185343852c3d93a513e6d4689cdc7482bc7f1fff410b7e1cd539c"
+    },
+    {
+      "receipt": "agent-change-06.json",
+      "file": "/Users/yanchenyu/Desktop/MindMap验证-QKK2j1/Codex验证.html",
+      "save": true,
+      "automaticRefresh": true,
+      "draftDiscard": true,
+      "historyCleared": true,
+      "diskHash": "8778d4ee063464805cac140cc645bf647e11941ae4c3699348fd5ec60b54ca46"
+    }
+  ],
+  "debugHttpPorts": {
+    "ports": [
+      8766,
+      8767
+    ],
+    "listening": false,
+    "evidence": "lsof -nP -iTCP:8766 -iTCP:8767 -sTCP:LISTEN returned no listeners"
+  },
+  "validationMethod": "User performed native UI and authorization and confirmed visual results; Agent performed filesystem checks, atomic external writes, source validation and runtime hash comparisons."
+}

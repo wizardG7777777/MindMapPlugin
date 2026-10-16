@@ -1,0 +1,18 @@
+{
+  "JSON-SchemaVersion": 2,
+  "metadata": {
+    "id": "plan",
+    "title": "Shared plan",
+    "graphVersion": 0,
+    "createdAt": "2026-09-05T00:00:00.000Z",
+    "updatedAt": "2026-09-05T00:00:00.000Z"
+  },
+  "graph": {
+    "topology": "directed",
+    "semanticType": "general",
+    "entryNodeId": null,
+    "nodes": {},
+    "edges": {}
+  },
+  "commits": []
+}

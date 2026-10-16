@@ -1,0 +1,45 @@
+{
+  "completedAt": "2026-10-16T02:48:40.359Z",
+  "objective": "Implement and verify the minimal offline HTML open/edit/save/Agent disk-change/forced-refresh flow in Chrome and Codex",
+  "release": "1.0.0-alpha.2",
+  "hosts": [
+    {
+      "host": "Chrome",
+      "evidence": "agent-change-04.json",
+      "checks": {
+        "sourceValid": true,
+        "realSave": true,
+        "agentDiskChange": true,
+        "automaticRefresh": true,
+        "unsavedDraftDiscard": true,
+        "undoHistoryCleared": true,
+        "diskMatchesObservedChange": true
+      }
+    },
+    {
+      "host": "Codex",
+      "evidence": "agent-change-06.json",
+      "checks": {
+        "sourceValid": true,
+        "realSave": true,
+        "agentDiskChange": true,
+        "automaticRefresh": true,
+        "unsavedDraftDiscard": true,
+        "undoHistoryCleared": true,
+        "diskMatchesObservedChange": true
+      }
+    }
+  ],
+  "offlineResources": {
+    "graphReferencesLocalFiles": true,
+    "stylesAndFontsBundled": true,
+    "currentBuildMatchesNativeTestPackage": true,
+    "debugHttpServersRequired": false
+  },
+  "validationMethod": "User performed native UI and authorization and confirmed visual results; Agent performed filesystem checks, atomic external writes, source validation and runtime hash comparisons.",
+  "unitTestsPassed": 22,
+  "documentFilesChecked": 10,
+  "localDocumentLinksChecked": 118,
+  "scope": "Minimal file-flow milestone only; full graph editor, first-save placement, cross-version loading and relative image bases remain future work.",
+  "complete": true
+}

@@ -1,0 +1,30 @@
+{
+  "at": "2026-10-15T09:49:31.414Z",
+  "target": "/Users/yanchenyu/Documents/WebApps/codexPlugin/mindMap/test-results/html-manual-xSMP6R/maps/chrome-fixed.html",
+  "release": "1.0.0-alpha.2",
+  "operation": "atomic replacement; only node-1 title changed",
+  "beforeTitle": "chrome 修复版初始图",
+  "afterTitle": "Agent 修复版刷新验证",
+  "beforeSha256": "4df1e9606241901f7cfb2ab9091bcb5d32f537ee74b363df011c81950ace3dfe",
+  "afterSha256": "1397d4c80372f52338294356edba9dfda612c5d5ad88878fbfcc93c642c5411a",
+  "userReportedReady": true,
+  "humanSaveDiskConfirmed": false,
+  "unsavedDraftPresence": "user-reported; not directly observed",
+  "pageAutoRefreshConfirmed": false,
+  "backup": "/Users/yanchenyu/Documents/WebApps/codexPlugin/mindMap/verification/html-milestone/chrome-alpha2-before-agent.html.txt",
+  "pageOutcome": "user-reported-no-visible-update",
+  "userObservation": "仍显示未保存草稿或原标题",
+  "nextEvidenceNeeded": "select chrome-fixed.html in the open picker, verify binding, then repeat save and Agent-change test",
+  "followUpEvidence": {
+    "source": "user screenshot at 19:23 Australia/Perth",
+    "screenshot": "chrome-alpha2-unbound.png",
+    "entry": "chrome-fixed.html",
+    "visibleTitle": "一个尚未保存的草稿",
+    "warnings": [
+      "请使用“打开其他图”选择图文件，授予读取、保存及外部修改检测所需的文件权限。",
+      "尚未获得当前图的文件句柄，请使用“打开其他图”选择要编辑的文件。"
+    ],
+    "interpretation": "New runtime page was opened but no file session was bound; save and monitoring prerequisites were not met.",
+    "pickerObservation": "User confirmed the Open button displays a macOS file chooser."
+  }
+}

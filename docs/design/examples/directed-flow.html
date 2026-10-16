@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="format" content="mindmap/1">
+  <title>有向关系源文本示例</title>
+</head>
+<body>
+  <header>
+    <h1>流程回路、依赖与独立节点</h1>
+    <p>源文本格式样例：直接显示字段与关系引用，不包含交互式渲染实现；首版按源坐标手动摆放，不提供自动排版。</p>
+  </header>
+  <section class="map default">
+    <article id="start" class="basic rect">
+      <h2 class="title">开始创作</h2>
+      <div class="card">进入内容起草。</div>
+      <div class="notes"></div>
+      <ul class="links">
+        <li><a id="start-draft" href="#draft">开始</a></li>
+      </ul>
+    </article>
+    <article id="draft" class="basic rect">
+      <h2 class="title">起草内容</h2>
+      <div class="card">按照需求起草内容。</div>
+      <div class="notes">支持 **Markdown** 与内联公式 $x + 1$ 的源码存储。</div>
+      <ul class="links">
+        <li><a id="draft-review" href="#review">提交检查</a></li>
+        <li><a id="draft-requirements" href="#requirements">依赖需求定义</a></li>
+      </ul>
+    </article>
+    <article id="review" class="basic rect">
+      <h2 class="title">检查内容</h2>
+      <div class="card">判断内容是否满足要求。</div>
+      <div class="notes">修改分支形成有向回路，不表示父子关系。</div>
+      <ul class="links">
+        <li><a id="review-draft" href="#draft">需要修改</a></li>
+        <li><a id="review-finish" href="#finish">通过</a></li>
+      </ul>
+    </article>
+    <article id="finish" class="basic rect">
+      <h2 class="title">完成</h2>
+      <div class="card"></div>
+      <div class="notes"></div>
+      <ul class="links"></ul>
+    </article>
+    <article id="requirements" class="basic rect">
+      <h2 class="title">需求定义</h2>
+      <div class="card">提供起草所依赖的输入。</div>
+      <div class="notes">比较方案 A &amp; B，保留原始说明。</div>
+      <ul class="links"></ul>
+    </article>
+    <article id="note" class="basic rect">
+      <h2 class="title">独立说明</h2>
+      <div class="card">此节点没有入向或出向关系。</div>
+      <div class="notes">读取和保存必须保留它，不要求将其连接到共同根节点。</div>
+      <ul class="links"></ul>
+    </article>
+  </section>
+</body>
+</html>

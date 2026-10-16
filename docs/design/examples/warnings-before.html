@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="format" content="mindmap/1">
+  <title>带警告文件：编辑之前</title>
+</head>
+<body>
+  <header>
+    <h1>无法自动修复的标题与可编辑的有效部分</h1>
+    <p>invalid-title 故意缺少有效标题，正式应用应在右上方警告栏提示；另外两个节点继续编辑，保存时排除异常节点及其关联连线。本页仅展示源文，不包含应用交互。</p>
+  </header>
+  <section class="map default">
+    <article id="valid-a" class="basic rect" data-x="0" data-y="0">
+      <h2 class="title">可编辑节点 A</h2>
+      <div class="card">保存前的正文。</div>
+      <div class="notes">其他错误不阻止这里的有效编辑。</div>
+      <ul class="links"></ul>
+    </article>
+    <article id="invalid-title" class="basic rect" data-x="360" data-y="0">
+      <h2 class="title"></h2>
+      <div class="card">这个异常节点不进入有效保存结果。</div>
+      <div class="notes">载入时不套用用户失焦交换，也不自动填入默认标题。</div>
+      <ul class="links"></ul>
+    </article>
+    <article id="valid-b" class="basic rect" data-x="720" data-y="0">
+      <h2 class="title">可编辑节点 B</h2>
+      <div class="card">有效节点保留，指向无效目标的连线排除。</div>
+      <div class="notes">有效笔记即使在卡片收起时不可见，也要完整保存。</div>
+      <ul class="links">
+        <li><a id="excluded-reference" href="#invalid-title">目标无效，保存时排除</a></li>
+      </ul>
+    </article>
+  </section>
+</body>
+</html>
